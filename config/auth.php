@@ -46,6 +46,16 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        //Nhân viên
+        'nhanvien' => [
+            'driver' => 'session',
+            'provider' => 'nhanviens',
+        ],
+        'nhanvien-api' => [
+            'driver' => 'token',
+            'provider' => 'nhanviens',
+        ],
     ],
 
     /*
@@ -75,6 +85,10 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+        'nhanviens' => [
+            'driver' => 'eloquent',
+            'model' => App\Model\NhanVien::class,
+        ],
     ],
 
     /*
