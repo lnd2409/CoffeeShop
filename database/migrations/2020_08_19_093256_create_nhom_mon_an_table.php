@@ -14,7 +14,8 @@ class CreateNhomMonAnTable extends Migration
     public function up()
     {
         Schema::create('nhommonan', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('nma_id');
+            $table->string('nma_ten',100);
             $table->timestamps();
         });
     }

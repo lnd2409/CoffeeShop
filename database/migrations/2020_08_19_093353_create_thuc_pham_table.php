@@ -14,7 +14,13 @@ class CreateThucPhamTable extends Migration
     public function up()
     {
         Schema::create('thucpham', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('tp_id');
+            $table->string('tp_ten',100);
+            $table->string('tp_chuthich',100);
+
+            $table->bigInteger('ltp_id')->unsigned();
+            $table->foreign('ltp_id')->references('ltp_id')->on('loaithucpham')->onDelete('cascade');
+            
             $table->timestamps();
         });
     }

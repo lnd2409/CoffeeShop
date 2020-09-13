@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNoiGiaoThucPhamTable extends Migration
+class CreatePhieuYeuCauTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateNoiGiaoThucPhamTable extends Migration
      */
     public function up()
     {
-        Schema::create('noigiaothucpham', function (Blueprint $table) {
-            $table->bigIncrements('ngtp_id');
-            $table->string('ngtp_ten',100);
+        Schema::create('phieuyeucau', function (Blueprint $table) {
+            $table->bigIncrements('pyc_id');
+            $table->dateTime('pyc_ngyalap');
+            $table->integer('pyc_giatientamtinh');
+            $table->integer('pyc_trangthai')->default(0);
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateNoiGiaoThucPhamTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('noigiaothucpham');
+        Schema::dropIfExists('phieuyeucau');
     }
 }
