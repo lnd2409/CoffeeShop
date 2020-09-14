@@ -18,7 +18,9 @@ Route::get('/', function () {
 //Đăng nhập
 Route::get('dang-nhap', 'AuthController@index')->name('get-login');
 Route::post('xu-ly-dang-nhap', 'AuthController@login')->name('login');
-
+//đăng ký
+Route::view('dang-ky', 'client.signup');
+Route::post('dang-ky-thanh-vien', 'AuthController@signup')->name('signup');
 // Phần admin
 Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function () {
     Route::get('/', function () {

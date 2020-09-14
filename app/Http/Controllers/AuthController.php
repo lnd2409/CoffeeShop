@@ -43,6 +43,9 @@ class AuthController extends Controller
         if(Auth::guard('nhanvien')->check()){
             Auth::guard('nhanvien')->logout();
         }
+        if(Auth::guard('khachhang')->check()){
+            Auth::guard('khachhang')->logout();
+        }
         return redirect()->route('get-login');
     }
 
@@ -111,5 +114,41 @@ class AuthController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function signup(Request $request)
+    {
+        // dd($request);
+        $arr = [
+            'username' => $request->username,
+            'password' => $request->password
+        ];
+         
+        $find=\DB::table('khachhang')->where('username',$request->username)->first();
+        if($find){
+            $alert = "Tài khoản đã tồn tại";
+            return response()->json($alert, 400);
+        }
+        else{
+            $find_tel=\DB::table('khachhang')->where('kh_sdt',$request->tel)->first();
+            if($find_tel){
+                $alert = "Số điện thoại đã tồn tại";
+                return response()->json($alert, 400);
+            }
+            else{
+                
+                \DB::table('khachhang')->insert([
+                    'kh_ten'=> $request->name,
+                    'kh_sdt'=>$request->tel,
+                    'username'=>$request->username,
+                    'password'=>$request->password,
+                    'lkh_id'=>1
+                ]);
+                
+                Auth::guard('khachhang')->attempt($arr,false);
+                    return redirect()->route('trang-chu');
+            }
+
+           
+        }
     }
 }
