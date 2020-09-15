@@ -119,7 +119,6 @@
         $(document).ready(function () {
                 $('#error').hide();
                 $('#signup').click(function (e) {
-                    console.log('click');
                     
                     e.preventDefault();
                     var username = $("input[name='username']").val();
@@ -144,12 +143,7 @@
                         window.location = "{{ route('get-login') }}"
                     },
                     error: function(e) {
-                        if(username == '' || password == '' ) {
-                            $('#error').text("Tài khoản và mật khẩu không được để trống");
-                            $('#error').show();
-                        }
-                       
-                        else if(password_new1!=password_new2){
+                        if(password_new1!=password_new2){
                         $('#error').text("Mật khẩu phải giống nhau");
                             $('#error').show();
                         }
@@ -159,7 +153,7 @@
                         }
                         else{
                             
-                            $('#error').text(e);
+                            $('#error').text(e.responseJSON);
                             $('#error').show();
                         }
                     }
