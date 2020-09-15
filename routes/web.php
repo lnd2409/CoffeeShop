@@ -21,6 +21,10 @@ Route::post('xu-ly-dang-nhap', 'AuthController@login')->name('login');
 //đăng ký
 Route::view('dang-ky', 'client.signup');
 Route::post('dang-ky-thanh-vien', 'AuthController@signup')->name('signup');
+
+//Đổi mât khẩu
+Route::view('doi-mat-khau', 'client.changepass');
+Route::post('doi-mat-khau', 'AuthController@changePass')->name('changePass');
 // Phần admin
 Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function () {
     Route::get('/', function () {
@@ -31,5 +35,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
     Route::post('/ban-an/them-ban-an', 'BanAnController@store')->name('them-ban-an');
 
     //Đăng xuất
-    Route::get('dang-xuat', 'AuthController@logout')->name('dang-xuat');
 });
+Route::get('dang-xuat', 'AuthController@logout')->name('dang-xuat');
