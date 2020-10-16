@@ -15,9 +15,12 @@ class CreatePhieuYeuCauTable extends Migration
     {
         Schema::create('phieuyeucau', function (Blueprint $table) {
             $table->bigIncrements('pyc_id');
-            $table->dateTime('pyc_ngyalap');
+            $table->dateTime('pyc_ngaylap');
             $table->integer('pyc_giatientamtinh');
             $table->integer('pyc_trangthai')->default(0);
+            $table->bigInteger('ba_id')->unsigned();
+            $table->foreign('ba_id')->references('ba_id')->on('banan')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

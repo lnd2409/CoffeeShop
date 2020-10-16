@@ -17,6 +17,8 @@ class CreateMonAnTable extends Migration
             $table->bigIncrements('ma_id');
             $table->string('ma_ten',100);
             $table->string('ma_chuthich',100);
+            //Phung bo sung thuoc tinh gia mon an
+            $table->integer('ma_gia');
 
             $table->bigInteger('nma_id')->unsigned();
             $table->foreign('nma_id')->references('nma_id')->on('nhommonan')->onDelete('cascade');

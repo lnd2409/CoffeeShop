@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!--[if IE 7 ]>    <html lang="en-gb" class="isie ie7 oldie no-js"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-gb" class="isie ie8 oldie no-js"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-gb" class="isie ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en-gb" xml:lang="en-gb" class="no-js"> <!--<![endif]-->
+
+
+<!-- Tieu Long Lanh Kute -->
+<head>
+	<meta charset="utf-8">
+    <!--[if lt IE 9]> 
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <![endif]-->
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Aleš Trunda alestrunda.cz">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.html">
+    <link rel="shortcut icon" href="ico/favicon.ico">
+
+    <!--[if lt IE 9]>
+        <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+   	<!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400' rel='stylesheet' type='text/css'>
+    
+    <link rel="stylesheet" href="dark/assets/bootstrap/css/bootstrap.min.css" type="text/css">
+    
+	<title>Pizzeria</title>
+    
+    <style>
+		a {
+			color: #FFF;
+		}
+		
+		a:hover {
+			color: #FFF;
+		}
+		
+		body {
+			font-size: 28px;
+			color: #FFF;
+			font-family: Roboto, sans-serif;
+			background-image: url('dark/assets/images/backgrounds/bg1.png');
+			background-attachment: fixed;
+			text-align: center;
+			height: 100%;
+			min-width: 1230px;
+		}
+		
+		html {
+			height: 100%;
+		}
+		
+		img {
+			max-width: 100%;
+		}
+		
+		p {
+			margin: 20px 0 30px 0;
+		}
+		
+		#all {
+			background-image: url('template/images/bg_pattern.html');
+			background-color: rgba(0,0,0,0.25);
+			padding: 40px 0;
+			min-height: 100%;
+		}
+		
+		.container {
+			width: 1200px;
+		}
+		
+		.pc-screen {
+			display: inline-block;
+			position: relative;
+		}
+		
+		.pc-screen:hover .pc-screen-content {
+			background-position: bottom center;
+		}
+		
+		.pc-screen:hover .pc-screen-content.no-move {
+			background-position: top center;
+		}
+		
+		.pc-screen-content {
+			position: absolute;
+			top: 13%;
+			left: 14%;
+			bottom: 20%;
+			right: 13.5%;
+			line-height: 280px;
+			background-position: top center;
+			-webkit-background-size: 100% auto;
+			background-size: 100% auto;
+			-webkit-transition: background-position 11s linear;
+			-moz-transition: background-position 11s linear;
+			-o-transition: background-position 11s linear;
+			transition: background-position 11s linear;
+		}
+		
+		.pc-screen-content img {
+			width: 70px;
+			margin: 20px 0 65px 0;
+		}
+		
+		.screen-dark {
+			background-image: url('dark.jpg');
+		}
+		
+		.screen-light {
+			background-image: url('light.jpg');
+		}
+		
+		.template-logo {
+			margin-bottom: 65px;
+		}
+		
+		.template-version {
+			margin-bottom: 110px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="all">
+        <div class="container">
+        	<img class="template-logo" alt="smarty logo" src="logo.png">
+            <div class="row">
+                <div class="col-xs-6">
+                    <article class="template-version">
+                        <div class="pc-screen">
+                            <img alt="pc-screen" src="bg-macbook.png">
+                            <div class="pc-screen-content screen-dark"></div>
+                        </div>
+                        <p><a href="dark/index.html">Dark version - Multi-page</a></p>
+                        <p><a href="dark/one_page.html">Dark version - One-page</a></p>
+                    </article>
+                </div>
+                <div class="col-xs-6">
+                    <article class="template-version">
+                        <div class="pc-screen">
+                            <img alt="pc-screen" src="bg-macbook.png">
+                            <div class="pc-screen-content screen-light"></div>
+                        </div>
+                        <p><a href="light/index.html">Light version - Multi-page</a></p>
+                        <p><a href="light/one_page.html">Light version - One-page</a></p>
+                    </article>
+                </div>
+            </div>
+        </div>
+	</div>
+</body>
+
+<!-- Tieu Long Lanh Kute -->
+</html>
