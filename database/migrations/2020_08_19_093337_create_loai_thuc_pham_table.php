@@ -14,7 +14,8 @@ class CreateLoaiThucPhamTable extends Migration
     public function up()
     {
         Schema::create('loaithucpham', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('ltp_id');
+            $table->string('ltp_ten',100);
             $table->timestamps();
         });
     }

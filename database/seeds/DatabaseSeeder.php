@@ -58,5 +58,73 @@ class DatabaseSeeder extends Seeder
                 'lkh_ten'=>'khách hàng kim cương'
             ],
         ]);
+
+
+        $nhomnonan = [
+            [
+                'nma_ten' => 'Pizza'
+            ],
+            [
+                'nma_ten' => 'Coffe'
+            ],
+            [
+                'nma_ten' => 'Sinh tố'
+            ],
+            [
+                'nma_ten' => 'Thịt Bò'
+            ],
+            [
+                'nma_ten' => 'Thịt Cá'
+            ],
+            [
+                'nma_ten' => 'Thịt Heo'
+            ],
+            [
+                'nma_ten' => 'Hải sản'
+            ],
+           
+        ];
+
+        DB::table('nhommonan')->insert($nhomnonan);
+
+
+
+        $monan = [
+            [
+                'ma_ten' => 'Pizza trứng muối',
+                'ma_chuthich'=>'Thích đượic ăn FREE',
+                'ma_gia'=>500000,
+                'nma_id'=>'1'
+            ],
+            [
+                'ma_ten' => 'Pizza hải sản',
+                'ma_chuthich'=>'Thích đượic ăn FREE',
+                'ma_gia'=>500000,
+                'nma_id'=>'1'
+            ],
+            [
+                'ma_ten' => 'Tôm hùm Alaska nướng cháy tỏi',
+                'ma_chuthich'=>'Thích đượic ăn FREE',
+                'ma_gia'=>500000,
+                'nma_id'=>'7'
+            ],
+            [
+                'ma_ten' => 'Bào ngư nướng mỡ hành',
+                'ma_chuthich'=>'Thích đượic ăn FREE',
+                'ma_gia'=>500000,
+                'nma_id'=>'7'
+            ],
+            [
+                'ma_ten' => 'Vây cá mập xông khói',
+                'ma_chuthich'=>'Thích đượic ăn FREE',
+                'ma_gia'=>500000,
+                'nma_id'=>'7'
+            ],
+           
+           
+           
+        ];
+
+        DB::table('monan')->insert($monan);
     }
 }
