@@ -31,6 +31,7 @@
 
     <!-- Main CSS-->
     <link href="{{asset("admin-assets")}}/css/theme.css" rel="stylesheet" media="all">
+    @stack('css')
 
 </head>
 
@@ -127,7 +128,7 @@
 
     <!-- Main JS-->
     <script src="{{asset("admin-assets")}}/js/main.js"></script>
-
+    @stack('script')
 </body>
 
 </html>

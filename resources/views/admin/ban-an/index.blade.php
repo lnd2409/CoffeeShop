@@ -32,7 +32,7 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">
-                        <a href="" class="btn btn-success">Thêm món</a>
+                        <a href="{{ route('them-mon-an', ['id'=>$item->ba_id]) }}" class="btn btn-success">Thêm món</a>
                         <a href="" class="btn btn-warning">Đặt bàn</a>
                         <a href="" class="btn btn-primary">Tính tiền</a>
                     </p>

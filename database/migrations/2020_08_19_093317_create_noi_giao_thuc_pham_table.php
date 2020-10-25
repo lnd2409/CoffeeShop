@@ -14,7 +14,8 @@ class CreateNoiGiaoThucPhamTable extends Migration
     public function up()
     {
         Schema::create('noigiaothucpham', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('ngtp_id');
+            $table->string('ngtp_ten',100);
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ class BanAnController extends Controller
     {
         $banan = DB::table('banan')->join('loaibanan','loaibanan.lba_id','banan.lba_id')->get();
         $loaibanan = DB::table('loaibanan')->get();
-        return view('admin.ban-an',compact(['banan','loaibanan']));
+        return view('admin.ban-an.index',compact(['banan','loaibanan']));
     }
 
     /**
