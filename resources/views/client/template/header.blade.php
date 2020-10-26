@@ -30,14 +30,19 @@
                     </div>
                     <nav id="main-navigation">
                         <ul id="one-page-nav">
-                            <li class="active">
-                                <a href="{{asset("client")}}/index.html">Trang chủ</a>
+                            <li class="@if (Request::path() == '/')
+                                active
+                            @endif">
+                                <a href="{{ route('trang-chu') }}">Trang chủ</a>
                             </li>
                             <li>
                                 <a href="{{asset("client")}}/about.html">Đặt bàn</a>
                             </li>
-                            <li>
-                                <a href="{{asset("client")}}/menu_1.html">Thực đơn</a>
+                            {{-- {{ Request::url() }} --}}
+                            <li class="@if (Request::segment(1) == 'thuc-don')
+                                active
+                            @endif">
+                                <a href="{{ route('thuc-don') }}">Thực đơn</a>
                             </li>
                             <li>
                                 <a href="{{asset("client")}}/gallery_1.html">Bộ sưu tập ảnh</a>

@@ -49,9 +49,11 @@
     @include('client.template.header')
 
     {{-- BANNER AND SLIDER --}}
-    @include('client.template.banner-slider')
+    @if (Request::url() == 'http://127.0.0.1:8000')
+        @include('client.template.banner-slider')
+    @endif
 
-    <div class="section-delimiter"></div>
+    {{-- <div class="section-delimiter"></div> --}}
 
     <section>
         <div class="container">

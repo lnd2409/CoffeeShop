@@ -41,3 +41,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
     //Đăng xuất
     Route::get('dang-xuat', 'AuthController@logout')->name('dang-xuat');
 });
+
+
+#Khách hàng
+Route::get('thuc-don', 'TrangChu\ThucDonController@index')->name('thuc-don');
+Route::get('/thuc-don/nhom-mon-an/{idCategory}','TrangChu\ThucDonController@category')->name('thuc-don.theo-loai');
