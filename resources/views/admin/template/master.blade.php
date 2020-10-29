@@ -10,7 +10,7 @@
 
     <!-- Title Page-->
     <title>@yield('title')</title>
-
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital@1&display=swap" rel="stylesheet">
     <!-- Fontfaces CSS-->
     <link href="{{asset("admin-assets")}}/css/font-face.css" rel="stylesheet" media="all">
     <link href="{{asset("admin-assets")}}/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
@@ -31,6 +31,11 @@
 
     <!-- Main CSS-->
     <link href="{{asset("admin-assets")}}/css/theme.css" rel="stylesheet" media="all">
+    <style>
+        body{
+            font-family: 'Raleway', sans-serif;
+        }
+    </style>
     @stack('css')
 
 </head>

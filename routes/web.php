@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
     Route::post('/ban-an/them-mon/', 'ThemMonAnController@store')->name('them-mon-an-submit');
     Route::get('/ban-an/xoa-mon/{idpyc}/{idma}', 'ThemMonAnController@destroy')->name('xoa-mon-an');
     Route::get('/ban-an/sua-mon/{idpyc}/{idma}', 'ThemMonAnController@update')->name('sua-mon-an');
+ 
 
 
 

@@ -15,8 +15,7 @@ class CreateBanAnTable extends Migration
     {
         Schema::create('banan', function (Blueprint $table) {
             $table->bigIncrements('ba_id');
-            $table->integer('ba_soban')->unsigned();
-            $table->integer('ba_sochongoi');
+            $table->integer('ba_sochongoi')->nullable();
             $table->integer('ba_trangthai')->default(0);
 
             $table->bigInteger('lba_id')->unsigned();

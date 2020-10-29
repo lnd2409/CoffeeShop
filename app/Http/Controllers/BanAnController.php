@@ -14,9 +14,12 @@ class BanAnController extends Controller
      */
     public function index()
     {
-        $banan = DB::table('banan')->join('loaibanan','loaibanan.lba_id','banan.lba_id')->get();
-        $loaibanan = DB::table('loaibanan')->get();
-        return view('admin.ban-an.index',compact(['banan','loaibanan']));
+        // $banan = DB::table('banan')->join('loaibanan','loaibanan.lba_id','banan.lba_id')->get();
+        // $loaibanan = DB::table('loaibanan')->get();
+        // return view('admin.ban-an.index',compact(['banan','loaibanan']));
+        $banan = DB::table('banan')->get();
+        $nhom = DB::table('nhommonan')->get();
+        return view('admin.ban-an.index2',compact('banan','nhom'));
     }
 
     /**
@@ -43,6 +46,7 @@ class BanAnController extends Controller
             $arrTable = [
                 'ba_soban' => 1,
                 'ba_sochongoi' => $request->sochongoi,
+                'ba_trangthai' => 1,
                 'lba_id' => $request->loaibanan
             ];
             $tableNew = DB::table('banan')->insert($arrTable);
