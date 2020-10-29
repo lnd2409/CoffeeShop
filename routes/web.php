@@ -46,3 +46,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
 #Khách hàng
 Route::get('thuc-don', 'TrangChu\ThucDonController@index')->name('thuc-don');
 Route::get('/thuc-don/nhom-mon-an/{idCategory}','TrangChu\ThucDonController@category')->name('thuc-don.theo-loai');
+
+#Khách hàng - đăng nhập
+Route::get('dang-nhap', function () {
+    return view('client.khach-hang.login');
+})->name('khach-hang.dang-nhap');
+
+Route::get('/dang-ky', function () {
+    return view('client.khach-hang.register');
+})->name('khach-hang.dang-ky');

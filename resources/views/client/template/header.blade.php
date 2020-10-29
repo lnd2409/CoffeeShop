@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-xs-6 text-right">
                     {{-- Xin chào quý khách,  --}}
-                    <a href="{{asset("client")}}/#" class="text-uppercase">Đăng nhập</a> | <a href="{{asset("client")}}/#" class="text-uppercase">Đăng ký</a>
+                    <a href="{{ route('khach-hang.dang-nhap', ['id'=>1]) }}" @if (Request::path() == 'dang-nhap') style="color: #f5d010" @endif  class="text-uppercase">Đăng nhập</a> | <a href="{{ route('khach-hang.dang-ky') }}" @if (Request::path() == 'dang-ky') style="color: #f5d010" @endif class="text-uppercase">Đăng ký</a>
                 </div>
             </div>
         </div>
@@ -43,12 +43,6 @@
                                 active
                             @endif">
                                 <a href="{{ route('thuc-don') }}">Thực đơn</a>
-                            </li>
-                            <li>
-                                <a href="{{asset("client")}}/gallery_1.html">Bộ sưu tập ảnh</a>
-                            </li>
-                            <li>
-                                <a href="{{asset("client")}}/blog.html">Tin tức</a>
                             </li>
                             <li>
                                 <a href="{{asset("client")}}/contact.html">Liên hệ</a>
