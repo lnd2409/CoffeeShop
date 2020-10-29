@@ -43,9 +43,9 @@ class ThemMonAnController extends Controller
 
         $data['ma_id'] = $request->MonAn;
         $data['ctpyc_soluongmonan'] = $soluong;
- 
+
         // dd($soluong);
-       
+
 
         $danhsachmonan = DB::table('chitietphieuyeucau as ctpyc')
         ->join('monan as ma','ma.ma_id','ctpyc.ma_id')
@@ -69,7 +69,7 @@ class ThemMonAnController extends Controller
             }
         }
 
-        
+
         $data['pyc_id'] = DB::table('phieuyeucau')->insertGetId($pyc);
         // dd($pyc_id);
         $result = DB::table('chitietphieuyeucau')->insert($data);
@@ -103,7 +103,7 @@ class ThemMonAnController extends Controller
      */
     public function update(Request $request)
     {
-        
+
     }
 
     /**

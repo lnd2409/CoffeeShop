@@ -7,7 +7,7 @@
  .additems {
     background: white;
     width: 100%;
-}   
+}
 </style>
 @endpush
 @section('content')
