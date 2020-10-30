@@ -27,9 +27,11 @@ class BanAnController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function NhomAjax(Request $request)
     {
-        //
+        $id =$request->nhom;
+        $data = DB::table('monan')->where('nma_id',$id)->get();
+        return response()->json($data,200);
     }
 
     /**

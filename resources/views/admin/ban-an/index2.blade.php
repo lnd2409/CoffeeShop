@@ -17,57 +17,65 @@
                             <span class="badge badge-success">Trống</span>
                         @endif
                     </h4>
-                    <p ><a href="{{ route('them-mon-an', ['id'=>$item->ba_id]) }}" style="font-size: 14px;margin-top: 24px;color: #d00101;font-weight: 600;"><i class="fa fa-tasks" aria-hidden="true"></i> Chi tiết bàn</a></p>
+                    <p ><a href="{{ route('chi-tiet-ban-an', ['id'=>$item->ba_id]) }}" style="font-size: 14px;margin-top: 24px;color: #d00101;font-weight: 600;"><i class="fa fa-tasks" aria-hidden="true"></i> Chi tiết bàn</a></p>
                 </div>
             @endforeach
         </div>
     </div>
     <div class="col-md-5">
         <h3>Thêm món ăn vào bàn</h3>
-        <div class="row">
-            <div class="col-md-9">
-                <div class="input-group mt-2">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="ChonBan" style="background: #bbefd4;width:110px;">Chọn bàn</label>
+        <form action="{{ route('them-mon-an-submit') }}" method="post">
+            @csrf
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                        <label class="input-group-text" for="ChonBan" style="background: #bbefd4;width:110px;">Chọn bàn</label>
+                        </div>
+                        <select class="custom-select" id="ChonBan" name="BanAn">
+                        <option selected disabled>-- Chọn bàn --</option>
+                            @foreach ($banan as $item)
+                            <option value=" {{$item->ba_id}} "> {{$item->ba_id}} </option>
+                            @endforeach
+                        </select>
                     </div>
-                    <select class="custom-select" id="ChonBan">
-                      <option selected disabled>-- Chọn bàn --</option>
-                        @foreach ($banan as $item)
-                        <option value=" {{$item->ba_id}} "> {{$item->ba_id}} </option>
+                </div>
+                <div class="col-md-12">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                        <label class="input-group-text" for="NhomMonAn" style="background: #bbefd4;width:110px;">Loại món ăn</label>
+                        </div>
+                        <select class="custom-select" id="NhomMonAn">
+                        <option selected disabled>-- Nhóm món ăn --</option>
+                        @foreach ($nhom as $item)
+                        <option value=" {{$item->nma_id}} "> {{$item->nma_ten}} </option>
                         @endforeach
-                    </select>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                        <label class="input-group-text" for="MonAn" style="background: #bbefd4; width:110px;">Món ăn</label>
+                        </div>
+                        <select class="custom-select MonAn" id="MonAn" name="MonAn">
+                            <option value="" id="delmonan" >--- Chọn món ---</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                        <label class="input-group-text" for="ChonBan" style="background: #bbefd4;width:110px;">Số lượng</label>
+                        </div>
+                        <input class="form-control" type="number" id="ChonBan" name="SoLuong" min="1" max="100" value="1" style="text-align: center">
+                    </div>
+                </div>
+                <div class="col-md-12 mt-2">
+                    <button type="submit" class="btn btn-success btn-block ">Lưu món ăn</button>
                 </div>
             </div>
-            <div class="col-md-12">
-                <div class="input-group mt-2">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="NhomMonAn" style="background: #bbefd4;width:110px;">Loại món ăn</label>
-                    </div>
-                    <select class="custom-select" id="NhomMonAn">
-                      <option selected disabled>-- Nhóm món ăn --</option>
-                      @foreach ($nhom as $item)
-                      <option value=" {{$item->nma_id}} "> {{$item->nma_ten}} </option>
-                      @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="input-group mt-2">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="MonAn" style="background: #bbefd4; width:110px;">Món ăn</label>
-                    </div>
-                    <select class="custom-select" id="MonAn">
-                      <option selected disabled> --- Món ăn ---</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
-            </div>
-            <div class="col-md-12 mt-2">
-                <button type="submit" class="btn btn-success btn-block ">Lưu món ăn</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 @endsection
@@ -77,6 +85,30 @@
     $('#NhomMonAn').change(function (e) { 
         e.preventDefault();
         var nhom = $('#NhomMonAn').val();
+        $.ajaxSetup({
+        headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "post",
+            url: " {{route('ban-an-Ajax')}} ",
+            data: {nhom:nhom},
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                $('#MonAn').empty();
+                $('#MonAn').removeAttr("disabled");
+                $('#delmonan').remove();
+                if (reponse = []) {
+                        $('.MonAn').append('<option class="form-control" disabled>Không có dữ liệu</option>');
+                    }
+                    for (let i = 0; i < response.length; i++) {
+                        console.log(response[i].ma_ten);
+                        $('.MonAn').append('<option class="form-control" value="' + response[i].ma_id + '" >' + response[i].ma_ten + '</option>');
+                    }
+            }
+        });
        
     });
 </script>

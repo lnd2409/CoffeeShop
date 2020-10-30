@@ -44,7 +44,7 @@ class ThemMonAnController extends Controller
         $data['ma_id'] = $request->MonAn;
         $data['ctpyc_soluongmonan'] = $soluong;
  
-        // dd($soluong);
+        // dd($data);
        
 
         $danhsachmonan = DB::table('chitietphieuyeucau as ctpyc')
@@ -75,7 +75,7 @@ class ThemMonAnController extends Controller
         $result = DB::table('chitietphieuyeucau')->insert($data);
         if($result)
         {
-            return  redirect()->back();
+            return  redirect()->route('chi-tiet-ban-an',[$request->BanAn]);
         }
         else
         {
