@@ -16,7 +16,7 @@ Route::get('/', function () {
 })->name('trang-chu');
 
 //Đăng nhập
-Route::get('dang-nhap', 'AuthController@index')->name('get-login');
+Route::get('dang-nhap', 'AuthController@index')->name('dang-nhap');
 Route::post('xu-ly-dang-nhap', 'AuthController@login')->name('login');
 
 // Phần admin
@@ -43,3 +43,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
     //Đăng xuất
     Route::get('dang-xuat', 'AuthController@logout')->name('dang-xuat');
 });
+
+
+#Khách hàng
+Route::get('thuc-don', 'TrangChu\ThucDonController@index')->name('thuc-don');
+Route::get('/thuc-don/nhom-mon-an/{idCategory}','TrangChu\ThucDonController@category')->name('thuc-don.theo-loai');
+
+#Khách hàng - đăng nhập
+Route::get('/khach-hang/dang-nhap', function () {
+    return view('client.khach-hang.login');
+})->name('khach-hang.dang-nhap');
+
+Route::get('/dang-ky', function () {
+    return view('client.khach-hang.register');
+})->name('khach-hang.dang-ky');

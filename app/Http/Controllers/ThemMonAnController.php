@@ -69,7 +69,7 @@ class ThemMonAnController extends Controller
             }
         }
 
-        
+
         $data['pyc_id'] = DB::table('phieuyeucau')->insertGetId($pyc);
         // dd($pyc_id);
         $result = DB::table('chitietphieuyeucau')->insert($data);
@@ -103,7 +103,7 @@ class ThemMonAnController extends Controller
      */
     public function update(Request $request)
     {
-        
+
     }
 
     /**

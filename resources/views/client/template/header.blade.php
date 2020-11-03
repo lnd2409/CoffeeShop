@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-xs-6 text-right">
                     {{-- Xin chào quý khách,  --}}
-                    <a href="{{asset("client")}}/#" class="text-uppercase">Đăng nhập</a> | <a href="{{asset("client")}}/#" class="text-uppercase">Đăng ký</a>
+                    <a href="{{ route('khach-hang.dang-nhap', ['id'=>1]) }}" @if (Request::path() == 'dang-nhap') style="color: #f5d010" @endif  class="text-uppercase">Đăng nhập</a> | <a href="{{ route('khach-hang.dang-ky') }}" @if (Request::path() == 'dang-ky') style="color: #f5d010" @endif class="text-uppercase">Đăng ký</a>
                 </div>
             </div>
         </div>
@@ -30,20 +30,19 @@
                     </div>
                     <nav id="main-navigation">
                         <ul id="one-page-nav">
-                            <li class="active">
-                                <a href="{{asset("client")}}/index.html">Trang chủ</a>
+                            <li class="@if (Request::path() == '/')
+                                active
+                            @endif">
+                                <a href="{{ route('trang-chu') }}">Trang chủ</a>
                             </li>
                             <li>
                                 <a href="{{asset("client")}}/about.html">Đặt bàn</a>
                             </li>
-                            <li>
-                                <a href="{{asset("client")}}/menu_1.html">Thực đơn</a>
-                            </li>
-                            <li>
-                                <a href="{{asset("client")}}/gallery_1.html">Bộ sưu tập ảnh</a>
-                            </li>
-                            <li>
-                                <a href="{{asset("client")}}/blog.html">Tin tức</a>
+                            {{-- {{ Request::url() }} --}}
+                            <li class="@if (Request::segment(1) == 'thuc-don')
+                                active
+                            @endif">
+                                <a href="{{ route('thuc-don') }}">Thực đơn</a>
                             </li>
                             <li>
                                 <a href="{{asset("client")}}/contact.html">Liên hệ</a>
