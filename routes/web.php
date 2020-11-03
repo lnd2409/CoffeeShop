@@ -16,7 +16,7 @@ Route::get('/', function () {
 })->name('trang-chu');
 
 //Đăng nhập
-Route::get('dang-nhap', 'AuthController@index')->name('dang-nhap');
+Route::get('dang-nhap', 'AuthController@index')->name('get-login');
 Route::post('xu-ly-dang-nhap', 'AuthController@login')->name('login');
 
 // Phần admin
@@ -48,10 +48,10 @@ Route::get('thuc-don', 'TrangChu\ThucDonController@index')->name('thuc-don');
 Route::get('/thuc-don/nhom-mon-an/{idCategory}','TrangChu\ThucDonController@category')->name('thuc-don.theo-loai');
 
 #Khách hàng - đăng nhập
-Route::get('/khach-hang/dang-nhap', function () {
-    return view('client.khach-hang.login');
-})->name('khach-hang.dang-nhap');
-
+Route::get('/khach-hang/dang-nhap', 'TrangChu\KhachHangController@loginCus')->name('khach-hang.dang-nhap');
+Route::post('khach-hang/xu-ly-dang-nhap','TrangChu\KhachHangController@handleLogin')->name('khach-hang.xu-ly-dang-nhap');
+Route::get('/dang-xuat-khach-hang', 'TrangChu\KhachHangController@logoutCus')->name('khach-hang.dang-xuat');
 Route::get('/dang-ky', function () {
     return view('client.khach-hang.register');
 })->name('khach-hang.dang-ky');
+

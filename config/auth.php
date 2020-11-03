@@ -56,6 +56,15 @@ return [
             'driver' => 'token',
             'provider' => 'nhanviens',
         ],
+        //Khách hàng
+        'khachhang' => [
+            'driver' => 'session',
+            'provider' => 'khachhang',
+        ],
+        'khachhang-api' => [
+            'driver' => 'token',
+            'provider' => 'khachhang',
+        ],
     ],
 
     /*
@@ -88,6 +97,10 @@ return [
         'nhanviens' => [
             'driver' => 'eloquent',
             'model' => App\Model\NhanVien::class,
+        ],
+        'khachhang' => [
+            'driver' => 'eloquent',
+            'model' => App\Model\KhachHang::class,
         ],
     ],
 

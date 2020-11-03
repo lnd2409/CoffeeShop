@@ -62,52 +62,63 @@
             </div><!-- .row -->
         </div><!-- .container -->
     </section>
-
-    <section id="cart">
-        <div class="container">
-            <div class="cart-content">
-                <div class="cart-close cart-trigger"><i class="fa fa-close"></i></div>
-                <div class="border-lines-container">
-                    <h1 class="no-top-margin border-lines">Thông tin đặt bàn</h1>
-                </div>
-                <form>
-                    <div class="product-preview-small">
-                        <div class="product-img">
-                            <img alt="product photo" src="{{asset("client")}}/assets/images/products/1_small.png">
-                        </div>
-                        <div class="product-content">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <h4 class="product-title">Vegetarian Pizza</h4>
-                                    Price $7.00/, order
-                                    <div class="product-pieces">
-                                        <input type="text" value="12">
-                                        <div class="product-pieces-up"></div>
-                                        <div class="product-pieces-down"></div>
-                                    </div>
-                                    pieces
-                                </div>
-                                <div class="col-md-4 product-price">
-                                    $75.0
-                                </div>
-                            </div>
-                        </div><!-- .product-content -->
-                    </div><!-- .product-preview-small -->
-                    <hr>
-                    <p class="text-right text-bigger">Tổng: $125.0</p>
-                    <div class="row text-xs-center">
-                        <div class="col-sm-6">
-                            <input class="button-yellow button-text-low button-long button-low" type="submit" value="Cập nhật">
-                        </div>
-                        <div class="col-sm-6 text-right text-xs-center">
-                            <div class="margin-15"></div>
-                            <a href="{{asset("client")}}/#section-delivery" class="button-yellow button-text-low button-long button-low scroll-to cart-trigger">Tiến hành thanh toán</a>
-                        </div>
+    @if (Auth::guard('khachhang')->check())
+        <section id="cart">
+            <div class="container">
+                <div class="cart-content">
+                    <div class="cart-close cart-trigger"><i class="fa fa-close"></i></div>
+                    <div class="border-lines-container">
+                        <h1 class="no-top-margin border-lines">Thông tin đặt bàn</h1>
                     </div>
-                </form>
-            </div><!-- .cart-content -->
-        </div><!-- .container -->
-    </section><!-- #cart -->
+                    <form>
+                        <div class="product-preview-small">
+                            <div class="product-img">
+                                <img alt="product photo" src="{{asset("client")}}/assets/images/products/1_small.png">
+                            </div>
+                            <div class="product-content">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h4 class="product-title">Vegetarian Pizza</h4>
+                                        Price $7.00/, order
+                                        <div class="product-pieces">
+                                            <input type="text" value="12">
+                                            <div class="product-pieces-up"></div>
+                                            <div class="product-pieces-down"></div>
+                                        </div>
+                                        pieces
+                                    </div>
+                                    <div class="col-md-4 product-price">
+                                        $75.0
+                                    </div>
+                                </div>
+                            </div><!-- .product-content -->
+                        </div><!-- .product-preview-small -->
+                        <hr>
+                        <div class="row text-xs-center">
+                            <div class="col-sm-6">
+                                <a class="button-yellow button-text-low button-long button-low" href="#">Đặt</a>
+                            </div>
+                        </div>
+                    </form>
+                </div><!-- .cart-content -->
+            </div><!-- .container -->
+        </section><!-- #cart -->
+    @else
+        <section id="cart">
+            <div class="container">
+                <div class="cart-content">
+                    <div class="cart-close cart-trigger"><i class="fa fa-close"></i></div>
+                    <div class="border-lines-container">
+                        <h1 class="no-top-margin border-lines">Thông tin đặt bàn</h1>
+                    </div>
+                    <div class="product-preview-small">
+                        <p class="text-center"><a href="{{ route('khach-hang.dang-nhap') }}">Đăng nhập để sử dụng chức năng này</a></p>
+                    </div><!-- .product-preview-small -->
+                </div><!-- .cart-content -->
+            </div><!-- .container -->
+        </section><!-- #cart -->
+    @endif
+
 
     {{-- FOOTER --}}
     @include('client.template.footer')
