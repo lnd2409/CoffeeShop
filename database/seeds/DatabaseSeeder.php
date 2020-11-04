@@ -32,6 +32,9 @@ class DatabaseSeeder extends Seeder
             [
                 'lba_ten' => 'Bàn tròn (10 người)'
             ],
+            [
+                'lba_ten' => 'Bàn thường'
+            ],
         ];
 
         DB::table('loaibanan')->insert($loaibanan);
@@ -126,5 +129,16 @@ class DatabaseSeeder extends Seeder
         ];
 
         DB::table('monan')->insert($monan);
+
+        $banan = [
+            [
+               'ba_trangthai'=>0,
+               'lba_id'=>4
+            ],
+
+           
+        ];
+        for($i=1; $i<=18 ; $i++)
+         DB::table('banan')->insert($banan);
     }
 }

@@ -7,7 +7,7 @@
  .additems {
     background: white;
     width: 100%;
-}   
+}
 </style>
 @endpush
 @section('content')
@@ -15,31 +15,7 @@
     @csrf
 <div class="row">
     <div class="col-md-12">
-    <h4>Thêm món ăn Bàn <span style="font-size: 20px; color:green;">{{$ba->ba_id}}</span> </h4>
-    </div>
-    <div class="col-sm-12 mt-2">
-     <div class="row">
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label for="">Chọn món ăn</label>
-                <select class="form-control" name="MonAn" id="MonAn">
-                    <option disabled selected>-- Chọn món ăn --</option>
-                    @foreach ($monan as $item)
-                        <option value=" {{$item->ma_id}} ">{{$item->ma_ten}}</option>
-                    @endforeach
-                </select>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="form-group">
-                <label for="">Chọn số lượng</label>
-                <input type="number" class="form-control text-center" min="1" max="100" value="1" name="SoLuong" style="width:100px;" id="SoLuong">
-                <input type="hidden"  value=" {{$ba->ba_id}} " id="BanAn" name="BanAn">
-            </div>
-            <button class="btn btn-success"  style="float: right;margin-top: -54px;margin-right: 100px;" id="ThemMonAn">Thêm</button>
-        </div>
-     </div>
-    </div>
+    <h4>Chi tiết bàn ăn</h4>
     <div class="col-sm-12 mt-2" style="clear: right;">
         <div class="additems">
             <table class="table table-hover table-bordered">
@@ -93,8 +69,8 @@
             ...
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            <button type="button" class="btn btn-primary">Lưu</button>
             </div>
         {{-- </form> --}}
       </div>

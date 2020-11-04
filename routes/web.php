@@ -35,7 +35,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
     Route::post('/ban-an/them-ban-an', 'BanAnController@store')->name('them-ban-an');
 
 
-    //Phần này của Phụng nhé! ---Yêu mọi người-----
     Route::get('/ban-an/them-mon/{id}', 'ThemMonAnController@index')->name('them-mon-an');
     Route::post('/ban-an/them-mon/', 'ThemMonAnController@store')->name('them-mon-an-submit');
     Route::get('/ban-an/xoa-mon/{idpyc}/{idma}', 'ThemMonAnController@destroy')->name('xoa-mon-an');
@@ -44,6 +43,20 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
 
 
 
+
     //Đăng xuất
 });
-Route::get('dang-xuat', 'AuthController@logout')->name('dang-xuat');
+
+
+#Khách hàng
+Route::get('thuc-don', 'TrangChu\ThucDonController@index')->name('thuc-don');
+Route::get('/thuc-don/nhom-mon-an/{idCategory}','TrangChu\ThucDonController@category')->name('thuc-don.theo-loai');
+
+#Khách hàng - đăng nhập
+Route::get('/khach-hang/dang-nhap', 'TrangChu\KhachHangController@loginCus')->name('khach-hang.dang-nhap');
+Route::post('khach-hang/xu-ly-dang-nhap','TrangChu\KhachHangController@handleLogin')->name('khach-hang.xu-ly-dang-nhap');
+Route::get('/dang-xuat-khach-hang', 'TrangChu\KhachHangController@logoutCus')->name('khach-hang.dang-xuat');
+Route::get('/dang-ky', function () {
+    return view('client.khach-hang.register');
+})->name('khach-hang.dang-ky');
+

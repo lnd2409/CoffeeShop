@@ -102,6 +102,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\KhachHang::class,
         ],
+        'khachhang' => [
+            'driver' => 'eloquent',
+            'model' => App\Model\KhachHang::class,
+        ],
     ],
 
     /*

@@ -18,7 +18,7 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
-                    <strong class="card-title">Bàn số {{ $item->ba_soban }}
+                    <strong class="card-title">Bàn số 
                             @if ($item->ba_trangthai == 0)
                                 <span class="badge badge-primary float-right mt-1">Trống</span>
                             @else
@@ -43,10 +43,10 @@
                         <br>
                         <b>Loại bàn:</b> {{ $item->lba_ten }}
                         <br>
-                        <b>Số khách hiện tại:</b> 10
+                        <b>Số khách hiện tại:</b> 
                         <br>
-                        <b>Số món:</b> 10
-                        <h5>Tổng tiền: 1.000.000 VNĐ</h5>
+                        <b>Số món:</b> 
+                        <h5>Tổng tiền:</h5>
                         <a href="#">Chi tiết bàn ăn</a>
                     </p>
                 </div>
