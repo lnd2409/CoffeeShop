@@ -110,6 +110,12 @@
         </div>
     </div>
 
+
+
+    @stack('insert_html')
+
+
+
     <!-- Jquery JS-->
     <script src="{{asset("admin-assets")}}/vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->

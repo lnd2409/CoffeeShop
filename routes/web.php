@@ -16,7 +16,7 @@ Route::get('/', function () {
 })->name('trang-chu');
 
 //Đăng nhập
-Route::get('dang-nhap', 'AuthController@index')->name('dang-nhap');
+Route::get('dang-nhap', 'AuthController@index')->name('get-login');
 Route::post('xu-ly-dang-nhap', 'AuthController@login')->name('login');
 
 // Phần admin
@@ -31,9 +31,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
 
     //Phần này của Phụng nhé! ---Yêu mọi người-----
     Route::get('/ban-an/chi-tiet/{id}', 'ThemMonAnController@index')->name('chi-tiet-ban-an');
+
     Route::post('/ban-an/them-mon/', 'ThemMonAnController@store')->name('them-mon-an-submit');
+
     Route::get('/ban-an/xoa-mon/{idpyc}/{idma}', 'ThemMonAnController@destroy')->name('xoa-mon-an');
+    
     Route::get('/ban-an/sua-mon/{idpyc}/{idma}', 'ThemMonAnController@update')->name('sua-mon-an');
+
+    Route::post('/ban-an/lay-mon-an', 'ThemMonAnController@GetAllFood')->name('lay-all-mon-an-theo-ban');
+
     Route::post('/ban-an/nhom', 'BanAnController@NhomAjax')->name('ban-an-Ajax');
  
 
