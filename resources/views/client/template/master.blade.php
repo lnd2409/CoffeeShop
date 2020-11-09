@@ -88,36 +88,83 @@
                 <div class="border-lines-container">
                     <h1 class="no-top-margin border-lines">Thông tin đặt bàn</h1>
                 </div>
-                <form>
-                    <div class="product-preview-small">
-                        <div class="product-img">
-                            <img alt="product photo" src="{{asset("client")}}/assets/images/products/1_small.png">
-                        </div>
-                        <div class="product-content">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <h4 class="product-title">Vegetarian Pizza</h4>
-                                    Price $7.00/, order
-                                    <div class="product-pieces">
-                                        <input type="text" value="12">
-                                        <div class="product-pieces-up"></div>
-                                        <div class="product-pieces-down"></div>
-                                    </div>
-                                    pieces
-                                </div>
-                                <div class="col-md-4 product-price">
-                                    $75.0
-                                </div>
-                            </div>
-                        </div><!-- .product-content -->
-                    </div><!-- .product-preview-small -->
-                    <hr>
-                    <div class="row text-xs-center">
-                        <div class="col-sm-6">
-                            <a class="button-yellow button-text-low button-long button-low" href="#">Đặt</a>
-                        </div>
+                <div class="content">
+                    @foreach ($phieudat as $item)
+
+                    <div class="info">
+                        <table>
+                            <tr>
+                                <td>Số khách:</td>
+                                <td>{{$item->pd_soluongkhach}}</td>
+                            </tr>
+                            <tr>
+                                <td>Số bàn:</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>Thời gian:</td>
+                                <td>{{$item->pd_ngayden}} - {{$item->pd_gioden}}</td>
+                            </tr>
+                            <tr>
+                                <td>Ghi chú:</td>
+                                <td>{{$item->pd_ghichu}}</td>
+                            </tr>
+                            <tr>
+                                <td>Tổng tiền:</td>
+                                <td>{{number_format($item->pd_sotientongtamtinh)}} đ</td>
+                            </tr>
+                        </table>
                     </div>
-                </form>
+                    <form>
+                        <div class="product-preview-small">
+                            <div class="product-img">
+                                <img alt="product photo" src="{{asset("client")}}/assets/images/products/1_small.png">
+                            </div>
+                            <div class="product-content">
+                                <div class="row">
+                                    @foreach ($item->chitiet as $item2)
+
+                                    <div class="col-md-9">
+                                        <div class="row">
+                                            <div class="col-md-8">
+
+                                                <h4 class="product-title">{{$item2->ma_ten}}</h4>
+                                                Giá {{number_format($item2->ma_gia)}} đ
+                                            </div>
+                                            <div class="col-md-2">
+                                                <h4 class="product-title">&nbsp;</h4>
+                                                x
+                                            </div>
+                                            <div class="col-md-2">
+                                                <h4 class="product-title">&nbsp;</h4>
+                                                {{$item2->ctpd_soluong}}
+                                            </div>
+                                        </div>
+
+                                        {{-- <div class="product-pieces">
+                                            <input type="text" value="">
+                                            <div class="product-pieces-up"></div>
+                                            <div class="product-pieces-down"></div>
+                                        </div> --}}
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h4 class="product-title">&nbsp;</h4>
+                                        {{number_format($item2->ma_gia*$item2->ctpd_soluong)}} đ
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div><!-- .product-content -->
+                        </div><!-- .product-preview-small -->
+                        <hr>
+                        {{-- <div class="row text-xs-center">
+                            <div class="col-sm-6">
+                                <a class="button-yellow button-text-low button-long button-low" href="#">Đặt</a>
+                            </div>
+                        </div> --}}
+                    </form>
+                    @endforeach
+                </div>
             </div><!-- .cart-content -->
         </div><!-- .container -->
     </section><!-- #cart -->
@@ -151,6 +198,7 @@
     <script type="text/javascript" src="{{asset("client")}}/assets/js/jquery.scrollTo.min.js"></script>
     <script type="text/javascript" src="{{asset("client")}}/assets/js/jquery.nav.min.js"></script>
     <script type="text/javascript" src="{{asset("client")}}/assets/js/custom.js"></script>
+    @stack('script')
 </body>
 
 </html>

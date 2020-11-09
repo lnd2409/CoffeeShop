@@ -16,12 +16,11 @@ class CreatePhieuDatTable extends Migration
         Schema::create('phieudat', function (Blueprint $table) {
             $table->bigIncrements('pd_id');
             $table->dateTime('pd_ngaylap');
-            $table->integer('pd_soluongban');
-            $table->integer('pd_soluuongkhach');
-            $table->dateTime('pd_ngayden');
+            $table->integer('pd_soluongkhach');
+            $table->date('pd_ngayden');
             $table->time('pd_gioden');
-            $table->BigInteger('pd_sotiencoc');
-            $table->BigInteger('pd_sotientongtamtinh');
+            $table->string('pd_ghichu',191)->nullbale();
+            $table->BigInteger('pd_sotientongtamtinh')->nullable()->default(0)->unsigned();
 
 
             $table->BigInteger('nv_id')->unsigned();

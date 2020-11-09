@@ -37,9 +37,7 @@ class Phieudat extends Model
 	protected $primaryKey = 'pd_id';
 
 	protected $casts = [
-		'pd_soluongban' => 'int',
-		'pd_soluuongkhach' => 'int',
-		'pd_sotiencoc' => 'int',
+		'pd_soluongkhach' => 'int',
 		'pd_sotientongtamtinh' => 'int',
 		'nv_id' => 'int',
 		'kh_id' => 'int'
@@ -53,11 +51,9 @@ class Phieudat extends Model
 
 	protected $fillable = [
 		'pd_ngaylap',
-		'pd_soluongban',
-		'pd_soluuongkhach',
+		'pd_soluongkhach',
 		'pd_ngayden',
 		'pd_gioden',
-		'pd_sotiencoc',
 		'pd_sotientongtamtinh',
 		'nv_id',
 		'kh_id'

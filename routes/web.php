@@ -10,10 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('client.index');
-})->name('trang-chu');
+Route::get('/', 'DatMonController@booked')->name('trang-chu');
+// Route::get('/', function () {
+//     return view('client.index');
+// });
 
 //Đăng nhập
 Route::get('dang-nhap', 'AuthController@index')->name('get-login');
@@ -47,6 +47,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
     //Đăng xuất
 });
 
+// đặt món
+Route::group(['prefix' => 'dat-ban'], function () {
+    Route::get('/','DatMonController@index')->name('datban.index');
+    Route::post('/','DatMonController@setTable')->name('datban.setTable');
+});
 
 #Khách hàng
 Route::get('thuc-don', 'TrangChu\ThucDonController@index')->name('thuc-don');
