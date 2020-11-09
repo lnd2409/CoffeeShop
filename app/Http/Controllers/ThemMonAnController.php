@@ -51,6 +51,10 @@ class ThemMonAnController extends Controller
         ->get();
 
         $data['pyc_id'] = DB::table('phieuyeucau')->insertGetId($pyc);
+
+        $status['ba_trangthai'] = 1;
+        DB::table('banan')->where('ba_id',$request->BanAn)->update($status);
+        
         
        
 

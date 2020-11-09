@@ -17,6 +17,23 @@
     width: 127px;
     margin: 5px 0;
 }
+#table-detail td, #table-detail th {
+  border: 1px solid #483333;
+  padding: 8px;
+}
+
+#table-detail tr:nth-child(even){background-color: #f2f2f2;}
+
+#table-detail tr:hover {background-color: #ddd;}
+tr.tr_td td {
+    line-height: 35px;
+}
+table#table-detail th {
+    text-align: center;
+    color: black;
+    font-size: 17px;
+    font-weight: 700;
+}
 </style>
 @endpush
 @section('content')
@@ -121,6 +138,9 @@
         </div>
         </div>
     </div>
+
+    {{-- Thanh toán --}}
+   
 </div>
 @endpush
 </div>
@@ -131,7 +151,7 @@
     <div class="col-md-12" id="scrollNe">
         <div class="additems">
             <h5>Đơn vị tính: VNĐ</h5>
-            <table class="table table-hover table-bordered" id="table-detail" style="margin-bottom: 10px">
+            <table class="table table-hover table-bordered" id="table-detail" style="margin-bottom: 40px;margin-top: 20px;">
                 <thead>
                   <tr>
                     <th scope="col">STT</th>
@@ -245,9 +265,9 @@ $( document ).ready(function() {
         // alert(tam + ban);
         // $('ChonMonAnNe').show();
         $('#ChonMonAnNe').modal('toggle')
-       
 
         var i=1;
+        var totalmenu =0;
         //Lấy thông tin món ăn của bàn ra ngoài
         $.ajaxSetup({
         headers: {
@@ -262,8 +282,10 @@ $( document ).ready(function() {
             success: function (response) {
                 console.log(response);
                 $("#Table_MonAn tr").remove();
+               
                 response.forEach(val => {
-                    var tring = '<tr>';
+                    totalmenu = totalmenu + (val.ma_gia * val.ctpyc_soluongmonan);
+                    var tring = '<tr class="tr_td">';
                     tring+='<td>'+i+'</td>';
                     tring+='<td>'+val.ma_ten+'</td>';
                     tring+='<td>'+val.ctpyc_soluongmonan+'</td>';
@@ -274,6 +296,13 @@ $( document ).ready(function() {
                     $('#Table_MonAn').append(tring);
                     i++;
                 });
+                console.log(totalmenu);
+                var str2 ='<tr class="tr_td">'
+                    str2+='<td colspan="4">Tổng tiền</td>'
+                    str2+='<td id="totalmenu">'+totalmenu+'</td>'
+                    str2+='<td>  <button class="btn btn-success" id="GetThanhToan">Thanh toán</button> </td>'
+                    str2+='</tr>'
+                $('#Table_MonAn').append(str2);
             }
         });
     
@@ -321,6 +350,7 @@ $( document ).ready(function() {
         var nhom = $(this).attr('data-nhom');
         // alert(nhom);
         var data='';
+        $('#totalmenu').append('');
         $.ajaxSetup({
         headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -367,6 +397,7 @@ $( document ).ready(function() {
         var sl = $('#GetQuatiFood'+stt).val();
         $('#GetQuatiFood'+stt).val(1);
        var i =1;
+       var totalmenu=0;
         console.log("ban"+ban );
         console.log("mon an"+ ma_id);
         console.log("so luong"+sl);
@@ -379,6 +410,7 @@ $( document ).ready(function() {
                 console.log(response);
                 $("#Table_MonAn tr").remove();
                     response.forEach(val => {
+                        totalmenu = totalmenu + (val.ma_gia * val.ctpyc_soluongmonan);
                         var tring = '<tr>';
                         tring+='<td>'+i+'</td>';
                         tring+='<td>'+val.ma_ten+'</td>';
@@ -390,13 +422,23 @@ $( document ).ready(function() {
                         $('#Table_MonAn').append(tring);
                         i++;
                     });
+                    var str2 ='<tr class="tr_td">'
+                    str2+='<td colspan="4">Tổng tiền</td>'
+                    str2+='<td id="totalmenu">'+totalmenu+'</td>'
+                    str2+='<td>  <button class="btn btn-success" id="GetThanhToan">Thanh toán</button> </td>'
+                    str2+='</tr>'
+                $('#Table_MonAn').append(str2);
             }
         });
 
 
     });
 
+    //thanh toán
 
+    $(document).on("click","button#GetThanhToan",function(){
+       
+    });
 
     console.log( "ready!" );
 });  
