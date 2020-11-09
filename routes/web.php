@@ -35,11 +35,19 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
     Route::post('/ban-an/them-ban-an', 'BanAnController@store')->name('them-ban-an');
 
 
-    Route::get('/ban-an/them-mon/{id}', 'ThemMonAnController@index')->name('them-mon-an');
+    //Phần này của Phụng nhé! ---Yêu mọi người-----
+    Route::get('/ban-an/chi-tiet/{id}', 'ThemMonAnController@index')->name('chi-tiet-ban-an');
+
     Route::post('/ban-an/them-mon/', 'ThemMonAnController@store')->name('them-mon-an-submit');
+
     Route::get('/ban-an/xoa-mon/{idpyc}/{idma}', 'ThemMonAnController@destroy')->name('xoa-mon-an');
+    
     Route::get('/ban-an/sua-mon/{idpyc}/{idma}', 'ThemMonAnController@update')->name('sua-mon-an');
 
+    Route::post('/ban-an/lay-mon-an', 'ThemMonAnController@GetAllFood')->name('lay-all-mon-an-theo-ban');
+
+    Route::post('/ban-an/nhom', 'BanAnController@NhomAjax')->name('ban-an-Ajax');
+ 
 
 
 

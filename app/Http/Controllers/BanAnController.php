@@ -17,8 +17,17 @@ class BanAnController extends Controller
         // $banan = DB::table('banan')->join('loaibanan','loaibanan.lba_id','banan.lba_id')->get();
         // $loaibanan = DB::table('loaibanan')->get();
         // return view('admin.ban-an.index',compact(['banan','loaibanan']));
+    //     $result1 = DB::table('phieuyeucau as pyc')
+    //    ->join('chitietphieuyeucau as ctpyc','ctpyc.pyc_id','pyc.pyc_id')
+    //     ->where('pyc.ba_id',1)
+    //     ->get();
+    //     dd( $result1);
         $banan = DB::table('banan')->get();
         $nhom = DB::table('nhommonan')->get();
+
+        
+
+
         return view('admin.ban-an.index2',compact('banan','nhom'));
     }
 
@@ -27,9 +36,11 @@ class BanAnController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function NhomAjax(Request $request)
     {
-        //
+        $id =$request->nhom;
+        $data = DB::table('monan')->where('nma_id',$id)->get();
+        return response()->json($data,200);
     }
 
     /**

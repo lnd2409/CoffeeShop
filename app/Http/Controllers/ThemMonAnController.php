@@ -24,6 +24,7 @@ class ThemMonAnController extends Controller
         // dd($danhsachmonan);
         $monan = DB::table('monan')->get();
 
+        
         return view('admin.ban-an.them-mon',compact('monan','ba','danhsachmonan'));
     }
 
@@ -35,6 +36,7 @@ class ThemMonAnController extends Controller
      */
     public function store(Request $request)
     {
+        
         $soluong =$request->SoLuong;
         $pyc['pyc_ngaylap']=Carbon::now();
         $pyc['pyc_giatientamtinh']=0;
@@ -43,44 +45,48 @@ class ThemMonAnController extends Controller
 
         $data['ma_id'] = $request->MonAn;
         $data['ctpyc_soluongmonan'] = $soluong;
-
-        // dd($soluong);
-
-
         $danhsachmonan = DB::table('chitietphieuyeucau as ctpyc')
         ->join('monan as ma','ma.ma_id','ctpyc.ma_id')
         ->join('phieuyeucau as pyc','pyc.pyc_id','ctpyc.pyc_id')
         ->get();
 
+        $data['pyc_id'] = DB::table('phieuyeucau')->insertGetId($pyc);
+
+        $status['ba_trangthai'] = 1;
+        DB::table('banan')->where('ba_id',$request->BanAn)->update($status);
+        
+        
+       
+
         foreach($danhsachmonan as $vl)
         {
-            if($vl->ma_id == $request->MonAn )
+            if($vl->ma_id == $request->MonAn && $vl->ba_id == $request->BanAn)
             {
                 $data['ctpyc_soluongmonan']= $soluong + $vl->ctpyc_soluongmonan;
-                $result = DB::table('chitietphieuyeucau')->where('ma_id',$request->MonAn)->update($data);
-                if($result)
-                {
-                    return  redirect()->back();
-                }
-                else
-                {
-                    dd('Sai rooi');
-                }
+                 DB::table('chitietphieuyeucau')->where('ma_id',$request->MonAn)->update($data);
+                 $result1 = DB::table('chitietphieuyeucau as ctpyc')
+                 ->join('phieuyeucau as pyc','pyc.pyc_id','ctpyc.pyc_id')
+                 ->join('monan as ma','ma.ma_id','ctpyc.ma_id')
+                 ->where('pyc.ba_id',$request->BanAn)
+                 ->get();
+                 return response()->json($result1, 200);
             }
         }
-
-
-        $data['pyc_id'] = DB::table('phieuyeucau')->insertGetId($pyc);
-        // dd($pyc_id);
+       
+        
+    
         $result = DB::table('chitietphieuyeucau')->insert($data);
-        if($result)
-        {
-            return  redirect()->back();
-        }
-        else
-        {
-            dd('Sai rooi');
-        }
+        // dd($pyc_id);
+        $result1 = DB::table('chitietphieuyeucau as ctpyc')
+        ->join('phieuyeucau as pyc','pyc.pyc_id','ctpyc.pyc_id')
+        ->join('monan as ma','ma.ma_id','ctpyc.ma_id')
+        ->where('pyc.ba_id',$request->BanAn)
+        ->get();
+       
+      
+        return response()->json($result1, 200);
+
+       
     }
 
     /**
@@ -101,6 +107,19 @@ class ThemMonAnController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function GetAllFood(Request $request)
+    {
+        $data = DB::table('chitietphieuyeucau as ctpyc')
+        ->join('phieuyeucau as pyc','pyc.pyc_id','ctpyc.pyc_id')
+        ->join('monan as ma','ma.ma_id','ctpyc.ma_id')
+        ->where('pyc.ba_id',$request->BanAn)
+        ->get();
+        return response()->json($data, 200);
+    }
+
+
+
+
     public function update(Request $request)
     {
 

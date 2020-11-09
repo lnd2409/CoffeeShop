@@ -35,11 +35,11 @@
                     <tr>
                         <th > {{$i++}}</th>
                         <td> {{$ma->ma_ten}} </td>
-                        <td style="width:60px;"> {{$ma->ctpyc_soluongmonan}} </td>
+                        <td style="width:110px; "> <input type="number" class="form-control" name="" id="" value="{{$ma->ctpyc_soluongmonan}}" style="text-align:center"></td>
                         <td>{{ number_format($ma->ma_gia)}}  vnđ</td>
                         <td>{{number_format($ma->ma_gia * $ma->ctpyc_soluongmonan)}}  vnđ</td>
-                        <td style="width:160px;">
-                            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#CapNhatMonAn"> <i class="fa fa-share-square-o" aria-hidden="true"></i> Sửa</a>
+                        <td style="width:190px;">
+                            <a href="#" class="btn btn-warning" > <i class="fa fa-share-square-o" aria-hidden="true"></i>Cập nhật</a>
                             <input type="hidden" id="pyc_id" value=" {{$ma->pyc_id}} ">
                             <input type="hidden" id="ma_id" value=" {{$ma->ma_id}} ">
                             <a href="{{ route('xoa-mon-an', ['idpyc'=>$ma->pyc_id,'idma'=>$ma->ma_id]) }}" class="btn btn-danger" onclick="return XoaMonAn()"> <i class="fa fa-trash-o" aria-hidden="true"></i> Xóa</a>
@@ -50,6 +50,9 @@
                   <tr>
                       <th colspan="4">Tổng tiền tạm tính</th>
                       <td > {{number_format($total)}} vnđ</td>
+                      <td>
+                        <button class="btn btn-success">Thanh toán</button>
+                      </td>
                   </tr>
                 </tbody>
             </table>
