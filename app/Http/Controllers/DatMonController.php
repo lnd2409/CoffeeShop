@@ -84,5 +84,48 @@ class DatMonController extends Controller
         // dd($phieudat);
         return view('client.index',compact('phieudat'));
     }
+    public function listOrder()
+    {
+        $phieudat=\DB::table('phieudat')
+        ->join('khachhang','khachhang.kh_id','phieudat.kh_id')
+        // ->where('phieudat.pd_ngayden','>=', date("Y-m-d"))
+        ->where('phieudat.nv_id',null)
+        ->get();
+        $ban=\DB::table('banan')->get();
+        foreach ($phieudat as $key => $value) {
+            $value->ban=$ban;
+            $chitiet=\DB::table('chitietphieudat')
+            ->join('monan','monan.ma_id','chitietphieudat.ma_id')
+            ->where('chitietphieudat.pd_id',$value->pd_id)
+            ->get();
+            $value->chitiet=$chitiet;
+
+            
+            
+            //bàn ăn
+            foreach($value->ban as $value2){
+                
+                //lịch đặt bàn
+                $banan=\DB::table('banan')
+                ->join('chitietphieudat','chitietphieudat.ba_id','banan.ba_id')
+                ->join('phieudat','phieudat.pd_id','chitietphieudat.pd_id')
+                ->where('banan.ba_id',$value2->ba_id)
+                ->whereDate('pd_ngayden','=',$value->pd_ngayden) // các bàn có lịch đặt vào ngày hôm đó
+                ->get();
+                // dd($banan);
+                $value2->banan=$banan;
+                
+
+            }
+            // dump($value);
+            
+
+        }
+        // dd($phieudat);
+        // dd($phieudat[0]->ban[1]->banan);
+        // die;
+
+        return view('admin.datban.pending',compact('phieudat'));
+    }
 }
 
