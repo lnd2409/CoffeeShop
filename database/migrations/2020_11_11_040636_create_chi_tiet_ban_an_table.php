@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateChiTietPhieuDatTable extends Migration
+class CreateChiTietBanAnTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateChiTietPhieuDatTable extends Migration
      */
     public function up()
     {
-        Schema::create('chitietphieudat', function (Blueprint $table) {
-            $table->bigIncrements('ctpd_id');
-            $table->integer('ctpd_soluong')->nullable()->unsigned();
-            $table->bigInteger('ma_id')->nullable()->unsigned();
-            $table->foreign('ma_id')->references('ma_id')->on('monan')->onDelete('cascade');
-
-            // $table->bigInteger('ba_id')->nullable()->unsigned();
-            // $table->foreign('ba_id')->references('ba_id')->on('banan')->onDelete('cascade');
+        Schema::create('chitietbanan', function (Blueprint $table) {
+            $table->bigIncrements('ctba_id');
+            $table->bigInteger('ba_id')->nullable()->unsigned();
+            $table->foreign('ba_id')->references('ba_id')->on('banan')->onDelete('cascade');
 
             $table->bigInteger('pd_id')->unsigned();
             $table->foreign('pd_id')->references('pd_id')->on('phieudat')->onDelete('cascade');
@@ -41,6 +37,6 @@ class CreateChiTietPhieuDatTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chitietphieudat');
+        Schema::dropIfExists('chitietbanan');
     }
 }

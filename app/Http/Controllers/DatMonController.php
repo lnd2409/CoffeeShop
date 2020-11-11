@@ -79,7 +79,12 @@ class DatMonController extends Controller
             ->join('monan','monan.ma_id','chitietphieudat.ma_id')
             ->where('chitietphieudat.pd_id',$value->pd_id)
             ->get();
+            $banan=\DB::table('chitietbanan')
+            // ->join('banan','banan.ba_id','chitietbanan.ba_id')
+            ->where('chitietbanan.pd_id',$value->pd_id)
+            ->get();
             $value->chitiet=$chitiet;
+            $value->banan=$banan;
         }
         // dd($phieudat);
         return view('client.index',compact('phieudat'));
@@ -107,8 +112,8 @@ class DatMonController extends Controller
                 
                 //lịch đặt bàn
                 $banan=\DB::table('banan')
-                ->join('chitietphieudat','chitietphieudat.ba_id','banan.ba_id')
-                ->join('phieudat','phieudat.pd_id','chitietphieudat.pd_id')
+                ->join('chitietbanan','chitietbanan.ba_id','banan.ba_id')
+                ->join('phieudat','phieudat.pd_id','chitietbanan.pd_id')
                 ->where('banan.ba_id',$value2->ba_id)
                 ->whereDate('pd_ngayden','=',$value->pd_ngayden) // các bàn có lịch đặt vào ngày hôm đó
                 ->get();
@@ -126,6 +131,30 @@ class DatMonController extends Controller
         // die;
 
         return view('admin.datban.pending',compact('phieudat'));
+    }
+    public function confirmOrder(Request $request)
+    {
+        // dd(\Auth::guard('nhanvien')->id());
+        foreach ($request->tableNumber as $key => $value) {
+            # code...
+            $chitiet=\DB::table('chitietbanan')
+            ->insert([
+                'pd_id'=>$request->id,
+                'ba_id'=>$value,
+                'nv_id'=>\Auth::guard('nhanvien')->id()
+            ]);
+        }
+        $chitiet=\DB::table('chitietphieudat')
+        ->where('pd_id',$request->id)
+        ->update([
+            'nv_id'=>\Auth::guard('nhanvien')->id()
+        ]);
+        $chitiet=\DB::table('phieudat')
+        ->where('pd_id',$request->id)
+        ->update([
+            'nv_id'=>\Auth::guard('nhanvien')->id()
+        ]);
+        return redirect()->route('listOrder');
     }
 }
 

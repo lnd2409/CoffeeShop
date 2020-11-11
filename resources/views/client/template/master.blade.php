@@ -99,7 +99,14 @@
                             </tr>
                             <tr>
                                 <td>Số bàn:</td>
-                                <td>5</td>
+                                <td>
+                                    @foreach ($item->banan as $key=>$banan)
+                                    {{$banan->ba_id}}
+                                    @if ($key++!=null)
+                                    ,
+                                    @endif
+                                    @endforeach
+                                </td>
                             </tr>
                             <tr>
                                 <td>Thời gian:</td>
