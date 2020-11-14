@@ -42,7 +42,7 @@
                                 <a href="{{ route('trang-chu') }}">Trang chủ</a>
                             </li>
                             <li>
-                                <a href="{{asset("client")}}/about.html">Đặt bàn</a>
+                                <a href="{{ route('datban.index') }}">Đặt bàn</a>
                             </li>
                             {{-- {{ Request::url() }} --}}
                             <li class="@if (Request::segment(1) == 'thuc-don')

@@ -99,7 +99,7 @@
             <tr>
                 <td class="icon"><i class="fa fa-users setsize" aria-hidden="true"></i></td>
                 <td>
-                    Số lượng chỗ
+                    Số lượng khách
                 </td>
             </tr>
             <tr>
@@ -173,7 +173,6 @@
                                         data-price="{{$item->ma_gia}}">
                                         {{$item->nma_ten}},
                                         {{$item->ma_ten}}
-
                                         <span class="" style="float: right"> {{number_format($item->ma_gia)}}
                                         </span>
                                     </option>
@@ -227,7 +226,7 @@
 </script>
 <script>
     $(document).ready(function () {
-        $('#addFood').click(function (e) { 
+        $('#addFood').click(function (e) {
             let html='<div class="append">';
             html+='<div class="col-md-12"><br></div>';
             html+='<div class="col-md-8">';
@@ -251,10 +250,10 @@
             $('.selectpicker').selectpicker();
 
             $( ".append" ).each(function(index) {
-                $('.testimonial').click(function (e) { 
+                $('.testimonial').click(function (e) {
                     // e.preventDefault();
                     $(this).parents(".append").html('');
-                    
+
                 });
             });
             $( ".selectFood" ).each(function(index) {
@@ -268,19 +267,19 @@
                     let tong=parseInt(total)*1000+ parseInt(after)-parseInt(before);
                     $('#inputTotal').val(tong);
                     $('#total').text(new Intl.NumberFormat().format(tong));
-                    
+
                     return false;
                     // console.log(boolKey);
                 });
-                
-            });  
-                
+
+            });
+
         });
     });
 </script>
 <script>
     $(document).ready(function () {
-        $('.selectFood').change(function (e) { 
+        $('.selectFood').change(function (e) {
             // e.preventDefault();
 
             var before = $(this).attr('data-before');
@@ -291,22 +290,22 @@
             let tong=parseInt(total)*1000+ parseInt(after)-parseInt(before);
             $('#inputTotal').val(tong);
             $('#total').text(new Intl.NumberFormat().format(tong));
-            
+
             return false;
         });
 
-        
+
     });
 
 
 
-   
+
 </script>
 <script>
     $(document).ready(function () {
-        $('.testimonial').click(function (e) { 
+        $('.testimonial').click(function (e) {
             $("#inputChooseFood").click();
-            
+
         });
         $("#inputChooseFood").click(function(){
             var status = $(this).prop("checked");

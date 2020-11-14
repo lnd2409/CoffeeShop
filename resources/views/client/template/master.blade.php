@@ -90,86 +90,87 @@
                 </div>
                 <div class="content">
                     @foreach ($phieudat as $item)
-
-                    <div class="info">
-                        <table>
-                            <tr>
-                                <td>Số khách:</td>
-                                <td>{{$item->pd_soluongkhach}}</td>
-                            </tr>
-                            <tr>
-                                <td>Số bàn:</td>
-                                <td>
-                                    @foreach ($item->banan as $key=>$banan)
-                                    {{$banan->ba_id}}
-                                    @if ($key++!=null)
-                                    ,
-                                    @endif
-                                    @endforeach
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Thời gian:</td>
-                                <td>{{$item->pd_ngayden}} - {{$item->pd_gioden}}</td>
-                            </tr>
-                            <tr>
-                                <td>Ghi chú:</td>
-                                <td>{{$item->pd_ghichu}}</td>
-                            </tr>
-                            <tr>
-                                <td>Tổng tiền:</td>
-                                <td>{{number_format($item->pd_sotientongtamtinh)}} đ</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <form>
-                        <div class="product-preview-small">
-                            <div class="product-img">
-                                <img alt="product photo" src="{{asset("client")}}/assets/images/products/1_small.png">
-                            </div>
-                            <div class="product-content">
-                                <div class="row">
-                                    @foreach ($item->chitiet as $item2)
-
-                                    <div class="col-md-9">
-                                        <div class="row">
-                                            <div class="col-md-8">
-
-                                                <h4 class="product-title">{{$item2->ma_ten}}</h4>
-                                                Giá {{number_format($item2->ma_gia)}} đ
-                                            </div>
-                                            <div class="col-md-2">
-                                                <h4 class="product-title">&nbsp;</h4>
-                                                x
-                                            </div>
-                                            <div class="col-md-2">
-                                                <h4 class="product-title">&nbsp;</h4>
-                                                {{$item2->ctpd_soluong}}
-                                            </div>
-                                        </div>
-
-                                        {{-- <div class="product-pieces">
-                                            <input type="text" value="">
-                                            <div class="product-pieces-up"></div>
-                                            <div class="product-pieces-down"></div>
-                                        </div> --}}
-
-                                    </div>
-                                    <div class="col-md-3">
-                                        <h4 class="product-title">&nbsp;</h4>
-                                        {{number_format($item2->ma_gia*$item2->ctpd_soluong)}} đ
-                                    </div>
-                                    @endforeach
+                        @if ($item->kh_id == Auth::guard('khachhang')->id())
+                        <div class="info">
+                            <table>
+                                <tr>
+                                    <td>Số khách:</td>
+                                    <td>{{$item->pd_soluongkhach}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Số bàn:</td>
+                                    <td>
+                                        @foreach ($item->banan as $key=>$banan)
+                                        {{$banan->ba_id}}
+                                        @if ($key++!=null)
+                                        ,
+                                        @endif
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Thời gian:</td>
+                                    <td>{{$item->pd_ngayden}} - {{$item->pd_gioden}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Ghi chú:</td>
+                                    <td>{{$item->pd_ghichu}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tổng tiền:</td>
+                                    <td>{{number_format($item->pd_sotientongtamtinh)}} đ</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <form>
+                            <div class="product-preview-small">
+                                <div class="product-img">
+                                    <img alt="product photo" src="{{asset("client")}}/assets/images/products/1_small.png">
                                 </div>
-                            </div><!-- .product-content -->
-                        </div><!-- .product-preview-small -->
-                        <hr>
-                        {{-- <div class="row text-xs-center">
-                            <div class="col-sm-6">
-                                <a class="button-yellow button-text-low button-long button-low" href="#">Đặt</a>
-                            </div>
-                        </div> --}}
-                    </form>
+                                <div class="product-content">
+                                    <div class="row">
+                                        @foreach ($item->chitiet as $item2)
+
+                                        <div class="col-md-9">
+                                            <div class="row">
+                                                <div class="col-md-8">
+
+                                                    <h4 class="product-title">{{$item2->ma_ten}}</h4>
+                                                    Giá {{number_format($item2->ma_gia)}} đ
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <h4 class="product-title">&nbsp;</h4>
+                                                    x
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <h4 class="product-title">&nbsp;</h4>
+                                                    {{$item2->ctpd_soluong}}
+                                                </div>
+                                            </div>
+
+                                            {{-- <div class="product-pieces">
+                                                <input type="text" value="">
+                                                <div class="product-pieces-up"></div>
+                                                <div class="product-pieces-down"></div>
+                                            </div> --}}
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <h4 class="product-title">&nbsp;</h4>
+                                            {{number_format($item2->ma_gia*$item2->ctpd_soluong)}} đ
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div><!-- .product-content -->
+                            </div><!-- .product-preview-small -->
+                            <hr>
+                            {{-- <div class="row text-xs-center">
+                                <div class="col-sm-6">
+                                    <a class="button-yellow button-text-low button-long button-low" href="#">Đặt</a>
+                                </div>
+                            </div> --}}
+                        </form>
+                        @endif
                     @endforeach
                 </div>
             </div><!-- .cart-content -->

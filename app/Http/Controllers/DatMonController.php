@@ -7,10 +7,30 @@ use App\Models\PhieuDat;
 use Illuminate\Support\Facades\Input;
 use DB;
 use Carbon\Carbon;
+use Auth;
 class DatMonController extends Controller
 {
     public function index()
     {
+        #Gợi ý thông minh
+        //Gợi ý món ăn người dùng đó đã đặt
+        $foodOrdered = DB::table('chitietphieudat')
+                    ->join('phieudat','phieudat.pd_id','chitietphieudat.pd_id')
+                    ->join('monan','monan.ma_id','chitietphieudat.ma_id')
+                    ->where('phieudat.kh_id',Auth::guard('khachhang')->id())
+                    ->get();
+        // dd($foodOrdered);
+        //Gợi ý món ăn được đặt nhiều nhất
+        $bestFood = DB::table('chitietphieudat')
+                    ->join('phieudat','phieudat.pd_id','chitietphieudat.pd_id')
+                    ->join('monan','monan.ma_id','chitietphieudat.ma_id')
+                    ->select('monan.ma_id','monan.ma_ten')->get();
+        // foreach ($bestFood as $key => $value) {
+        //     # code...
+
+        // }
+        // dd($bestFood);
+
         $monan=\DB::table('nhommonan')
         ->join('monan','monan.nma_id','nhommonan.nma_id')
         ->get();
@@ -21,7 +41,7 @@ class DatMonController extends Controller
         // \dd($request);
         // \dd(Carbon::parse($request->time));
         DB::beginTransaction();
-       
+
         try {
             $phieudat_id=\DB::table('phieudat')->insertGetId([
                 'pd_ngaylap' => date("Y-m-d"),
@@ -49,7 +69,7 @@ class DatMonController extends Controller
                             'ma_id'=>$item,
                             'ctpd_soluong'=>$request->amount[$key]
                         ]);
-                        
+
                     }
                 }
             }
@@ -74,7 +94,7 @@ class DatMonController extends Controller
         ->where('phieudat.kh_id',\Auth::guard('khachhang')->id())
         ->get();
         foreach ($phieudat as $key => $value) {
-            
+
             $chitiet=\DB::table('chitietphieudat')
             ->join('monan','monan.ma_id','chitietphieudat.ma_id')
             ->where('chitietphieudat.pd_id',$value->pd_id)
@@ -87,7 +107,7 @@ class DatMonController extends Controller
             $value->banan=$banan;
         }
         // dd($phieudat);
-        return view('client.index',compact('phieudat'));
+        return view('client.index');
     }
     public function listOrder()
     {
@@ -105,11 +125,11 @@ class DatMonController extends Controller
             ->get();
             $value->chitiet=$chitiet;
 
-            
-            
+
+
             //bàn ăn
             foreach($value->ban as $value2){
-                
+
                 //lịch đặt bàn
                 $banan=\DB::table('banan')
                 ->join('chitietbanan','chitietbanan.ba_id','banan.ba_id')
@@ -119,11 +139,11 @@ class DatMonController extends Controller
                 ->get();
                 // dd($banan);
                 $value2->banan=$banan;
-                
+
 
             }
             // dump($value);
-            
+
 
         }
         // dd($phieudat);

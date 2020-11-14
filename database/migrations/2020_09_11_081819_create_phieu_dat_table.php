@@ -23,7 +23,7 @@ class CreatePhieuDatTable extends Migration
             $table->BigInteger('pd_sotientongtamtinh')->nullable()->default(0)->unsigned();
 
 
-            $table->BigInteger('nv_id')->unsigned();
+            $table->BigInteger('nv_id')->unsigned()->nullable();
             $table->foreign('nv_id')->references('nv_id')->on('nhanvien')->onDelete('cascade');
 
             $table->BigInteger('kh_id')->unsigned();
