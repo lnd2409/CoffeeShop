@@ -24,22 +24,22 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $phieudat=\DB::table('phieudat')
-        ->where('phieudat.pd_ngayden','>=', date("Y-m-d"))
-        ->get();
-        foreach ($phieudat as $key => $value) {
+        // $phieudat=\DB::table('phieudat')
+        // ->where('phieudat.pd_ngayden','>=', date("Y-m-d"))
+        // ->get();
+        // foreach ($phieudat as $key => $value) {
 
-            $chitiet=\DB::table('chitietphieudat')
-            ->join('monan','monan.ma_id','chitietphieudat.ma_id')
-            ->where('chitietphieudat.pd_id',$value->pd_id)
-            ->get();
-            $banan=\DB::table('chitietbanan')
-            // ->join('banan','banan.ba_id','chitietbanan.ba_id')
-            ->where('chitietbanan.pd_id',$value->pd_id)
-            ->get();
-            $value->chitiet=$chitiet;
-            $value->banan=$banan;
-        }
-        View::share('phieudat',$phieudat);
+        //     $chitiet=\DB::table('chitietphieudat')
+        //     ->join('monan','monan.ma_id','chitietphieudat.ma_id')
+        //     ->where('chitietphieudat.pd_id',$value->pd_id)
+        //     ->get();
+        //     $banan=\DB::table('chitietbanan')
+        //     // ->join('banan','banan.ba_id','chitietbanan.ba_id')
+        //     ->where('chitietbanan.pd_id',$value->pd_id)
+        //     ->get();
+        //     $value->chitiet=$chitiet;
+        //     $value->banan=$banan;
+        // }
+        // View::share('phieudat',$phieudat);
     }
 }

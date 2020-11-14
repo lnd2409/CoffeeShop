@@ -52,6 +52,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
     Route::get('/danh-sach-dat-ban', 'DatMonController@listOrder')->name('listOrder');
     Route::post('/xac-nhan-dat-ban', 'DatMonController@confirmOrder')->name('confirmOrder');
 
+    #Khuyến mãi
 
     //Đăng xuất
     Route::get('/dang-xuat', 'AuthController@logout')->name('dang-xuat');
