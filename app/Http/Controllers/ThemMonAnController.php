@@ -119,6 +119,47 @@ class ThemMonAnController extends Controller
 
 
 
+    public function DeleteFood(Request $request)
+    {
+        $data = $request->all();
+        DB::table('chitietphieuyeucau')
+        ->where('ma_id',$request->ma_id)
+        ->where('pyc_id',$request->pyc_id)
+        ->delete();
+        DB::table('phieuyeucau')->where('pyc_id',$request->pyc_id)->delete();
+        $data = DB::table('chitietphieuyeucau as ctpyc')
+        ->join('phieuyeucau as pyc','pyc.pyc_id','ctpyc.pyc_id')    
+        ->join('monan as ma','ma.ma_id','ctpyc.ma_id')
+        ->where('pyc.ba_id',$request->BanAn)
+        ->get();
+        return response()->json($data, 200);
+    }
+
+
+
+
+    public function CheckBanAjax(Request $request)
+    {
+      
+        $data['ba_trangthai']=1;
+        $result = DB::table('phieuyeucau')->where('ba_id',$request->ba_id)->get();
+        if(count($result) > 0){
+            DB::table('banan')->where('ba_id',$request->ba_id)->update($data);
+            return response()->json(count($result));
+        }
+        else
+        {
+            $data['ba_trangthai']=0;
+            DB::table('banan')->where('ba_id',$request->ba_id)->update($data);
+            return response()->json(count($result));
+        }   
+
+    }
+
+
+
+
+
 
     public function update(Request $request)
     {

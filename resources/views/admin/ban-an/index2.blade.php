@@ -43,15 +43,17 @@ table#table-detail th {
         <div class="row" style="width:100%;overflow: auto;margin:auto;border: 1px solid wheat;background: aliceblue;margin-top: 20px;padding: 10px;">
             @foreach ($banan as $item)
             <div class="col-sm-2 BanAn " id="BanSo{{$item->ba_id}}" style="background: #bbefd4;  border:2px solid; margin:5px; height:100px;" >
-                    <h4 class="text-center" style="width: 100%;text-align: center;color: #212f38;font-size: 17px; margin-top:5px">Bàn số {{$item->ba_id}}
+                    <h4 class="text-center"  style="width: 100%;text-align: center;color: #212f38;font-size: 17px; margin-top:5px">Bàn số {{$item->ba_id}}
+                       <p id="h4_status{{$item->ba_id}}">
                         @if ($item->ba_trangthai == 1)
-                            <span class="badge badge-danger">Có người</span>
+                        <span class="badge badge-danger">Có người</span>
                         @else
                             <span class="badge badge-success">Bàn Trống</span>
-                        @endif
+                        @endif 
+                        </p> 
                     </h4>
                     <p style="margin-top:20px;"><a href="" class="ClickBanNe" data-banid="{{$item->ba_id}}"><i class="fa fa-tasks" aria-hidden="true"></i>Thêm món ăn</a></p>
-                </div>
+                </div> 
             @endforeach
         </div>
     </div>
@@ -125,7 +127,7 @@ table#table-detail th {
             <div class="row">
                 @foreach ($nhom as $val)
                 <div class="col-md-2" style="height:40px;background: #252121;margin: 5px 10px;">
-                <a style="color: white;text-align: center;height: 40px;line-height: 40px; display: block;" class="ClickNhom" data-nhom="{{$val->nma_id}}"> {{$val->nma_ten}} </a></div>
+                <a style="color: white;text-align: center;height: 40px;line-height: 40px; display: block;" class="ClickNhom" data-nhom="{{$val->nma_id}}">Loại {{$val->nma_ten}} </a></div>
                 @endforeach
             </div>
             <hr>
@@ -280,9 +282,8 @@ $( document ).ready(function() {
             data: {BanAn:ban},
             dataType: "json",
             success: function (response) {
-                console.log(response);
+                // console.log(response);
                 $("#Table_MonAn tr").remove();
-               
                 response.forEach(val => {
                     totalmenu = totalmenu + (val.ma_gia * val.ctpyc_soluongmonan);
                     var tring = '<tr class="tr_td">';
@@ -291,7 +292,7 @@ $( document ).ready(function() {
                     tring+='<td>'+val.ctpyc_soluongmonan+'</td>';
                     tring+='<td>'+val.ma_gia+'</td>';
                     tring+='<td>'+val.ma_gia * val.ctpyc_soluongmonan+'</td>';
-                    tring+='<td><button type="button" class="btn btn-danger" >Xóa</button></td>';
+                    tring+='<td><button type="button" class="btn btn-danger XoaMonAnNe" data-XoaMonAnNe="'+val.ma_id+'" data-pyc="'+val.pyc_id+'">Xóa</button></td>';
                     tring+='</tr>';
                     $('#Table_MonAn').append(tring);
                     i++;
@@ -311,39 +312,7 @@ $( document ).ready(function() {
 
     });
 
-    //Lưu thông tin của món ăn trên bàn
-    // $('#LuuMonAn').click(function (e) { 
-    //     e.preventDefault();
-    //     var ban = $('#BanNum').val();
-    //     // var nmaid = $('#NhomMonAn').val();
-    //     var ma_id = $('#MonAn').val();
-    //     var sl = $('#ChonBan').val();
-    //     var i=1;
-       
-    //     $.ajax({
-    //         type: "POST",
-    //         url: " {{route('them-mon-an-submit')}} ",
-    //         data: {SoLuong:sl,BanAn:ban,MonAn:ma_id },
-    //         dataType: "json",
-    //         success: function (response) {
-    //             console.log(response);
-    //             $("#Table_MonAn tr").remove();
-    //             response.forEach(val => {
-    //                 var tring = '<tr>';
-    //                 tring+='<td>'+i+'</td>';
-    //                 tring+='<td>'+val.ma_ten+'</td>';
-    //                 tring+='<td>'+val.ctpyc_soluongmonan+'</td>';
-    //                 tring+='<td>'+val.ma_gia+'</td>';
-    //                 tring+='<td>'+val.ma_gia * val.ctpyc_soluongmonan+'</td>';
-    //                 tring+='<td>'+10+'</td>';
-                
-    //                 tring+='</tr>';
-    //                 $('#Table_MonAn').append(tring);
-    //                 i++;
-    //             });
-    //         }
-    //     });
-    // });
+  
 
     $('.ClickNhom').click(function (e) { 
         e.preventDefault();
@@ -381,7 +350,6 @@ $( document ).ready(function() {
                     data +='</div>';  
                     $('#MonTheoNhom').append(data);
                 }
-                
             }
         });
     });
@@ -393,14 +361,16 @@ $( document ).ready(function() {
 
         var stt = $(this).attr('data-stt');
         var ban = $('#BanNum').val();
+       
         var ma_id = $('#GetNameFood'+stt).val();
         var sl = $('#GetQuatiFood'+stt).val();
         $('#GetQuatiFood'+stt).val(1);
        var i =1;
        var totalmenu=0;
-        console.log("ban"+ban );
-        console.log("mon an"+ ma_id);
-        console.log("so luong"+sl);
+       $("#Table_MonAn tr").remove();
+        // console.log("ban"+ban );
+        // console.log("mon an"+ ma_id);
+        // console.log("so luong"+sl);
         $.ajax({
             type: "POST",
             url: " {{route('them-mon-an-submit')}} ",
@@ -408,7 +378,9 @@ $( document ).ready(function() {
             dataType: "json",
             success: function (response) {
                 console.log(response);
+                CheckStatusTab(ban);
                 $("#Table_MonAn tr").remove();
+                
                     response.forEach(val => {
                         totalmenu = totalmenu + (val.ma_gia * val.ctpyc_soluongmonan);
                         var tring = '<tr>';
@@ -417,7 +389,7 @@ $( document ).ready(function() {
                         tring+='<td>'+val.ctpyc_soluongmonan+'</td>';
                         tring+='<td>'+val.ma_gia+'</td>';
                         tring+='<td>'+val.ma_gia * val.ctpyc_soluongmonan+'</td>';
-                        tring+='<td><button type="button" class="btn btn-danger" >Xóa</button></td>';
+                        tring+='<td><button type="button" class="btn btn-danger XoaMonAnNe" data-XoaMonAnNe="'+val.ma_id+'" data-pyc="'+val.pyc_id+'">Xóa</button></td>';
                         tring+='</tr>';
                         $('#Table_MonAn').append(tring);
                         i++;
@@ -440,6 +412,87 @@ $( document ).ready(function() {
        
     });
 
+
+
+    // Xoa mon an
+    $(document).on("click",".XoaMonAnNe",function(){
+    
+        var ma_id = $(this).attr('data-XoaMonAnNe');
+        var pyc_id = $(this).attr('data-pyc');
+        var totalmenu=0;
+        var i =1;
+        var ban = $('#BanNum').val();
+        if(confirm("Bạn có muốn xóa món ăn này ?")){
+            console.log("ban  "+ban );
+            console.log("mon an "+ma_id);
+            console.log("pyc "+ pyc_id);
+            // $("#Table_MonAn tr").remove();
+        $.ajaxSetup({
+        headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: " {{route('xoa-mon-an-theo-ban')}} ",
+            data: {ma_id:ma_id,pyc_id:pyc_id,BanAn:ban},
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                CheckStatusTab(ban);
+                $("#Table_MonAn tr").remove();
+                response.forEach(val => {
+                    totalmenu = totalmenu + (val.ma_gia * val.ctpyc_soluongmonan);
+                    var tring = '<tr class="tr_td">';
+                    tring+='<td>'+i+'</td>';
+                    tring+='<td>'+val.ma_ten+'</td>';
+                    tring+='<td>'+val.ctpyc_soluongmonan+'</td>';
+                    tring+='<td>'+val.ma_gia+'</td>';
+                    tring+='<td>'+val.ma_gia * val.ctpyc_soluongmonan+'</td>';
+                    tring+='<td><button type="button" class="btn btn-danger XoaMonAnNe" data-XoaMonAnNe="'+val.ma_id+'" data-pyc="'+val.pyc_id+'">Xóa</button></td>';
+                    tring+='</tr>';
+                    $('#Table_MonAn').append(tring);
+                    i++;
+                });
+                var str2 ='<tr class="tr_td">'
+                    str2+='<td colspan="4">Tổng tiền</td>'
+                    str2+='<td id="totalmenu">'+totalmenu+'</td>'
+                    str2+='<td>  <button class="btn btn-success" id="GetThanhToan">Thanh toán</button> </td>'
+                    str2+='</tr>'
+                $('#Table_MonAn').append(str2);
+            }
+        });
+
+        
+        }   
+    });
+
+    //Kiểm tra checkin trang thái bàn
+    function CheckStatusTab(val)
+    {
+        $.ajax({
+            type: "post",
+            url: " {{route('check-status-table')}} ",
+            data: {ba_id:val},
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                $('#h4_status'+val).empty();
+                if(response > 0){
+                    var string ='';
+                    string+= '<span class="badge badge-danger">Có người</span>';
+                    $('#h4_status'+val).append(string); 
+                }
+                else
+                {
+                    var string ='';
+                    string+= '<span class="badge badge-success">Bàn Trống</span>';
+                    $('#h4_status'+val).append(string); 
+                }
+            }
+        });
+    }
     console.log( "ready!" );
 });  
 </script>

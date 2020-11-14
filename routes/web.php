@@ -40,7 +40,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
 
     Route::post('/ban-an/lay-mon-an', 'ThemMonAnController@GetAllFood')->name('lay-all-mon-an-theo-ban');
 
+    Route::post('/ban-an/xoa-mon-an', 'ThemMonAnController@DeleteFood')->name('xoa-mon-an-theo-ban');
+
     Route::post('/ban-an/nhom', 'BanAnController@NhomAjax')->name('ban-an-Ajax');
+
+    Route::post('/ban-an/kiem-tra-ban', 'ThemMonAnController@CheckBanAjax')->name('check-status-table');
  
 
 
