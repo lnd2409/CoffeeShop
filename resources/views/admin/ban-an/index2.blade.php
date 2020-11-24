@@ -219,6 +219,8 @@ table#table-detail th {
 
 @push('script')
 <script>
+// Select your input element.
+
 $( document ).ready(function() {
    
     $('#NhomMonAn').change(function (e) { 
@@ -290,17 +292,18 @@ $( document ).ready(function() {
                     tring+='<td>'+i+'</td>';
                     tring+='<td>'+val.ma_ten+'</td>';
                     tring+='<td>'+val.ctpyc_soluongmonan+'</td>';
-                    tring+='<td>'+val.ma_gia+'</td>';
-                    tring+='<td>'+val.ma_gia * val.ctpyc_soluongmonan+'</td>';
-                    tring+='<td><button type="button" class="btn btn-danger XoaMonAnNe" data-XoaMonAnNe="'+val.ma_id+'" data-pyc="'+val.pyc_id+'">Xóa</button></td>';
+                    tring+='<td>'+ addCommas(val.ma_gia)+'</td>';
+                    tring+='<td style="text-align: right;">'+ addCommas(val.ma_gia * val.ctpyc_soluongmonan)+'</td>';
+                    tring+='<td style="width:100px; "><button style="  margin: 0 25px;" type="button" class="btn btn-danger XoaMonAnNe" data-XoaMonAnNe="'+val.ma_id+'" data-pyc="'+val.pyc_id+'">Xóa</button></td>';
                     tring+='</tr>';
                     $('#Table_MonAn').append(tring);
                     i++;
                 });
-                console.log(totalmenu);
+                console.log( addCommas(totalmenu));
+               
                 var str2 ='<tr class="tr_td">'
                     str2+='<td colspan="4">Tổng tiền</td>'
-                    str2+='<td id="totalmenu">'+totalmenu+'</td>'
+                    str2+='<td id="totalmenu" style="text-align: right;font-size: 17px;font-weight: bold;color: black;">'+ addCommas(totalmenu)+'</td>'
                     str2+='<td>  <button class="btn btn-success" id="GetThanhToan">Thanh toán</button> </td>'
                     str2+='</tr>'
                 $('#Table_MonAn').append(str2);
@@ -365,6 +368,7 @@ $( document ).ready(function() {
         var ma_id = $('#GetNameFood'+stt).val();
         var sl = $('#GetQuatiFood'+stt).val();
         $('#GetQuatiFood'+stt).val(1);
+        
        var i =1;
        var totalmenu=0;
        $("#Table_MonAn tr").remove();
@@ -448,8 +452,8 @@ $( document ).ready(function() {
                     tring+='<td>'+i+'</td>';
                     tring+='<td>'+val.ma_ten+'</td>';
                     tring+='<td>'+val.ctpyc_soluongmonan+'</td>';
-                    tring+='<td>'+val.ma_gia+'</td>';
-                    tring+='<td>'+val.ma_gia * val.ctpyc_soluongmonan+'</td>';
+                    tring+='<td>'+ addCommas(val.ma_gia)+'</td>';
+                    tring+='<td>'+addCommas(val.ma_gia * val.ctpyc_soluongmonan)+'</td>';
                     tring+='<td><button type="button" class="btn btn-danger XoaMonAnNe" data-XoaMonAnNe="'+val.ma_id+'" data-pyc="'+val.pyc_id+'">Xóa</button></td>';
                     tring+='</tr>';
                     $('#Table_MonAn').append(tring);
@@ -493,7 +497,29 @@ $( document ).ready(function() {
             }
         });
     }
+
+
+    function addCommas(nStr)
+    {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        console.log(x1 + x2 );
+        return x1 + x2;
+    }
+
+
+    // addCommas(233333);
+
+   
+   
     console.log( "ready!" );
-});  
+});
+ 
 </script>
 @endpush
