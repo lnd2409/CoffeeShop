@@ -53,7 +53,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
     Route::post('/xac-nhan-dat-ban', 'DatMonController@confirmOrder')->name('confirmOrder');
 
     #Khuyến mãi
-
+    Route::get('khuyen-mai', 'KhuyenMaiController@index')->name('khuyen-mai');
+    Route::get('khuyen-mai/them-khuyen-mai', 'KhuyenMaiController@themKhuyenMai')->name('khuyen-mai.them-khuyen-mai');
     //Đăng xuất
     Route::get('/dang-xuat', 'AuthController@logout')->name('dang-xuat');
 });

@@ -49,6 +49,11 @@
                     <a href="chart.html">
                         <i class="far fa-user-circle"></i>Khách hàng</a>
                 </li>
+                <li>
+                    <a href="{{ route('khuyen-mai') }}">
+                        <i class="far fa-user-circle"></i>Khuyến mãi
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
