@@ -2,7 +2,7 @@
 <aside class="menu-sidebar d-none d-lg-block">
     <div class="logo">
         <a href="#">
-            <img src="{{asset("admin-assets")}}/images/logo.png"/>
+            <img src="{{asset("admin-assets")}}/images/logo.png" />
             <span>Tâm Food</span>
         </a>
     </div>
@@ -20,12 +20,12 @@
                     @else
                     @endif
                 ">
-                    <a href="{{ route('ban-an') }}" >
+                    <a href="{{ route('ban-an') }}">
                         <i class="fas fa-table"></i>Bàn ăn
                     </a>
                 </li>
                 <li>
-                    <a href="chart.html">
+                    <a href="{{route('listOrder')}}">
                         <i class="fa fa-sticky-note	"></i>Phiếu đặt bàn</a>
                 </li>
                 <li>
