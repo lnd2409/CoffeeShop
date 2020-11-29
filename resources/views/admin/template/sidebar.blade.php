@@ -25,7 +25,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="chart.html">
+                    <a href="{{ route('listOrder') }}">
                         <i class="fa fa-sticky-note	"></i>Phiếu đặt bàn</a>
                 </li>
                 <li>

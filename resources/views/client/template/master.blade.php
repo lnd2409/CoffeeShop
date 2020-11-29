@@ -89,6 +89,10 @@
                     <h1 class="no-top-margin border-lines">Thông tin đặt bàn</h1>
                 </div>
                 <div class="content">
+                    {{-- @if (count($phieudat) > 0)
+
+                    @endif --}}
+                    {{-- {{ dd($phieudat) }} --}}
                     @foreach ($phieudat as $item)
                         @if ($item->kh_id == Auth::guard('khachhang')->id())
                         <div class="info">
