@@ -48,7 +48,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
 
     Route::post('/ban-an/nhom', 'BanAnController@NhomAjax')->name('ban-an-Ajax');
 
-
     Route::get('/danh-sach-dat-ban', 'DatMonController@listOrder')->name('listOrder');
     Route::post('/xac-nhan-dat-ban', 'DatMonController@confirmOrder')->name('confirmOrder');
 

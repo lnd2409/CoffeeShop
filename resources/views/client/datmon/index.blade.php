@@ -93,7 +93,7 @@
 @section('content')
 <div class="container">
 
-    <form action="{{route('datban.setTable')}}" method="post" class="frm">
+    <form action="{{route('datban.setTable')}}" method="post" class="frm" id="frm">
         @csrf
         <table class="table table-borderless">
             <tr>
@@ -163,8 +163,8 @@
                         <div class="row">
                             <div class="col-md-8">
 
-                                <select class="selectpicker form-control selectFood" data-live-search="true"
-                                    name="food[]" data-before=0>
+                                <select class="selectpicker form-control selectFood 0" data-live-search="true"
+                                    name="food[]" data-before=0 data-select=0>
                                     <option data-tokens="Chọn sau" value="0" data-price=0 selected disabled>Chọn món
                                     </option>
                                     @foreach ($monan as $item)
@@ -181,8 +181,8 @@
                             </div>
                             <div class="col-md-3">
 
-                                <input class="form-control" type="number" name="amount[]" placeholder="Số lượng" min="1"
-                                    value="1" step="any"
+                                <input class="form-control amount" type="number" name="amount[]" placeholder="Số lượng"
+                                    min="1" data-id="1" value="1" step="any" data-amount=0
                                     onKeyUp="if(this.value>100){this.value='100';}else if(this.value<1){this.value='1';}">
                             </div>
                             <div class="col-md-1 text-center ">
@@ -197,10 +197,10 @@
                 <td></td>
                 <td>
                     <a type="button" id="addFood">Thêm món</a>
-                    <span style="float: right">Tổng tiền:
+                    <input type="hidden" name="total" value="0" id="inputTotal">
+                    {{-- <span style="float: right">Tổng tiền:
                         <span id="total">0</span>
-                        <input type="hidden" name="total" value="0" id="inputTotal">
-                    </span>
+                    </span> --}}
                 </td>
             </tr>
             <tr>
@@ -226,11 +226,12 @@
 </script>
 <script>
     $(document).ready(function () {
+        let count=1;
         $('#addFood').click(function (e) {
             let html='<div class="append">';
             html+='<div class="col-md-12"><br></div>';
             html+='<div class="col-md-8">';
-            html+='<select class="form-control selectpicker selectFood" data-live-search="true" name="food[]" data-before=0>';
+            html+='<select class="form-control selectpicker selectFood '+count+'" data-live-search="true" name="food[]" data-before=0 data-select="'+count+'">';
             html+='<option data-tokens="Chọn món" value="0" data-price=0 selected="true" disabled="disabled">Chọn món</option>';
             html+='@foreach ($monan as $item)';
             html+='<option data-tokens="{{$item->nma_ten}} {{$item->ma_ten}}" value="{{$item->ma_id}}" data-price="{{$item->ma_gia}}">{{$item->nma_ten}}, {{$item->ma_ten}}';
@@ -240,12 +241,13 @@
             html+='</select>';
             html+='</div>';
             html+='<div class="col-md-3">';
-            html+='<input class="form-control" type="number" name="amount[]" value="1" placeholder="Số lượng" min="1" step="any" onKeyUp="if(this.value>100){this.value=`100`;}else if(this.value<1){this.value=`1`;}">';
+            html+='<input class="form-control amount" data-amount="'+count+'" type="number" name="amount[]" value="1" placeholder="Số lượng" min="1" step="any" onKeyUp="if(this.value>100){this.value=`100`;}else if(this.value<1){this.value=`1`;}">';
             html+='</div>';
             html+='<div class="col-md-1 text-center ">';
             html+='<a class="testimonial"><i class="fa fa-times" aria-hidden="true"></i></a>';
             // html+='</div>';
             html+='</div>';
+            count++;
             $('.addFood').append(html);
             $('.selectpicker').selectpicker();
 
@@ -256,50 +258,10 @@
 
                 });
             });
-            $( ".selectFood" ).each(function(index) {
-                $(this).on("change", function(){
-                    // For the boolean value
-                    var before = $(this).attr('data-before');
-                    var after = $('option:selected', this).attr('data-price');
-                    var total=$('#total').html();
-                    $(this).attr('data-before', after);
-                    console.log(parseInt(total));
-                    let tong=parseInt(total)*1000+ parseInt(after)-parseInt(before);
-                    $('#inputTotal').val(tong);
-                    $('#total').text(new Intl.NumberFormat().format(tong));
-
-                    return false;
-                    // console.log(boolKey);
-                });
-
-            });
+           
 
         });
     });
-</script>
-<script>
-    $(document).ready(function () {
-        $('.selectFood').change(function (e) {
-            // e.preventDefault();
-
-            var before = $(this).attr('data-before');
-            var after = $('option:selected', this).attr('data-price');
-            var total=$('#total').html();
-            $(this).attr('data-before', after);
-            console.log(parseInt(total));
-            let tong=parseInt(total)*1000+ parseInt(after)-parseInt(before);
-            $('#inputTotal').val(tong);
-            $('#total').text(new Intl.NumberFormat().format(tong));
-
-            return false;
-        });
-
-
-    });
-
-
-
-
 </script>
 <script>
     $(document).ready(function () {

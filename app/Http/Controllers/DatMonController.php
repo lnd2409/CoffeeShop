@@ -43,24 +43,46 @@ class DatMonController extends Controller
         DB::beginTransaction();
 
         try {
-            $phieudat_id=\DB::table('phieudat')->insertGetId([
-                'pd_ngaylap' => date("Y-m-d"),
-                'pd_soluongkhach' => $request->amountCustomer,
-                'pd_ngayden' => date("Y-m-d"),
-                'pd_gioden' => Carbon::parse($request->time),
-                'pd_ghichu' => $request->note,
-                'pd_sotientongtamtinh' => $request->total,
-                'kh_id' => \Auth::guard('khachhang')->id(),
-            ]);
+            $tong=0;
+            
+            
             //không chọn món trước
             if($request->inputChooseFood==null){
+                dd('null');
+                $phieudat_id=\DB::table('phieudat')->insertGetId([
+                    'pd_ngaylap' => date("Y-m-d"),
+                    'pd_soluongkhach' => $request->amountCustomer,
+                    'pd_ngayden' => date("Y-m-d"),
+                    'pd_gioden' => Carbon::parse($request->time),
+                    'pd_ghichu' => $request->note,
+                    'pd_sotientongtamtinh' => 0,
+                    'kh_id' => \Auth::guard('khachhang')->id(),
+                ]);
+
                 \DB::table('chitietphieudat')->insert([
                     'pd_id'=>$phieudat_id
                     ]);
-                }
+            }
             // có chọn món
             if($request->inputChooseFood=='on' && $request->food!=null){
-
+                // dd('mon');
+                foreach ($request->food as $key => $value) {
+                    # code...
+                    $mon=\DB::table('monan')->where('ma_id',$value)->first();
+                    $tong+=$request->amount[$key]*$mon->ma_gia;
+                }
+                // dd('inset phiếu đặt');
+                $phieudat_id=\DB::table('phieudat')->insertGetId([
+                    'pd_ngaylap' => date("Y-m-d"),
+                    'pd_soluongkhach' => $request->amountCustomer,
+                    'pd_ngayden' => date("Y-m-d"),
+                    'pd_gioden' => Carbon::parse($request->time),
+                    'pd_ghichu' => $request->note,
+                    'pd_sotientongtamtinh' => $tong,
+                    'kh_id' => \Auth::guard('khachhang')->id(),
+                ]);
+                // dd($phieudat_id);
+                // dd('chitiet');
                 foreach($request->food as $key=> $item){
                     // nếu chọn món thì lưu vào chi tiết
                     if($item!=0){
@@ -72,17 +94,21 @@ class DatMonController extends Controller
 
                     }
                 }
+                // dd('xong');
             }
             if($request->inputChooseFood=='on' && $request->food==null){
 
                 return redirect()->back()->withInput();
             }
             \DB::commit();
+            return redirect()->route('trang-chu');
         }catch (\Exception $e) {
+            dd($e);
             \DB::rollback();
             throw $e;
-        // something went wrong
+            // something went wrong
         }catch (\Throwable $e) {
+            dd($e);
             \DB::rollback();
             throw $e;
         }
