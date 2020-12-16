@@ -39,6 +39,28 @@ class DatabaseSeeder extends Seeder
 
         DB::table('loaibanan')->insert($loaibanan);
 
+        DB::table('loaikhachhang')->insert([
+            [
+                'lkh_id'=>1,
+                'lkh_ten'=>'khách hàng mới'
+            ],
+            [
+                'lkh_id'=>2,
+                'lkh_ten'=>'khách hàng đồng'
+            ],
+            [
+                'lkh_id'=>3,
+                'lkh_ten'=>'khách hàng bạc'
+            ],
+            [
+                'lkh_id'=>4,
+                'lkh_ten'=>'khách hàng vàng'
+            ],
+            [
+                'lkh_id'=>5,
+                'lkh_ten'=>'khách hàng kim cương'
+            ],
+        ]);
 
 
         $nhomnonan = [

@@ -6,24 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-class NhanVien extends Authenticatable
+class KhachHang extends Authenticatable
 {
-    use Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $primaryKey = 'nv_id';
-    protected $table = 'nhanvien';
-    protected $guard = 'nhanvien';
+    protected $primaryKey = 'kh_id';
+    protected $table = 'khachhang';
+    protected $guard = 'khachhang';
     protected $fillable = [
         'usernname',
         'password',
-        'nv_ten',
-        'nv_sdt',
-        'nv_cmnd'
+        'kh_ten',
+        'kh_sdt',
+        'lkh_id'
     ];
 
     public $timestamps = true;

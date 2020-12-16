@@ -27,7 +27,7 @@
 
         @foreach ($nhomMonAn as $item)
             <div class="border-lines-container">
-                <h5 class="border-lines">{{ $item->nma_ten }}</h5>
+                <h5 class="border-lines">{{ $item->nma_ten }} </h5>
             </div>
             <div class="row">
                 {{-- {{ dd($monAn[$item->nma_id]) }} --}}
@@ -45,7 +45,7 @@
                                     {{ $item->ma_ten }}
                                 </h3>
                                 <p class="product-info">{{ $item->ma_chuthich }}</p>
-                                <a href="#" class="cart-trigger button-clean button-text-small">Order now</a>
+                                {{-- <a href="#" class="button-clean button-text-small">Đặt ngay</a> --}}
                             </div><!-- .product-preview -->
                         </div><!-- .col-md-4 -->
                     @endforeach

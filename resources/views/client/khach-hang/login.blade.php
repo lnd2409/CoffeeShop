@@ -17,7 +17,8 @@
         <div class="row">
             <div class="col-md-12">
                 <h3 class="text-uppercase">Xin chào quý khách</h3>
-                <form id="form-contact" class="form-big" action="" method="post">
+                <form class="form-big" action="{{ route('khach-hang.xu-ly-dang-nhap') }}" method="post">
+                    @csrf
                     <div class="row">
                         <div class="col-sm-6">
                             <input type="text" name="username" placeholder="Tên đăng nhập . . .">
@@ -29,7 +30,7 @@
                         </div>
                     </div>
                     <div class="">
-                        <input class="button-yellow button-text-low button-long button-low" type="submit" value="Đăng nhập">
+                        <button class="button-yellow button-text-low button-long button-low" type="submit">Đăng nhập</button>
                     </div>
                 </form>
                 <div class="margin-20"></div>

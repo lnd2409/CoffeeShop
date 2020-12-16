@@ -7,7 +7,13 @@
                 </div>
                 <div class="col-xs-6 text-right">
                     {{-- Xin chào quý khách,  --}}
-                    <a href="{{ route('khach-hang.dang-nhap', ['id'=>1]) }}" @if (Request::path() == 'dang-nhap') style="color: #f5d010" @endif  class="text-uppercase">Đăng nhập</a> | <a href="{{ route('khach-hang.dang-ky') }}" @if (Request::path() == 'dang-ky') style="color: #f5d010" @endif class="text-uppercase">Đăng ký</a>
+                    @if (Auth::guard('khachhang')->check())
+                        Xin chào, <a href="#">{{ Auth::guard('khachhang')->user()->kh_ten }}</a>
+                        ||
+                        <a href="{{ route('khach-hang.dang-xuat') }}">Đăng xuất</a>
+                    @else
+                        <a href="{{ route('khach-hang.dang-nhap') }}" @if (Request::path() == 'khach-hang/dang-nhap') style="color: #f5d010" @endif  class="text-uppercase">Đăng nhập</a> | <a href="{{ route('khach-hang.dang-ky') }}" @if (Request::path() == 'dang-ky') style="color: #f5d010" @endif class="text-uppercase">Đăng ký</a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -36,7 +42,7 @@
                                 <a href="{{ route('trang-chu') }}">Trang chủ</a>
                             </li>
                             <li>
-                                <a href="{{asset("client")}}/about.html">Đặt bàn</a>
+                                <a href="{{ route('datban.index') }}">Đặt bàn</a>
                             </li>
                             {{-- {{ Request::url() }} --}}
                             <li class="@if (Request::segment(1) == 'thuc-don')

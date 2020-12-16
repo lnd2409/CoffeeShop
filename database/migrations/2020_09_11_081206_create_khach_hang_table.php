@@ -17,12 +17,12 @@ class CreateKhachHangTable extends Migration
             $table->bigIncrements('kh_id');
             $table->string('kh_ten',100);
             $table->string('kh_sdt',100);
-            $table->string('kh_username',100);
-            $table->string('kh_password',100);
-        
+            $table->string('username',100);
+            $table->string('password',100);
+
             $table->bigInteger('lkh_id')->unsigned();
             $table->foreign('lkh_id')->references('lkh_id')->on('loaikhachhang')->onDelete('cascade');
-            
+
             $table->timestamps();
         });
     }
