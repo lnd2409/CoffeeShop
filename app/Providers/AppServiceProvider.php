@@ -41,5 +41,9 @@ class AppServiceProvider extends ServiceProvider
             $value->banan=$banan;
         }
         View::share('phieudat',$phieudat);
+
+
+        $loaikhachhang = DB::table('loaikhachhang')->get();
+        view()->share('loaikhachhang', $loaikhachhang);
     }
 }

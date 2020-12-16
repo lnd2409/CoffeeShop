@@ -34,7 +34,7 @@
                         Hóa đơn</a>
                 </li>
                 <li>
-                    <a href="chart.html">
+                    <a href="{{ route('admin.loai-mon-an') }}">
                         <i class="fas fa-utensils"></i>Món ăn</a>
                 </li>
                 <li>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-class KhachHangController extends Controller
+class LoaiMonAnController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,26 +13,11 @@ class KhachHangController extends Controller
      */
     public function index()
     {
-
-        $khachhang = DB::table('khachhang')
-        ->join('loaikhachhang as lkh','lkh.lkh_id','khachhang.lkh_id')
+        $loai = DB::table('nhommonan')->get();
+        $monan = DB::table('monan')
+        ->orderBy('nma_id','DESC')
         ->get();
-        // dd($khachhang);
-        return view('admin.khachhang.index',compact('khachhang'));
-    }
-    public function indexAjax(Request $request)
-    {
-
-       if($request->ajax())
-       {
-            $khachhang = DB::table('khachhang')
-            ->join('loaikhachhang as lkh','lkh.lkh_id','khachhang.lkh_id')
-            ->where('kh_id',$request->kh_id)
-            ->first();
-
-            return response()->json($khachhang, 200);
-       }
-       
+        return view('admin.monan.index',compact('loai','monan'));
     }
 
     /**
@@ -41,17 +26,25 @@ class KhachHangController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function LoaiThem(Request $request)
     {
-       $data['kh_ten']=$request->kh_ten;
-       $data['kh_sdt']=$request->kh_sdt;
-       $data['lkh_id']=$request->lkh_id;
-
-    //    dd($data);
-        
-        DB::table('khachhang')->where('kh_id',$request->kh_id)->update($data);
+        $data['nma_ten']=$request->nma_ten;
+        // dd($data);
+        DB::table('nhommonan')->insert($data);
         return redirect()->back();
-    
+    }
+
+
+    public function MonThem(Request $request)
+    {
+       $data['ma_ten'] = $request->ma_ten;
+       $data['ma_chuthich'] = $request->ma_ghichu;
+       $data['ma_gia'] = $request->ma_gia;
+       $data['nma_id'] = $request->loai_id;
+
+       DB::table('monan')->insert($data);
+        return redirect()->back();
+
     }
 
     /**
@@ -60,10 +53,17 @@ class KhachHangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function LoaiXoa($id)
     {
-        //
+        DB::table('nhommonan')->where('nma_id',$id)->delete();
+        return redirect()->back();
     }
+    public function MonAnXoa($id)
+    {
+        DB::table('monan')->where('ma_id',$id)->delete();
+        return redirect()->back();
+    }
+    
 
     /**
      * Update the specified resource in storage.
@@ -85,7 +85,6 @@ class KhachHangController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('khachhang')->where('kh_id',$id)->delete();
-        return redirect()->back();
+        //
     }
 }

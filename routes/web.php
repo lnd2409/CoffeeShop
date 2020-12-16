@@ -59,6 +59,30 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
         
         Route::get('/','KhachHangController@index')->name('admin.khach-hang');
 
+        Route::post('/get-all-kh','KhachHangController@indexAjax')->name('admin.khach-hang.ajax');
+
+        Route::post('/luu','KhachHangController@store')->name('admin.khach-hang.submit');
+
+        Route::get('/xoa/{id}','KhachHangController@destroy')->name('admin.khach-hang.delete');
+
+    });
+
+
+    //Thêm loại và món ăn 
+    Route::group(['prefix' => 'loai-mon-an'], function () {
+        
+        Route::get('/','LoaiMonAnController@index')->name('admin.loai-mon-an');
+
+        Route::post('/them-loai','LoaiMonAnController@LoaiThem')->name('admin.loai-mon-an.submit');
+
+        Route::post('/them-mon','LoaiMonAnController@MonThem')->name('admin.mon-an.submit');
+
+        Route::get('/loai-xoa/{id}','LoaiMonAnController@LoaiXoa')->name('admin.loai-mon-an.xoa');
+
+        Route::get('/monan-xoa/{id}','LoaiMonAnController@MonAnXoa')->name('admin.mon-an.xoa');
+
+      
+
     });
 
 
