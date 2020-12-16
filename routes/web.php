@@ -47,6 +47,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
     Route::post('/ban-an/kiem-tra-ban', 'ThemMonAnController@CheckBanAjax')->name('check-status-table');
  
 
+    //Quản lí khách hàng =>phụng
+
+    Route::group(['prefix' => 'khach-hang'], function () {
+        
+        Route::get('/','KhachHangController@index')->name('admin.khach-hang');
+
+    });
+
+
 
 
 

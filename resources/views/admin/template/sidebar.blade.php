@@ -46,7 +46,7 @@
                         <i class="fas fa-user-circle"></i>Nhân viên</a>
                 </li>
                 <li>
-                    <a href="chart.html">
+                    <a href="{{ route('admin.khach-hang') }}">
                         <i class="far fa-user-circle"></i>Khách hàng</a>
                 </li>
             </ul>

@@ -146,7 +146,7 @@ table#table-detail th {
 </div>
 @endpush
 </div>
-<div class="row mt-2"id="detailFood">
+<div class="row mt-2" id="detailFood">
     <div class="col-md-12 " >
         <h3 class="mt-2 " >Chi tiết bàn ăn số <input type="number" class="BanNum"  id="BanNum" value="0" style="width:50px;text-align: center;" disabled></h3>
     </div>
@@ -212,6 +212,42 @@ table#table-detail th {
         </form>
     </div> --}}
 </div>
+<div class="row mt-2" id="detailFood" >
+
+    <div class="col-md-12"id="ThanhToanBill">
+        <div class="additems"  >
+            <h5>Thanh toán</h5>
+            <table class="table table-hover table-bordered" id="table-detail" style="width: 67%;margin: auto;">
+                <thead>
+                  <tr>
+                    <th scope="col">Nhập mã giảm giá hoặc voucher</th>
+                    <th scope="col"><input type="text" name="" class="form-control" id=""> </th>
+                  </tr>
+                  <tr>
+                    <th scope="col">Tổng tiền</th>
+                    <th scope="col"></th>
+                  </tr>
+                  <tr>
+                    <th scope="col">Tiền giảm</th>
+                    <th scope="col"></th>
+                  </tr>
+                  <tr>
+                    <th scope="col">Tiền khách đưa</th>
+                    <th scope="col"><input type="text" name="" class="form-control" id=""></th>
+                  </tr>
+                  <tr>
+                    <th scope="col">Tiền thối lại</th>
+                    <th scope="col">10000000</th>
+                  </tr>
+                </thead>
+                <tbody >
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+ 
+</div>
 
   
 
@@ -220,8 +256,11 @@ table#table-detail th {
 @push('script')
 <script>
 // Select your input element.
+$('#ThanhToanBill').hide();
 
 $( document ).ready(function() {
+
+    
    
     $('#NhomMonAn').change(function (e) { 
         e.preventDefault();
@@ -413,7 +452,8 @@ $( document ).ready(function() {
     //thanh toán
 
     $(document).on("click","button#GetThanhToan",function(){
-       
+
+       $('#ThanhToanBill').show();
     });
 
 
