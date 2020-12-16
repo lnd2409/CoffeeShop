@@ -140,6 +140,7 @@
     <!-- Main JS-->
     <script src="{{asset("admin-assets")}}/js/main.js"></script>
     @stack('script')
+    @stack('khuyenmai')
 </body>
 
 </html>

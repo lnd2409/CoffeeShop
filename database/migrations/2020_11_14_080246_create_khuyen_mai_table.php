@@ -19,11 +19,13 @@ class CreateKhuyenMaiTable extends Migration
             $table->text('km_noidung');
             $table->date('km_ngaybatdau');
             $table->date('km_ngayketthuc');
-            $table->string('km_hinhanh');
+            $table->string('km_hinhanh')->nullable();
             $table->integer('km_giamphantram')->nullable();
             $table->integer('km_giamgiatien')->nullable();
             $table->integer('km_trangthai')->default(1);
             $table->string('km_code')->nullable();
+            $table->bigInteger('lkm_id')->unsigned();
+            $table->foreign('lkm_id')->references('lkm_id')->on('loaikhuyenmai')->onDelete('cascade');
             $table->timestamps();
         });
     }

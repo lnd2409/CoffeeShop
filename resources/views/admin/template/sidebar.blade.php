@@ -34,7 +34,7 @@
                         Hóa đơn</a>
                 </li>
                 <li>
-                    <a href="chart.html">
+                    <a href="{{ route('mon-an.danh-sach') }}">
                         <i class="fas fa-utensils"></i>Món ăn</a>
                 </li>
                 <li>
@@ -49,7 +49,11 @@
                     <a href="chart.html">
                         <i class="far fa-user-circle"></i>Khách hàng</a>
                 </li>
-                <li>
+                <li class="
+                    @if (Request::segment(2) == 'khuyen-mai')
+                        active
+                    @else
+                    @endif">
                     <a href="{{ route('khuyen-mai') }}">
                         <i class="far fa-user-circle"></i>Khuyến mãi
                     </a>
