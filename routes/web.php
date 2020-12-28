@@ -81,11 +81,27 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
 
         Route::get('/monan-xoa/{id}','LoaiMonAnController@MonAnXoa')->name('admin.mon-an.xoa');
 
-      
+        Route::post('/nhom-mon-an/get','LoaiMonAnController@AjaxGetNMA')->name('admin.get-nhom-ma');
+
+        Route::post('/mon-an/get','LoaiMonAnController@AjaxGetMA')->name('admin.get-mon-ma');
+
+        Route::post('/cap-nhat/nhom-mon-an','LoaiMonAnController@UpdateNhomMonAn')->name('admin.loai-mon-an.update');
+
+        Route::post('/cap-nhat/mon-an','LoaiMonAnController@UpdateMonAn')->name('admin.mon-an.update');
 
     });
 
+    // Nhân viên
+    Route::group(['prefix' => 'nhan-vien'], function () {
+        
+        Route::get('/','NhanVienController@index')->name('nhanvien');
 
+        Route::post('/them','NhanVienController@store')->name('nhanvien.submit');
+
+        //kiểm tra mật khẩu
+        Route::post('/checkpass','NhanVienController@CheckPass')->name('nhanvien.checkpass');
+
+    });
 
 
     Route::get('/danh-sach-dat-ban', 'DatMonController@listOrder')->name('listOrder');

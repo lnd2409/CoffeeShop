@@ -13,19 +13,35 @@ class LoaiMonAnController extends Controller
      */
     public function index()
     {
-        $loai = DB::table('nhommonan')->get();
+        $loai = DB::table('nhommonan')->orderBy('nma_id','DESC')->paginate(4);
+        $loai1 = DB::table('nhommonan')->get();
         $monan = DB::table('monan')
         ->orderBy('nma_id','DESC')
-        ->get();
-        return view('admin.monan.index',compact('loai','monan'));
+        ->paginate(10);
+        return view('admin.monan.index',compact('loai','monan','loai1'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   //Lấy nhóm món ăn ajax
+    public function AjaxGetNMA(Request $request)
+    {
+        if($request->ajax())
+        {
+            $data =DB::table('nhommonan')->where('nma_id',$request->nma_id)->first();
+            return response()->json($data, 200);
+        }
+    }
+
+
+
+   //Lấy món ăn ajax
+    public function AjaxGetMA(Request $request)
+    {
+        if($request->ajax())
+        {
+            $data =DB::table('monan')->where('ma_id',$request->ma_id)->first();
+            return response()->json($data, 200);
+        }
+    }
     public function LoaiThem(Request $request)
     {
         $data['nma_ten']=$request->nma_ten;
@@ -34,15 +50,60 @@ class LoaiMonAnController extends Controller
         return redirect()->back();
     }
 
+    public function UpdateNhomMonAn(Request $request)
+    {
+        $data['nma_ten']=$request->nma_tenmon;
+        // dd($data);
+        DB::table('nhommonan')->where('nma_id',$request->nma_id)->update($data);
+        return redirect()->back();
+    }
+
 
     public function MonThem(Request $request)
     {
+        if ($request->hasFile('ma_hinhanh')) {
+            $file = $request->ma_hinhanh;
+
+            $name = $file->getClientOriginalName();
+            $file->move('upload/mon-an', $file->getClientOriginalName());
+            $data['ma_hinhanh'] = $name;
+        }
+
+
+
+
        $data['ma_ten'] = $request->ma_ten;
        $data['ma_chuthich'] = $request->ma_ghichu;
        $data['ma_gia'] = $request->ma_gia;
        $data['nma_id'] = $request->loai_id;
 
+    //    dd($data);
        DB::table('monan')->insert($data);
+        return redirect()->back();
+
+    }
+
+
+    public function UpdateMonAn(Request $request)
+    {
+        if ($request->hasFile('ma_hinhanh')) {
+            $file = $request->ma_hinhanh;
+
+            $name = $file->getClientOriginalName();
+            $file->move('upload/mon-an', $file->getClientOriginalName());
+            $data['ma_hinhanh'] = $name;
+        }
+
+
+
+
+       $data['ma_ten'] = $request->ma_ten;
+       $data['ma_chuthich'] = $request->ma_mota;
+       $data['ma_gia'] = $request->ma_gia;
+    //    $data['nma_id'] = $request->loai_id;
+
+    //    dd($data);
+       DB::table('monan')->where('ma_id',$request->ma_id)->update($data);
         return redirect()->back();
 
     }

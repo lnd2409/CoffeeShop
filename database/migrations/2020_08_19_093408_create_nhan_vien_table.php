@@ -20,6 +20,7 @@ class CreateNhanVienTable extends Migration
             $table->string('nv_ten', 100);
             $table->string('nv_sdt', 100);
             $table->integer('nv_cmnd');
+            $table->integer('nv_quyen');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -42,7 +42,7 @@
                         <i class="fa fa-newspaper-o"></i>Phiếu mua thực phẩm</a>
                 </li>
                 <li>
-                    <a href="chart.html">
+                    <a href="{{ route('nhanvien') }}">
                         <i class="fas fa-user-circle"></i>Nhân viên</a>
                 </li>
                 <li>
