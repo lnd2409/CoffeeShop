@@ -11,9 +11,7 @@
 |
 */
 // Route::get('/', 'DatMonController@booked')->name('trang-chu');
-Route::get('/', function () {
-    return view('client.index');
-})->name('trang-chu');
+Route::get('/', 'TrangChu\KhachHangController@homePage')->name('trang-chu');
 
 //Đăng nhập
 Route::get('dang-nhap', 'AuthController@index')->name('get-login');

@@ -3,6 +3,9 @@
     Trang chủ
 @endsection
 @section('content')
+    <div class="border-lines-container">
+        <h5 class="border-lines">Các món đặt gần đây</h5>
+    </div>
     <div class="col-sm-6 responsive-column">
         <div class="row">
             <div class="col-md-6 responsive-column">
