@@ -24,11 +24,13 @@ class BanAnController extends Controller
     //     dd( $result1);
         $banan = DB::table('banan')->get();
         $nhom = DB::table('nhommonan')->get();
+        $loaikhuyenmai = DB::table('loaikhuyenmai')->get();
+
 
         
 
 
-        return view('admin.ban-an.index2',compact('banan','nhom'));
+        return view('admin.ban-an.index2',compact('banan','nhom','loaikhuyenmai'));
     }
 
     /**
@@ -41,6 +43,24 @@ class BanAnController extends Controller
         $id =$request->nhom;
         $data = DB::table('monan')->where('nma_id',$id)->get();
         return response()->json($data,200);
+    }
+
+
+    //kiểm tra khuyến mãi
+    public function CheckKMAjax(Request $request)
+    {
+        // $data['code'] =$request->code;
+        // $data['loaiKM'] =$request->loaiKM;
+        // $data['tongtien'] =$request->tongtien;
+   
+        $Gia = DB::table('khuyenmai')
+        // ->where('km_code',$request->code)
+        ->where('lkm_id',$request->loaiKM)
+        ->where('km_trangthai',1)
+        ->get();
+       
+        
+        return response()->json($Gia,200);
     }
 
     /**

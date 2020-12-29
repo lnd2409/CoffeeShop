@@ -49,12 +49,15 @@ Danh sách đặt bàn
                 @endforeach
             </td>
             <td>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary show-modal" data-toggle="modal"
-                    data-target="#exampleModal">
-                    <i class="fa fa-table" aria-hidden="true"></i>
-                </button>
-
+                @if ($item->nv_id != null)
+                    <p style="color: red;">Đã nhận bàn</p>
+                @else
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary show-modal" data-toggle="modal"
+                        data-target="#exampleModal">
+                        <i class="fa fa-table" aria-hidden="true"></i>
+                    </button>
+                @endif
                 <!-- Modal -->
                 @push('insert_html')
 

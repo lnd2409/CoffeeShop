@@ -34,6 +34,19 @@ table#table-detail th {
     font-size: 17px;
     font-weight: 700;
 }
+.YCheckColor{
+    border: 2px solid green;
+}
+.NCheckColor{
+    border: 2px solid red;
+}
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: none !important;
+    outline: 0;
+    box-shadow: none !important;
+}
 </style>
 @endpush
 @section('content')
@@ -217,33 +230,56 @@ table#table-detail th {
     <div class="col-md-12"id="ThanhToanBill">
         <div class="additems"  >
             <h5>Thanh toán</h5>
-            <table class="table table-hover table-bordered" id="table-detail" style="width: 67%;margin: auto;">
-                <thead>
-                  <tr>
-                    <th scope="col">Nhập mã giảm giá hoặc voucher</th>
-                    <th scope="col"><input type="text" name="" class="form-control" id=""> </th>
-                  </tr>
-                  <tr>
-                    <th scope="col">Tổng tiền</th>
-                    <th scope="col"></th>
-                  </tr>
-                  <tr>
-                    <th scope="col">Tiền giảm</th>
-                    <th scope="col"></th>
-                  </tr>
-                  <tr>
-                    <th scope="col">Tiền khách đưa</th>
-                    <th scope="col"><input type="text" name="" class="form-control" id=""></th>
-                  </tr>
-                  <tr>
-                    <th scope="col">Tiền thối lại</th>
-                    <th scope="col">10000000</th>
-                  </tr>
-                </thead>
-                <tbody >
-                    
-                </tbody>
-            </table>
+            <form action="" method="post">
+                @csrf
+                <table class="table table-hover table-bordered" id="table-detail" style="width: 67%;margin: auto;">
+                    <thead>
+                      <tr>
+                        <th scope="col">Chọn loại giảm giá</th>
+                        <th scope="col">
+                            
+                            <div class="form-group">
+                              <select class="form-control" name="lkm_id" id="ChonLoaiKM" required>
+                                @foreach ($loaikhuyenmai as $item)
+                                    <option value=" {{$item->lkm_id}} ">{{$item->lkm_ten}}</option>
+                                @endforeach
+                              </select>
+                            </div>
+                        </th>
+                      </tr>
+                      <tr>
+                        <th scope="col">Nhập mã</th>
+                        <th scope="col"> <input type="text" class="form-control" id="MKMAI"> </th>
+                        <input type="hidden" id="TongGia" name="TongGiaTien" >
+                      </tr>
+                      <tr>
+                        <th scope="col">Tổng tiền</th>
+                        <th scope="col"> <input type="text"  id="TongGia1" class="form-control"  ></th>
+                      </tr>
+                      <tr>
+                        <th scope="col">Tiền giảm</th>
+                        <th scope="col" ><input type="text" id="PhanTram" class="form-control" disabled style="width:40%; float: left;"><input type="text" id="TienGiamGia" class="form-control" disabled style="width:40%"> </th>
+                      </tr>
+                      <tr>
+                        <th scope="col">Tổng tiền phải thu</th>
+                        <th scope="col"> 
+                           <input type="text" id="TienPhaiThu" class="form-control" disabled>
+                        </th>
+                      </tr>
+                      <tr>
+                        <th scope="col">Tiền khách đưa</th>
+                        <th scope="col"><input type="text" name="" class="form-control" id=""></th>
+                      </tr>
+                      <tr>
+                        <th scope="col">Tiền thối lại</th>
+                        <th scope="col">10000000</th>
+                      </tr>
+                    </thead>
+                    <tbody >
+                        
+                    </tbody>
+                </table>
+            </form>
         </div>
     </div>
  
@@ -332,7 +368,7 @@ $( document ).ready(function() {
                     tring+='<td>'+val.ma_ten+'</td>';
                     tring+='<td>'+val.ctpyc_soluongmonan+'</td>';
                     tring+='<td>'+ addCommas(val.ma_gia)+'</td>';
-                    tring+='<td style="text-align: right;">'+ addCommas(val.ma_gia * val.ctpyc_soluongmonan)+'</td>';
+                    tring+='<td style="text-align: right;" >'+ addCommas(val.ma_gia * val.ctpyc_soluongmonan)+'</td>';
                     tring+='<td style="width:100px; "><button style="  margin: 0 25px;" type="button" class="btn btn-danger XoaMonAnNe" data-XoaMonAnNe="'+val.ma_id+'" data-pyc="'+val.pyc_id+'">Xóa</button></td>';
                     tring+='</tr>';
                     $('#Table_MonAn').append(tring);
@@ -342,7 +378,7 @@ $( document ).ready(function() {
                
                 var str2 ='<tr class="tr_td">'
                     str2+='<td colspan="4">Tổng tiền</td>'
-                    str2+='<td id="totalmenu" style="text-align: right;font-size: 17px;font-weight: bold;color: black;">'+ addCommas(totalmenu)+'</td>'
+                    str2+='<td id="totalmenu" style="text-align: right;font-size: 17px;font-weight: bold;color: black;"><input id="GetGia" type="hidden" value=" '+totalmenu+' ">'+ addCommas(totalmenu)+'</td>'
                     str2+='<td>  <button class="btn btn-success" id="GetThanhToan">Thanh toán</button> </td>'
                     str2+='</tr>'
                 $('#Table_MonAn').append(str2);
@@ -454,6 +490,8 @@ $( document ).ready(function() {
     $(document).on("click","button#GetThanhToan",function(){
 
        $('#ThanhToanBill').show();
+       $('#TongGia').val($('#GetGia').val());
+       $('#TongGia1').val(addCommas($('#GetGia').val()));
     });
 
 
@@ -554,7 +592,54 @@ $( document ).ready(function() {
     }
 
 
-    // addCommas(233333);
+    //tính khuyễn mãi
+    $('#MKMAI').keyup(function (e) { 
+        var code = $(this).val();
+        var loaiKM = $('#ChonLoaiKM').val();
+    
+        $.ajaxSetup({
+        headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: "post",
+            url: " {{route('ban-an-KMAjax')}}",
+            data: {code:code,loaiKM:loaiKM},
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                var code = $('#MKMAI').val();
+                var tongtien = $('#TongGia').val();
+                var tiengiam = 0;
+                var tienphaithu = 0;
+                var i=0;
+                for( i=0; i< response.length; i++)
+                {
+                    if(code == response[i].km_code)
+                    {
+                       $('#MKMAI').addClass('YCheckColor');
+                       $('#MKMAI').removeClass('NCheckColor');
+                        tiengiam =(tongtien * response[i].km_giamphantram/100);
+                        tienphaithu =tongtien-(tongtien * response[i].km_giamphantram/100);
+                        $('#TienGiamGia').val(addCommas(tiengiam));
+                        $('#PhanTram').val(response[i].km_giamphantram+' %');
+                        $('#TienPhaiThu').val(addCommas(tienphaithu));
+                       break;
+                    }
+                    else(code != response[i].km_code)
+                    {
+                       $('#MKMAI').addClass('NCheckColor');
+                        $('#MKMAI').removeClass('YCheckColor');
+                    //    console.log('đéo');
+                    }
+                }
+            }
+        });
+    });
+   
+  
 
    
    

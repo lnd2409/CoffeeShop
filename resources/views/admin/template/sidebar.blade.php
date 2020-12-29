@@ -49,7 +49,11 @@
                     <a href="{{ route('admin.khach-hang') }}">
                         <i class="far fa-user-circle"></i>Khách hàng</a>
                 </li>
-                <li>
+                <li class="
+                    @if (Request::segment(2) == 'khuyen-mai')
+                        active
+                    @else
+                    @endif">
                     <a href="{{ route('khuyen-mai') }}">
                         <i class="far fa-user-circle"></i>Khuyến mãi
                     </a>

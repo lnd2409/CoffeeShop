@@ -39,4 +39,14 @@ class KhachHangController extends Controller
         Auth::guard('khachhang')->logout();
         return redirect()->back();
     }
+
+    //Trang chủ
+    public function homePage()
+    {
+        $cacMonDatGanDay = DB::table('chitietphieudat')
+                            ->join('monan','monan.ma_id','chitietphieudat.ma_id')
+                            ->get();
+        return view('client.index');
+    }
+
 }

@@ -44,8 +44,8 @@ class DatMonController extends Controller
 
         try {
             $tong=0;
-            
-            
+
+
             //không chọn món trước
             if($request->inputChooseFood==null){
                 dd('null');
@@ -140,8 +140,9 @@ class DatMonController extends Controller
         $phieudat=\DB::table('phieudat')
         ->join('khachhang','khachhang.kh_id','phieudat.kh_id')
         // ->where('phieudat.pd_ngayden','>=', date("Y-m-d"))
-        ->where('phieudat.nv_id',null)
+        // ->where('phieudat.nv_id',null)
         ->get();
+        // dd($phieudat);
         $ban=\DB::table('banan')->get();
         foreach ($phieudat as $key => $value) {
             $value->ban=$ban;
@@ -149,10 +150,8 @@ class DatMonController extends Controller
             ->join('monan','monan.ma_id','chitietphieudat.ma_id')
             ->where('chitietphieudat.pd_id',$value->pd_id)
             ->get();
+            // print_r($chitiet);
             $value->chitiet=$chitiet;
-
-
-
             //bàn ăn
             foreach($value->ban as $value2){
 
@@ -165,17 +164,10 @@ class DatMonController extends Controller
                 ->get();
                 // dd($banan);
                 $value2->banan=$banan;
-
-
             }
             // dump($value);
-
-
         }
         // dd($phieudat);
-        // dd($phieudat[0]->ban[1]->banan);
-        // die;
-
         return view('admin.datban.pending',compact('phieudat'));
     }
     public function confirmOrder(Request $request)

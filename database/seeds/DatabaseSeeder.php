@@ -17,10 +17,21 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make(123),
                 'nv_ten' => 'Dương Ngọc Tâm',
                 'nv_cmnd' => 1234567890,
-                'nv_sdt' => '1234567890'
+                'nv_sdt' => '1234567890',
+                'nv_quyen'=>0
+                
             ]
         ];
         DB::table('nhanvien')->insert($user);
+        $loaikhuyenmai = [
+            [
+                'lkm_ten' => 'Loại sản phẩm',
+            ],
+            [
+                'lkm_ten'=>'Voucher'
+            ]
+        ];
+        DB::table('loaikhuyenmai')->insert($loaikhuyenmai);
 
         $loaibanan = [
             [
