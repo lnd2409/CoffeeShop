@@ -31,12 +31,7 @@
                 <!-- Table head -->
                 <thead>
                 <tr>
-                    <th style="width:50px;">
-                    <!-- Default unchecked -->
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="tableDefaultCheck1">
-                    </div>
-                    </th>
+    
                     <th>Họ tên</th>
                     <th>Số điện thoại</th>
                     <th>CMND</th>
@@ -49,19 +44,13 @@
                 <tbody>
                     @foreach ($nhanvien as $item)
                 <tr>
-                    <th scope="row">
-                        <!-- Default unchecked -->
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id=" kh{{$item->nv_id}} " checked>
-                            <label class="custom-control-label" for="kh{{$item->nv_id}} "></label>
-                        </div>
-                        </th>
+                    
                         <td> <strong>{{$item->nv_ten}}</strong> </td>
                         <td>{{$item->nv_sdt}} </td>
                         <td>{{$item->nv_cmnd}} </td>
                         <td style="width:150px">
-                            <a href="#"  data-kh_id="{{$item->nv_id}} " class="GetInfoKH btn btn-warning" data-toggle="modal" data-target="#UpdateKhachHang">Sửa</a>
-                            <a onclick=" return DeleteKH()" href="{{ route('admin.khach-hang.delete', ['id'=>$item->nv_id]) }}" class="btn btn-danger">Xóa</a>
+                            <a href="#"  data-nv_id="{{$item->nv_id}} " class="GetInfoNV btn btn-warning" data-toggle="modal" data-target="#UpdateNhanVien">Sửa</a>
+                            <a onclick=" return DeleteNV()" href="{{ route('admin.nhan-vien.delete', ['id'=>$item->nv_id]) }}" class="btn btn-danger">Xóa</a>
                         </td>
                     </tr>
                     @endforeach
@@ -79,7 +68,7 @@
 @endsection
 @push('script')
 <script>
-function DeleteKH()
+function DeleteNV()
 {
     if(confirm("Bạn có muốn xóa ? ")){
         return true;
@@ -89,66 +78,11 @@ function DeleteKH()
 
 
 $(document).ready(function () {
-    $('#CheckSubmit').attr('disabled',true);
-    //Kiểm tra mật khẩu
-    $('#Pss2').keyup(function (e) { 
-
-
-        var p2 = $(this).val();
-        var p1 = $('#Pss1').val();
-        $.ajaxSetup({
-        headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $.ajax({
-            type: "post",
-            url: " {{route('nhanvien.checkpass')}} ",
-            data: {p1:p1,p2:p2},
-            dataType: "json",
-            success: function (response) {
-                console.log(response);
-                if(response==1)
-                {
-                    $('#Pss1').removeClass('checkpassN');
-                    $('#Pss2').removeClass('checkpassN');
-                     $('#Pss1').addClass('checkpassY');
-                     $('#Pss2').addClass('checkpassY');
-                     $('#CheckSubmit').attr('disabled',false);
-                }
-                else
-                {
-                    $('#CheckSubmit').attr('disabled',true);
-                    $('#Pss1').removeClass('checkpassY');
-                    $('#Pss2').removeClass('checkpassY');
-                    $('#Pss1').addClass('checkpassN');
-                     $('#Pss2').addClass('checkpassN');
-                }
-               
-            }
-        });
-
-
-    });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    $('.GetInfoKH').click(function (e) { 
+    $('.GetInfoNV').click(function (e) { 
         e.preventDefault();
 
-        var kh_id =$(this).attr('data-kh_id');
+        var nv_id =$(this).attr('data-nv_id');
+        // alert(nv_id);
         $.ajaxSetup({
         headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -157,16 +91,16 @@ $(document).ready(function () {
 
         $.ajax({
             type: "post",
-            url: " {{route('admin.khach-hang.ajax')}} ",
+            url: " {{route('admin.nhanvien.ajax')}} ",
             dataType: "json",
-            data:{kh_id:kh_id},
+            data:{nv_id:nv_id},
             success: function (response) {
                 console.log(response);
-                $('#kh_ten').val(response.kh_ten);
-                $('#kh_sdt').val(response.kh_sdt);
-                $('#lkh_ten').val(response.lkh_ten);
-                $('#kh_id').val(response.kh_id);
-                $('#lkh_id').val(response.lkh_id);
+                $('#nv_ten').val(response.nv_ten);
+                $('#nv_sdt').val(response.nv_sdt);
+                $('#nv_cmnd').val(response.nv_cmnd);
+                $('#nv_id').val(response.nv_id);
+              
             }
         });
 

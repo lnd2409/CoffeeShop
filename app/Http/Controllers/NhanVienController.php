@@ -39,7 +39,7 @@ class NhanVienController extends Controller
         DB::table('nhanvien')->insert($nhanvien);
         return redirect()->back();
 
-        dd($nhanvien);
+        // dd($nhanvien);
     }
 
 
@@ -63,6 +63,21 @@ class NhanVienController extends Controller
        }
     }
 
+
+    public function indexAjax(Request $request)
+    {
+
+       if($request->ajax())
+       {
+            $nhanvien = DB::table('nhanvien')
+            // ->join('loaikhachhang as lkh','lkh.lkh_id','khachhang.lkh_id')
+            ->where('nv_id',$request->nv_id)
+            ->first();
+
+            return response()->json($nhanvien, 200);
+       }
+       
+    }
     /**
      * Display the specified resource.
      *
@@ -81,9 +96,16 @@ class NhanVienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+       $result = DB::table('nhanvien')->where('nv_id',$request->nv_id)->update([
+           'nv_ten'=>$request->nv_ten,
+           'nv_sdt'=>$request->nv_sdt,
+           'nv_cmnd'=>$request->nv_cmnd,
+           'nv_quyen'=>$request->nv_quyen,
+       ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -94,6 +116,7 @@ class NhanVienController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('nhanvien')->where('nv_id',$id)->delete();
+        return redirect()->back();
     }
 }

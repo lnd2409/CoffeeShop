@@ -22,12 +22,7 @@
                 <!-- Table head -->
                 <thead>
                 <tr>
-                    <th style="width:50px;">
-                    <!-- Default unchecked -->
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="tableDefaultCheck1">
-                    </div>
-                    </th>
+                   
                     <th>Họ tên</th>
                     <th>Số điện thoại</th>
                     <th>Loại khách hàng</th>
@@ -40,13 +35,7 @@
                 <tbody>
                     @foreach ($khachhang as $item)
                 <tr>
-                    <th scope="row">
-                        <!-- Default unchecked -->
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id=" kh{{$item->kh_id}} " checked>
-                            <label class="custom-control-label" for="kh{{$item->kh_id}} "></label>
-                        </div>
-                        </th>
+                   
                         <td> <strong>{{$item->kh_ten}}</strong> </td>
                         <td>{{$item->kh_sdt}} </td>
                         <td>{{$item->lkh_ten}} </td>

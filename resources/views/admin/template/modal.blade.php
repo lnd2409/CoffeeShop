@@ -191,3 +191,57 @@
     </div>
   </div>
 </div>
+
+{{-- cập nhật nhân viên--}}
+  <!-- Modal -->
+  <div class="modal fade" id="UpdateNhanVien" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cập nhật nhân viên</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="{{ route('admin.nhan-vien.submit') }}" method="post">
+                            @csrf
+                            <div class="form-group">
+                              <label for="">Họ tên</label>
+                              <input type="text"
+                                class="form-control" name="nv_ten" id="nv_ten" >
+                              <input type="hidden"
+                                class="form-control" name="nv_id"  id="nv_id" >
+                            </div>
+                            <div class="form-group">
+                              <label for="">Số điện thoại</label>
+                              <input type="text"
+                                class="form-control" name="nv_sdt" id="nv_sdt" >
+                            </div>
+                            <div class="form-group">
+                              <label for="">CMND</label>
+                              <input type="text"
+                                class="form-control" name="nv_cmnd" id="nv_cmnd" >
+                            </div>
+                            <div class="form-group">
+                              <label for="">Phân quyền</label>
+                              <select class="form-control" name="nv_quyen" id="">
+                                <option value="0" selected>Admin</option>
+                                <option value="1" selected>Nhân viên</option>
+                              </select>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+          <button type="submit" class="btn btn-primary">Cập nhật</button>
+        </div></form>
+      </div>
+    </div>
+  </div>

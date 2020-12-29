@@ -98,8 +98,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
 
         Route::post('/them','NhanVienController@store')->name('nhanvien.submit');
 
+        Route::post('/cap-nhat','NhanVienController@update')->name('admin.nhan-vien.submit');
+
+        Route::post('/get-all-nhanvien','NhanVienController@indexAjax')->name('admin.nhanvien.ajax');
+
         //kiểm tra mật khẩu
         Route::post('/checkpass','NhanVienController@CheckPass')->name('nhanvien.checkpass');
+
+        Route::get('/xoa/{id}','NhanVienController@destroy')->name('admin.nhan-vien.delete');
 
     });
 
