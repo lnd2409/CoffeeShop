@@ -53,6 +53,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
     //Thanh toán, kiểm tra khuyên mãi
     Route::post('/thanh-toan/chekc-KM', 'BanAnController@CheckKMAjax')->name('ban-an-KMAjax');
 
+    //Lưu hóa đơn nè
+    Route::post('/thanh-toan/hoa-don', 'HoaDonController@store')->name('ban-an-luu-hoa-don');
+
+
+    Route::get('/thanh-toan/hoa-don', 'HoaDonController@index')->name('hoa-don-get');
+
+    Route::get('/xoa-hoa-don/{id}','HoaDonController@destroy')->name('hoa-don.xoa');
+
+
  
 
     //Quản lí khách hàng =>phụng

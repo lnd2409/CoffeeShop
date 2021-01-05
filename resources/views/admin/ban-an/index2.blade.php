@@ -229,10 +229,11 @@ table#table-detail th {
 
     <div class="col-md-12"id="ThanhToanBill">
         <div class="additems"  >
-            <h5>Thanh toán</h5>
-            <form action="" method="post">
+            <h3 style="text-align: center; margin:10px">Thanh toán</h3>
+            <form action="{{ route('ban-an-luu-hoa-don') }}" method="post">
+                <input type="hidden" name="ba_id" id="BananNE">
                 @csrf
-                <table class="table table-hover table-bordered" id="table-detail" style="width: 67%;margin: auto;">
+                <table class="table table-hover table-bordered" id="table-detail" style="width: 60%;margin:20px auto;">
                     <thead>
                       <tr>
                         <th scope="col">Chọn loại giảm giá</th>
@@ -240,6 +241,7 @@ table#table-detail th {
                             
                             <div class="form-group">
                               <select class="form-control" name="lkm_id" id="ChonLoaiKM" required>
+                                <option value="0" selected>--Không có khuyến mãi--</option>
                                 @foreach ($loaikhuyenmai as $item)
                                     <option value=" {{$item->lkm_id}} ">{{$item->lkm_ten}}</option>
                                 @endforeach
@@ -254,11 +256,11 @@ table#table-detail th {
                       </tr>
                       <tr>
                         <th scope="col">Tổng tiền</th>
-                        <th scope="col"> <input type="text"  id="TongGia1" class="form-control"  ></th>
+                        <th scope="col"> <input type="text" name="tongtien"  id="TongGia1" class="form-control"  ></th>
                       </tr>
                       <tr>
                         <th scope="col">Tiền giảm</th>
-                        <th scope="col" ><input type="text" id="PhanTram" class="form-control" disabled style="width:40%; float: left;"><input type="text" id="TienGiamGia" class="form-control" disabled style="width:40%"> </th>
+                        <th scope="col" ><input type="text" id="PhanTram" class="form-control" disabled style="width:40%; float: left;"><input type="text" name="tiengiam" id="TienGiamGia" class="form-control"  style="width:40%"> </th>
                       </tr>
                       <tr>
                         <th scope="col">Tổng tiền phải thu</th>
@@ -267,12 +269,7 @@ table#table-detail th {
                         </th>
                       </tr>
                       <tr>
-                        <th scope="col">Tiền khách đưa</th>
-                        <th scope="col"><input type="text" name="" class="form-control" id=""></th>
-                      </tr>
-                      <tr>
-                        <th scope="col">Tiền thối lại</th>
-                        <th scope="col">10000000</th>
+                          <td colspan="2"> <button type="submit" style="float:right" class="btn btn-success">Thanh Toán</button></td>
                       </tr>
                     </thead>
                     <tbody >
@@ -341,6 +338,7 @@ $( document ).ready(function() {
         tam=ban;
         $('#BanSo'+ban).toggleClass("change_backgruond");
         $('.BanNum').val(ban);
+        $('#BananNE').val(ban);
         // alert(tam + ban);
         // $('ChonMonAnNe').show();
         $('#ChonMonAnNe').modal('toggle')

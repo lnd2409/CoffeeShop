@@ -17,6 +17,7 @@ class CreateHoaDonTable extends Migration
             $table->bigIncrements('hd_id');
             $table->dateTime('ngaylap');
             $table->integer('tiengiam');
+            $table->integer('tongtien');
 
             $table->bigInteger('nv_id')->unsigned();
             $table->foreign('nv_id')->references('nv_id')->on('nhanvien')->onDelete('cascade');

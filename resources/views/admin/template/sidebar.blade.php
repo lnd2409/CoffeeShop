@@ -29,7 +29,7 @@
                         <i class="fa fa-sticky-note	"></i>Phiếu đặt bàn</a>
                 </li>
                 <li>
-                    <a href="chart.html">
+                    <a href="{{ route('hoa-don-get') }}">
                         <i class="far fa-sticky-note"></i>
                         Hóa đơn</a>
                 </li>
