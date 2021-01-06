@@ -45,8 +45,9 @@ class KhachHangController extends Controller
     {
         $cacMonDatGanDay = DB::table('chitietphieudat')
                             ->join('monan','monan.ma_id','chitietphieudat.ma_id')
-                            ->get();
-        return view('client.index');
+                            ->paginate(4);
+        $monAn = DB::table('monan')->where('ma_giakhuyenmai','<>', null)->paginate(8);
+        return view('client.index', compact('cacMonDatGanDay','monAn'));
     }
 
 }
