@@ -30,7 +30,7 @@
                         <i class="fa fa-sticky-note	"></i>Phiếu đặt bàn</a>
                 </li>
                 <li>
-                    <a href="chart.html">
+                    <a href="">
                         <i class="far fa-sticky-note"></i>
                         Hóa đơn</a>
                 </li>

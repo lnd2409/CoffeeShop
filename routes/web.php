@@ -44,7 +44,82 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
 
     Route::post('/ban-an/lay-mon-an', 'ThemMonAnController@GetAllFood')->name('lay-all-mon-an-theo-ban');
 
+    Route::post('/ban-an/xoa-mon-an', 'ThemMonAnController@DeleteFood')->name('xoa-mon-an-theo-ban');
+
     Route::post('/ban-an/nhom', 'BanAnController@NhomAjax')->name('ban-an-Ajax');
+
+    Route::post('/ban-an/kiem-tra-ban', 'ThemMonAnController@CheckBanAjax')->name('check-status-table');
+
+    //Thanh toán, kiểm tra khuyên mãi
+    Route::post('/thanh-toan/chekc-KM', 'BanAnController@CheckKMAjax')->name('ban-an-KMAjax');
+
+    //Lưu hóa đơn nè
+    Route::post('/thanh-toan/hoa-don', 'HoaDonController@store')->name('ban-an-luu-hoa-don');
+
+
+    Route::get('/thanh-toan/hoa-don', 'HoaDonController@index')->name('hoa-don-get');
+
+    Route::get('/xoa-hoa-don/{id}','HoaDonController@destroy')->name('hoa-don.xoa');
+
+
+ 
+
+    //Quản lí khách hàng =>phụng
+
+    Route::group(['prefix' => 'khach-hang'], function () {
+        
+        Route::get('/','KhachHangController@index')->name('admin.khach-hang');
+
+        Route::post('/get-all-kh','KhachHangController@indexAjax')->name('admin.khach-hang.ajax');
+
+        Route::post('/luu','KhachHangController@store')->name('admin.khach-hang.submit');
+
+        Route::get('/xoa/{id}','KhachHangController@destroy')->name('admin.khach-hang.delete');
+
+    });
+
+
+    //Thêm loại và món ăn 
+    Route::group(['prefix' => 'loai-mon-an'], function () {
+        
+        Route::get('/','LoaiMonAnController@index')->name('admin.loai-mon-an');
+
+        Route::post('/them-loai','LoaiMonAnController@LoaiThem')->name('admin.loai-mon-an.submit');
+
+        Route::post('/them-mon','LoaiMonAnController@MonThem')->name('admin.mon-an.submit');
+
+        Route::get('/loai-xoa/{id}','LoaiMonAnController@LoaiXoa')->name('admin.loai-mon-an.xoa');
+
+        Route::get('/monan-xoa/{id}','LoaiMonAnController@MonAnXoa')->name('admin.mon-an.xoa');
+
+        Route::post('/nhom-mon-an/get','LoaiMonAnController@AjaxGetNMA')->name('admin.get-nhom-ma');
+
+        Route::post('/mon-an/get','LoaiMonAnController@AjaxGetMA')->name('admin.get-mon-ma');
+
+        Route::post('/cap-nhat/nhom-mon-an','LoaiMonAnController@UpdateNhomMonAn')->name('admin.loai-mon-an.update');
+
+        Route::post('/cap-nhat/mon-an','LoaiMonAnController@UpdateMonAn')->name('admin.mon-an.update');
+
+    });
+
+    // Nhân viên
+    Route::group(['prefix' => 'nhan-vien'], function () {
+        
+        Route::get('/','NhanVienController@index')->name('nhanvien');
+
+        Route::post('/them','NhanVienController@store')->name('nhanvien.submit');
+
+        Route::post('/cap-nhat','NhanVienController@update')->name('admin.nhan-vien.submit');
+
+        Route::post('/get-all-nhanvien','NhanVienController@indexAjax')->name('admin.nhanvien.ajax');
+
+        //kiểm tra mật khẩu
+        Route::post('/checkpass','NhanVienController@CheckPass')->name('nhanvien.checkpass');
+
+        Route::get('/xoa/{id}','NhanVienController@destroy')->name('admin.nhan-vien.delete');
+
+    });
+
 
     Route::get('/danh-sach-dat-ban', 'DatMonController@listOrder')->name('listOrder');
     Route::post('/xac-nhan-dat-ban', 'DatMonController@confirmOrder')->name('confirmOrder');

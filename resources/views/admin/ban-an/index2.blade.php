@@ -34,6 +34,19 @@ table#table-detail th {
     font-size: 17px;
     font-weight: 700;
 }
+.YCheckColor{
+    border: 2px solid green;
+}
+.NCheckColor{
+    border: 2px solid red;
+}
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: none !important;
+    outline: 0;
+    box-shadow: none !important;
+}
 </style>
 @endpush
 @section('content')
@@ -43,15 +56,17 @@ table#table-detail th {
         <div class="row" style="width:100%;overflow: auto;margin:auto;border: 1px solid wheat;background: aliceblue;margin-top: 20px;padding: 10px;">
             @foreach ($banan as $item)
             <div class="col-sm-2 BanAn " id="BanSo{{$item->ba_id}}" style="background: #bbefd4;  border:2px solid; margin:5px; height:100px;" >
-                    <h4 class="text-center" style="width: 100%;text-align: center;color: #212f38;font-size: 17px; margin-top:5px">Bàn số {{$item->ba_id}}
+                    <h4 class="text-center"  style="width: 100%;text-align: center;color: #212f38;font-size: 17px; margin-top:5px">Bàn số {{$item->ba_id}}
+                       <p id="h4_status{{$item->ba_id}}">
                         @if ($item->ba_trangthai == 1)
-                            <span class="badge badge-danger">Có người</span>
+                        <span class="badge badge-danger">Có người</span>
                         @else
                             <span class="badge badge-success">Bàn Trống</span>
-                        @endif
+                        @endif 
+                        </p> 
                     </h4>
                     <p style="margin-top:20px;"><a href="" class="ClickBanNe" data-banid="{{$item->ba_id}}"><i class="fa fa-tasks" aria-hidden="true"></i>Thêm món ăn</a></p>
-                </div>
+                </div> 
             @endforeach
         </div>
     </div>
@@ -125,7 +140,7 @@ table#table-detail th {
             <div class="row">
                 @foreach ($nhom as $val)
                 <div class="col-md-2" style="height:40px;background: #252121;margin: 5px 10px;">
-                <a style="color: white;text-align: center;height: 40px;line-height: 40px; display: block;" class="ClickNhom" data-nhom="{{$val->nma_id}}"> {{$val->nma_ten}} </a></div>
+                <a style="color: white;text-align: center;height: 40px;line-height: 40px; display: block;" class="ClickNhom" data-nhom="{{$val->nma_id}}">Loại {{$val->nma_ten}} </a></div>
                 @endforeach
             </div>
             <hr>
@@ -144,7 +159,7 @@ table#table-detail th {
 </div>
 @endpush
 </div>
-<div class="row mt-2"id="detailFood">
+<div class="row mt-2" id="detailFood">
     <div class="col-md-12 " >
         <h3 class="mt-2 " >Chi tiết bàn ăn số <input type="number" class="BanNum"  id="BanNum" value="0" style="width:50px;text-align: center;" disabled></h3>
     </div>
@@ -210,6 +225,62 @@ table#table-detail th {
         </form>
     </div> --}}
 </div>
+<div class="row mt-2" id="detailFood" >
+
+    <div class="col-md-12"id="ThanhToanBill">
+        <div class="additems"  >
+            <h3 style="text-align: center; margin:10px">Thanh toán</h3>
+            <form action="{{ route('ban-an-luu-hoa-don') }}" method="post">
+                <input type="hidden" name="ba_id" id="BananNE">
+                @csrf
+                <table class="table table-hover table-bordered" id="table-detail" style="width: 60%;margin:20px auto;">
+                    <thead>
+                      <tr>
+                        <th scope="col">Chọn loại giảm giá</th>
+                        <th scope="col">
+                            
+                            <div class="form-group">
+                              <select class="form-control" name="lkm_id" id="ChonLoaiKM" required>
+                                <option value="0" selected>--Không có khuyến mãi--</option>
+                                @foreach ($loaikhuyenmai as $item)
+                                    <option value=" {{$item->lkm_id}} ">{{$item->lkm_ten}}</option>
+                                @endforeach
+                              </select>
+                            </div>
+                        </th>
+                      </tr>
+                      <tr>
+                        <th scope="col">Nhập mã</th>
+                        <th scope="col"> <input type="text" class="form-control" id="MKMAI"> </th>
+                        <input type="hidden" id="TongGia" name="TongGiaTien" >
+                      </tr>
+                      <tr>
+                        <th scope="col">Tổng tiền</th>
+                        <th scope="col"> <input type="text" name="tongtien"  id="TongGia1" class="form-control"  ></th>
+                      </tr>
+                      <tr>
+                        <th scope="col">Tiền giảm</th>
+                        <th scope="col" ><input type="text" id="PhanTram" class="form-control" disabled style="width:40%; float: left;"><input type="text" name="tiengiam" id="TienGiamGia" class="form-control"  style="width:40%"> </th>
+                      </tr>
+                      <tr>
+                        <th scope="col">Tổng tiền phải thu</th>
+                        <th scope="col"> 
+                           <input type="text" id="TienPhaiThu" class="form-control" disabled>
+                        </th>
+                      </tr>
+                      <tr>
+                          <td colspan="2"> <button type="submit" style="float:right" class="btn btn-success">Thanh Toán</button></td>
+                      </tr>
+                    </thead>
+                    <tbody >
+                        
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+ 
+</div>
 
   
 
@@ -217,7 +288,12 @@ table#table-detail th {
 
 @push('script')
 <script>
+// Select your input element.
+$('#ThanhToanBill').hide();
+
 $( document ).ready(function() {
+
+    
    
     $('#NhomMonAn').change(function (e) { 
         e.preventDefault();
@@ -262,6 +338,7 @@ $( document ).ready(function() {
         tam=ban;
         $('#BanSo'+ban).toggleClass("change_backgruond");
         $('.BanNum').val(ban);
+        $('#BananNE').val(ban);
         // alert(tam + ban);
         // $('ChonMonAnNe').show();
         $('#ChonMonAnNe').modal('toggle')
@@ -280,26 +357,26 @@ $( document ).ready(function() {
             data: {BanAn:ban},
             dataType: "json",
             success: function (response) {
-                console.log(response);
+                // console.log(response);
                 $("#Table_MonAn tr").remove();
-               
                 response.forEach(val => {
                     totalmenu = totalmenu + (val.ma_gia * val.ctpyc_soluongmonan);
                     var tring = '<tr class="tr_td">';
                     tring+='<td>'+i+'</td>';
                     tring+='<td>'+val.ma_ten+'</td>';
                     tring+='<td>'+val.ctpyc_soluongmonan+'</td>';
-                    tring+='<td>'+val.ma_gia+'</td>';
-                    tring+='<td>'+val.ma_gia * val.ctpyc_soluongmonan+'</td>';
-                    tring+='<td><button type="button" class="btn btn-danger" >Xóa</button></td>';
+                    tring+='<td>'+ addCommas(val.ma_gia)+'</td>';
+                    tring+='<td style="text-align: right;" >'+ addCommas(val.ma_gia * val.ctpyc_soluongmonan)+'</td>';
+                    tring+='<td style="width:100px; "><button style="  margin: 0 25px;" type="button" class="btn btn-danger XoaMonAnNe" data-XoaMonAnNe="'+val.ma_id+'" data-pyc="'+val.pyc_id+'">Xóa</button></td>';
                     tring+='</tr>';
                     $('#Table_MonAn').append(tring);
                     i++;
                 });
-                console.log(totalmenu);
+                console.log( addCommas(totalmenu));
+               
                 var str2 ='<tr class="tr_td">'
                     str2+='<td colspan="4">Tổng tiền</td>'
-                    str2+='<td id="totalmenu">'+totalmenu+'</td>'
+                    str2+='<td id="totalmenu" style="text-align: right;font-size: 17px;font-weight: bold;color: black;"><input id="GetGia" type="hidden" value=" '+totalmenu+' ">'+ addCommas(totalmenu)+'</td>'
                     str2+='<td>  <button class="btn btn-success" id="GetThanhToan">Thanh toán</button> </td>'
                     str2+='</tr>'
                 $('#Table_MonAn').append(str2);
@@ -311,39 +388,7 @@ $( document ).ready(function() {
 
     });
 
-    //Lưu thông tin của món ăn trên bàn
-    // $('#LuuMonAn').click(function (e) { 
-    //     e.preventDefault();
-    //     var ban = $('#BanNum').val();
-    //     // var nmaid = $('#NhomMonAn').val();
-    //     var ma_id = $('#MonAn').val();
-    //     var sl = $('#ChonBan').val();
-    //     var i=1;
-       
-    //     $.ajax({
-    //         type: "POST",
-    //         url: " {{route('them-mon-an-submit')}} ",
-    //         data: {SoLuong:sl,BanAn:ban,MonAn:ma_id },
-    //         dataType: "json",
-    //         success: function (response) {
-    //             console.log(response);
-    //             $("#Table_MonAn tr").remove();
-    //             response.forEach(val => {
-    //                 var tring = '<tr>';
-    //                 tring+='<td>'+i+'</td>';
-    //                 tring+='<td>'+val.ma_ten+'</td>';
-    //                 tring+='<td>'+val.ctpyc_soluongmonan+'</td>';
-    //                 tring+='<td>'+val.ma_gia+'</td>';
-    //                 tring+='<td>'+val.ma_gia * val.ctpyc_soluongmonan+'</td>';
-    //                 tring+='<td>'+10+'</td>';
-                
-    //                 tring+='</tr>';
-    //                 $('#Table_MonAn').append(tring);
-    //                 i++;
-    //             });
-    //         }
-    //     });
-    // });
+  
 
     $('.ClickNhom').click(function (e) { 
         e.preventDefault();
@@ -381,7 +426,6 @@ $( document ).ready(function() {
                     data +='</div>';  
                     $('#MonTheoNhom').append(data);
                 }
-                
             }
         });
     });
@@ -393,14 +437,17 @@ $( document ).ready(function() {
 
         var stt = $(this).attr('data-stt');
         var ban = $('#BanNum').val();
+       
         var ma_id = $('#GetNameFood'+stt).val();
         var sl = $('#GetQuatiFood'+stt).val();
         $('#GetQuatiFood'+stt).val(1);
+        
        var i =1;
        var totalmenu=0;
-        console.log("ban"+ban );
-        console.log("mon an"+ ma_id);
-        console.log("so luong"+sl);
+       $("#Table_MonAn tr").remove();
+        // console.log("ban"+ban );
+        // console.log("mon an"+ ma_id);
+        // console.log("so luong"+sl);
         $.ajax({
             type: "POST",
             url: " {{route('them-mon-an-submit')}} ",
@@ -408,7 +455,9 @@ $( document ).ready(function() {
             dataType: "json",
             success: function (response) {
                 console.log(response);
+                CheckStatusTab(ban);
                 $("#Table_MonAn tr").remove();
+                
                     response.forEach(val => {
                         totalmenu = totalmenu + (val.ma_gia * val.ctpyc_soluongmonan);
                         var tring = '<tr>';
@@ -417,7 +466,7 @@ $( document ).ready(function() {
                         tring+='<td>'+val.ctpyc_soluongmonan+'</td>';
                         tring+='<td>'+val.ma_gia+'</td>';
                         tring+='<td>'+val.ma_gia * val.ctpyc_soluongmonan+'</td>';
-                        tring+='<td><button type="button" class="btn btn-danger" >Xóa</button></td>';
+                        tring+='<td><button type="button" class="btn btn-danger XoaMonAnNe" data-XoaMonAnNe="'+val.ma_id+'" data-pyc="'+val.pyc_id+'">Xóa</button></td>';
                         tring+='</tr>';
                         $('#Table_MonAn').append(tring);
                         i++;
@@ -437,10 +486,163 @@ $( document ).ready(function() {
     //thanh toán
 
     $(document).on("click","button#GetThanhToan",function(){
-       
+
+       $('#ThanhToanBill').show();
+       $('#TongGia').val($('#GetGia').val());
+       $('#TongGia1').val(addCommas($('#GetGia').val()));
     });
 
+
+
+    // Xoa mon an
+    $(document).on("click",".XoaMonAnNe",function(){
+    
+        var ma_id = $(this).attr('data-XoaMonAnNe');
+        var pyc_id = $(this).attr('data-pyc');
+        var totalmenu=0;
+        var i =1;
+        var ban = $('#BanNum').val();
+        if(confirm("Bạn có muốn xóa món ăn này ?")){
+            console.log("ban  "+ban );
+            console.log("mon an "+ma_id);
+            console.log("pyc "+ pyc_id);
+            // $("#Table_MonAn tr").remove();
+        $.ajaxSetup({
+        headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: " {{route('xoa-mon-an-theo-ban')}} ",
+            data: {ma_id:ma_id,pyc_id:pyc_id,BanAn:ban},
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                CheckStatusTab(ban);
+                $("#Table_MonAn tr").remove();
+                response.forEach(val => {
+                    totalmenu = totalmenu + (val.ma_gia * val.ctpyc_soluongmonan);
+                    var tring = '<tr class="tr_td">';
+                    tring+='<td>'+i+'</td>';
+                    tring+='<td>'+val.ma_ten+'</td>';
+                    tring+='<td>'+val.ctpyc_soluongmonan+'</td>';
+                    tring+='<td>'+ addCommas(val.ma_gia)+'</td>';
+                    tring+='<td>'+addCommas(val.ma_gia * val.ctpyc_soluongmonan)+'</td>';
+                    tring+='<td><button type="button" class="btn btn-danger XoaMonAnNe" data-XoaMonAnNe="'+val.ma_id+'" data-pyc="'+val.pyc_id+'">Xóa</button></td>';
+                    tring+='</tr>';
+                    $('#Table_MonAn').append(tring);
+                    i++;
+                });
+                var str2 ='<tr class="tr_td">'
+                    str2+='<td colspan="4">Tổng tiền</td>'
+                    str2+='<td id="totalmenu">'+totalmenu+'</td>'
+                    str2+='<td>  <button class="btn btn-success" id="GetThanhToan">Thanh toán</button> </td>'
+                    str2+='</tr>'
+                $('#Table_MonAn').append(str2);
+            }
+        });
+
+        
+        }   
+    });
+
+    //Kiểm tra checkin trang thái bàn
+    function CheckStatusTab(val)
+    {
+        $.ajax({
+            type: "post",
+            url: " {{route('check-status-table')}} ",
+            data: {ba_id:val},
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                $('#h4_status'+val).empty();
+                if(response > 0){
+                    var string ='';
+                    string+= '<span class="badge badge-danger">Có người</span>';
+                    $('#h4_status'+val).append(string); 
+                }
+                else
+                {
+                    var string ='';
+                    string+= '<span class="badge badge-success">Bàn Trống</span>';
+                    $('#h4_status'+val).append(string); 
+                }
+            }
+        });
+    }
+
+
+    function addCommas(nStr)
+    {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        console.log(x1 + x2 );
+        return x1 + x2;
+    }
+
+
+    //tính khuyễn mãi
+    $('#MKMAI').keyup(function (e) { 
+        var code = $(this).val();
+        var loaiKM = $('#ChonLoaiKM').val();
+    
+        $.ajaxSetup({
+        headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: "post",
+            url: " {{route('ban-an-KMAjax')}}",
+            data: {code:code,loaiKM:loaiKM},
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                var code = $('#MKMAI').val();
+                var tongtien = $('#TongGia').val();
+                var tiengiam = 0;
+                var tienphaithu = 0;
+                var i=0;
+                for( i=0; i< response.length; i++)
+                {
+                    if(code == response[i].km_code)
+                    {
+                       $('#MKMAI').addClass('YCheckColor');
+                       $('#MKMAI').removeClass('NCheckColor');
+                        tiengiam =(tongtien * response[i].km_giamphantram/100);
+                        tienphaithu =tongtien-(tongtien * response[i].km_giamphantram/100);
+                        $('#TienGiamGia').val(addCommas(tiengiam));
+                        $('#PhanTram').val(response[i].km_giamphantram+' %');
+                        $('#TienPhaiThu').val(addCommas(tienphaithu));
+                       break;
+                    }
+                    else(code != response[i].km_code)
+                    {
+                       $('#MKMAI').addClass('NCheckColor');
+                        $('#MKMAI').removeClass('YCheckColor');
+                    //    console.log('đéo');
+                    }
+                }
+            }
+        });
+    });
+   
+  
+
+   
+   
     console.log( "ready!" );
-});  
+});
+ 
 </script>
 @endpush

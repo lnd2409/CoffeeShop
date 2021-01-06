@@ -29,12 +29,12 @@
                         <i class="fa fa-sticky-note	"></i>Phiếu đặt bàn</a>
                 </li>
                 <li>
-                    <a href="chart.html">
+                    <a href="{{ route('hoa-don-get') }}">
                         <i class="far fa-sticky-note"></i>
                         Hóa đơn</a>
                 </li>
                 <li>
-                    <a href="{{ route('mon-an.danh-sach') }}">
+                    <a href="{{ route('admin.loai-mon-an') }}">
                         <i class="fas fa-utensils"></i>Món ăn</a>
                 </li>
                 <li>
@@ -42,11 +42,11 @@
                         <i class="fa fa-newspaper-o"></i>Phiếu mua thực phẩm</a>
                 </li>
                 <li>
-                    <a href="chart.html">
+                    <a href="{{ route('nhanvien') }}">
                         <i class="fas fa-user-circle"></i>Nhân viên</a>
                 </li>
                 <li>
-                    <a href="chart.html">
+                    <a href="{{ route('admin.khach-hang') }}">
                         <i class="far fa-user-circle"></i>Khách hàng</a>
                 </li>
                 <li class="

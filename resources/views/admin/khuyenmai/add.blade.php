@@ -21,8 +21,9 @@
             <label>Loại khuyến mãi</label>
             <select name="loaiKhuyenMai" class="form-control" id="loaiKhuyenMai">
                 <option value="null">Chọn loại khuyến mãi</option>
-                <option value="nhomMonAn">Loại sản phẩm</option>
-                <option value="voucher">Voucher</option>
+                @foreach ($loaiKhuyenMai as $item)
+                    <option value=" {{$item->lkm_id}} "> {{$item->lkm_ten}} </option>
+                @endforeach
             </select>
         </div>
 
