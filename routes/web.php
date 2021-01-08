@@ -39,9 +39,7 @@ Route::view('doi-mat-khau', 'client.changepass');
 Route::post('doi-mat-khau', 'AuthController@changePass')->name('changePass');
 // Phần admin
 Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function () {
-    Route::get('/', function () {
-        return view('admin.index');
-    })->name('admin');
+    Route::get('/', 'ThongKeController@index')->name('admin');
     //Bàn ăn
     Route::get('/ban-an', 'BanAnController@index')->name('ban-an');
     Route::post('/ban-an/them-ban-an', 'BanAnController@store')->name('them-ban-an');
