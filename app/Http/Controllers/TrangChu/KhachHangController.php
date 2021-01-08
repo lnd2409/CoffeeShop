@@ -49,5 +49,10 @@ class KhachHangController extends Controller
         $monAn = DB::table('monan')->where('ma_giakhuyenmai','<>', null)->paginate(8);
         return view('client.index', compact('cacMonDatGanDay','monAn'));
     }
+    public function LienHe()
+    {
+
+        return view('client.lien-he.contact');
+    }
 
 }

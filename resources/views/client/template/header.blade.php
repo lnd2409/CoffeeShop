@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-6">
-                    <em>Liên hệ: 0 800 - <span class="text-uppercase">Giao hàng tận nơi</span></em>
+                    <em>Liên hệ: 0973 131 676 - <span class="text-uppercase">Giao hàng tận nơi</span></em>
                 </div>
                 <div class="col-xs-6 text-right">
                     {{-- Xin chào quý khách,  --}}
@@ -29,8 +29,8 @@
                                 <img class="page-logo" alt="logo" src="{{asset("client")}}/assets/images/logo.png">
                             </div>
                             <div class="centered-column hidden-xs">
-                                <h1 class="site-name">ResFoo</h1>
-                                <h4 class="site-name-info">Chuỗi nhà hàng - khách sạn</h4>
+                                <h1 class="site-name">RedFoods</h1>
+                                <h4 class="site-name-info">Nhà RedFoods kính chào quý khách</h4>
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                                 <a href="{{ route('thuc-don') }}">Thực đơn</a>
                             </li>
                             <li>
-                                <a href="{{asset("client")}}/contact.html">Liên hệ</a>
+                                <a href="{{ route('kh-lien-he') }}">Liên hệ</a>
                             </li>
                             <li>
                                 <div class="menu-item has-small-label cart-trigger">Bàn đã đặt </div>

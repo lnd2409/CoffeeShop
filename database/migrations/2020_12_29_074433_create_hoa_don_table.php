@@ -16,8 +16,8 @@ class CreateHoaDonTable extends Migration
         Schema::create('hoadon', function (Blueprint $table) {
             $table->bigIncrements('hd_id');
             $table->dateTime('ngaylap');
-            $table->integer('tiengiam');
-            $table->integer('tongtien');
+            $table->string('tiengiam');
+            $table->string('tongtien');
 
             $table->bigInteger('nv_id')->unsigned();
             $table->foreign('nv_id')->references('nv_id')->on('nhanvien')->onDelete('cascade');

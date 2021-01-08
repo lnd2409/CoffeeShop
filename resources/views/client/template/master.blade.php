@@ -201,6 +201,7 @@
     {{-- FOOTER --}}
     @include('client.template.footer')
     <script type="text/javascript" src="{{asset("client")}}/assets/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script type="text/javascript" src="{{asset("client")}}/assets/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{asset("client")}}/assets/owl-carousel2/owl.carousel.min.js"></script>
     <script type="text/javascript" src="{{asset("client")}}/assets/retina/retina.min.js"></script>

@@ -7,16 +7,26 @@
     <img class="img-full" alt="page title img" src="{{asset("client")}}/assets/images/headers/menu.png">
     <div class="page-title">
         <div class="container">
-            <h1>Menu</h1>
-            <p>Lorem ipsum dolor sit amet</p>
+            <h1>
+                RedFoods</h1>
+            <p>Chất Lượng - An Toàn - Tin Cậy</p>
         </div><!-- .container -->
     </div>
 </div><!-- .page-title-img -->
 
 <section class="section-gray">
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" action="{{ route('kh-tim-kiem') }}" id="SearchFood">
+                    @csrf
+                    <input  style="width:30%" class="form-control" id="NoiDung" type="text" name="NoiDung" placeholder="Nhập từ khóa tìm kiếm...">
+                </form>
+            </div>
+        </div>
         <div class="text-center">
             <ul class="list-bullets-inline">
+
                 <li><a href="{{ route('thuc-don') }}">Tất cả</a></li>
                 @foreach ($nhomMonAn as $item)
                     {{-- <p>{{ 'thuc-don/nhom-mon-an'.'/'.$item->nma_id }}</p> --}}
@@ -33,13 +43,13 @@
                 @foreach ($monAn[$item->nma_id] as $item)
                     <div class="col-md-6 product-preview-container">
                         <div class="product-preview-big">
-                            <a href="#" class="cart-trigger"><img alt="product photo" src="{{asset("client")}}/assets/images/menu/menu1.jpg"></a>
+                            <a href="#" class="cart-trigger"><img style="width:60%" alt="product photo" src="{{asset("upload/mon-an/")}}/{{$item->ma_hinhanh}}"></a>
                             <div class="product-content">
                                 <div class="product-content-inner">
                                     <h4 class="product-title"><a href="#" class="cart-trigger">{{ $item->ma_ten }}</a></h4>
                                     <p>{{ $item->ma_chuthich }}</p>
                                     <div class="product-price">
-                                        {{ $item->ma_gia }}
+                                        {{ number_format($item->ma_gia)  }} đ
                                     </div>
                                 </div>
                             </div><!-- .product-content -->
@@ -49,6 +59,7 @@
             @endif
         </div><!-- .row -->
         @endforeach
+
         {{-- <div class="row">
             <div class="col-md-6 product-preview-container">
                 <div class="product-preview-big">
@@ -218,3 +229,13 @@
     </div><!-- .container -->
 </section>
 @endsection
+@push('script')
+<script>
+$('#NoiDung').keypress(function (e) {
+  if (e.which == 13) {
+    $('form#SearchFood').submit();
+    return false;    //<---- Add this line
+  }
+});
+</script>
+@endpush
