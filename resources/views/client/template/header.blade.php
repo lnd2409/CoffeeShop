@@ -51,7 +51,11 @@
                                 <a href="{{ route('thuc-don') }}">Thực đơn</a>
                             </li>
                             <li>
+<<<<<<< HEAD
                                 <a href="{{ route('kh-lien-he') }}">Liên hệ</a>
+=======
+                                <a href="{{ route('lien-he') }}">Liên hệ</a>
+>>>>>>> ngoc.duc
                             </li>
                             <li>
                                 <div class="menu-item has-small-label cart-trigger">Bàn đã đặt </div>

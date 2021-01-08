@@ -10,7 +10,7 @@
         <nav class="navbar-sidebar">
             <ul class="list-unstyled navbar__list">
                 <li>
-                    <a href="{{ route('trang-chu') }}">
+                    <a href="{{ route('admin') }}">
                         <i class="fas fa-home"></i>Trang chủ</a>
                 </li>
                 {{-- class="active" --}}
