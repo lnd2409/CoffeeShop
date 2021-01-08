@@ -12,6 +12,8 @@
 */
 // Route::get('/', 'DatMonController@booked')->name('trang-chu');
 Route::get('/', 'TrangChu\KhachHangController@homePage')->name('trang-chu');
+Route::get('/lien-he', 'LienHeController@index')->name('lien-he');
+
 
 //Đăng nhập
 Route::get('dang-nhap', 'AuthController@index')->name('get-login');
@@ -25,6 +27,10 @@ Route::view('doi-mat-khau', 'client.changepass');
 Route::post('doi-mat-khau', 'AuthController@changePass')->name('changePass');
 // Phần admin
 Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function () {
+
+
+
+
     Route::get('/', 'ThongKeController@index')->name('admin');
     //Bàn ăn
     Route::get('/ban-an', 'BanAnController@index')->name('ban-an');

@@ -51,7 +51,7 @@
                                 <a href="{{ route('thuc-don') }}">Thực đơn</a>
                             </li>
                             <li>
-                                <a href="{{asset("client")}}/contact.html">Liên hệ</a>
+                                <a href="{{ route('lien-he') }}">Liên hệ</a>
                             </li>
                             <li>
                                 <div class="menu-item has-small-label cart-trigger">Bàn đã đặt </div>
