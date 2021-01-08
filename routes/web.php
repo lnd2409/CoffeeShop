@@ -25,9 +25,7 @@ Route::view('doi-mat-khau', 'client.changepass');
 Route::post('doi-mat-khau', 'AuthController@changePass')->name('changePass');
 // Phần admin
 Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function () {
-    Route::get('/', function () {
-        return view('admin.index');
-    })->name('admin');
+    Route::get('/', 'ThongKeController@index')->name('admin');
     //Bàn ăn
     Route::get('/ban-an', 'BanAnController@index')->name('ban-an');
     Route::post('/ban-an/them-ban-an', 'BanAnController@store')->name('them-ban-an');
@@ -62,12 +60,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
     Route::get('/xoa-hoa-don/{id}','HoaDonController@destroy')->name('hoa-don.xoa');
 
 
- 
+
 
     //Quản lí khách hàng =>phụng
 
     Route::group(['prefix' => 'khach-hang'], function () {
-        
+
         Route::get('/','KhachHangController@index')->name('admin.khach-hang');
 
         Route::post('/get-all-kh','KhachHangController@indexAjax')->name('admin.khach-hang.ajax');
@@ -79,9 +77,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
     });
 
 
-    //Thêm loại và món ăn 
+    //Thêm loại và món ăn
     Route::group(['prefix' => 'loai-mon-an'], function () {
-        
+
         Route::get('/','LoaiMonAnController@index')->name('admin.loai-mon-an');
 
         Route::post('/them-loai','LoaiMonAnController@LoaiThem')->name('admin.loai-mon-an.submit');
@@ -104,7 +102,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkNhanVien'], function ()
 
     // Nhân viên
     Route::group(['prefix' => 'nhan-vien'], function () {
-        
+
         Route::get('/','NhanVienController@index')->name('nhanvien');
 
         Route::post('/them','NhanVienController@store')->name('nhanvien.submit');
