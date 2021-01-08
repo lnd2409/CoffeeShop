@@ -91,8 +91,7 @@
 </style>
 @endpush
 @section('content')
-<div class="container">
-
+<div class="" style="margin-left: 200px;margin-right: 200px">
     <form action="{{route('datban.setTable')}}" method="post" class="frm" id="frm">
         @csrf
         <table class="table table-borderless">

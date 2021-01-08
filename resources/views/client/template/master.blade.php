@@ -89,121 +89,125 @@
                     <h1 class="no-top-margin border-lines">Thông tin đặt bàn</h1>
                 </div>
                 <div class="content">
-                    <form action="" method="get">
+                    {{-- <form action="{{route('datban.search')}}" method="get"> --}}
 
-                        <input type="date" name="date" id="" value="{{$phieudat[0]->pd_ngayden}}" style="color: black;">
-                        &nbsp;
-                        <button class="btn btn-success" type="submit">Tìm kiếm</button>
-                        &nbsp;
-                        <button class="btn btn-warning" type="button">Xem
-                            lịch sử đặt</button>
-                    </form>
+                    <input type="date" name="date" id="date" value="{{$phieudat[0]->pd_ngayden}}" style="color: black;">
+                    &nbsp;
+                    <button class="btn btn-success" type="submit" id="search">Tìm kiếm</button>
+                    &nbsp;
+                    <button class="btn btn-warning" type="button" id="history">Xem
+                        lịch sử đặt</button>
+                    {{-- </form> --}}
                     <br>
                     {{-- bàn --}}
-                    @foreach ($phieudat as $item)
-                    <form action="{{route('datban.updateTable',$item->pd_id)}}" method="post">
-                        @csrf
-                        @if ($item->kh_id == Auth::guard('khachhang')->id())
-                        <div class="info">
-                            <table>
-                                <tr>
-                                    <td>Số khách:</td>
-                                    <td><input type="number" value="{{$item->pd_soluongkhach}}" style="color: black;"
-                                            name="amountCustomer">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Số bàn:</td>
-                                    @if ($item->banan->isNotEmpty())
+                    <div class="contentResponse">
 
-                                    <td>
-                                        @foreach ($item->banan as $key=>$banan)
-                                        {{$banan->ba_id}}
-                                        @if ($key++!=null)
-                                        ,
+                        @foreach ($phieudat as $item)
+                        <form action="{{route('datban.updateTable',$item->pd_id)}}" method="post">
+                            @csrf
+                            @if ($item->kh_id == Auth::guard('khachhang')->id())
+                            <div class="info">
+                                <table>
+                                    <tr>
+                                        <td>Số khách:</td>
+                                        <td><input type="number" value="{{$item->pd_soluongkhach}}"
+                                                style="color: black;" name="amountCustomer">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Số bàn:</td>
+                                        @if ($item->banan->isNotEmpty())
+
+                                        <td>
+                                            @foreach ($item->banan as $key=>$banan)
+                                            {{$banan->ba_id}}
+                                            @if ($key++==null)
+                                            ,
+                                            @endif
+                                            @endforeach
+                                        </td>
+                                        @else
+                                        <td>Đang chờ nhân viên xác nhận</td>
                                         @endif
-                                        @endforeach
-                                    </td>
-                                    @else
-                                    <td>Đang chờ nhân viên xác nhận</td>
-                                    @endif
-                                </tr>
-                                <tr>
-                                    <td>Thời gian:</td>
-                                    <td><input type="datetime-local" style="color: black;"
-                                            value="{{strftime('%Y-%m-%dT%H:%M:%S', strtotime($item->pd_ngayden.$item->pd_gioden))}}"
-                                            name="time">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Ghi chú:</td>
-                                    <td><input type="text" value="{{$item->pd_ghichu}}" name="note"></td>
-                                </tr>
-                                <tr>
-                                    <td>Tổng tiền:</td>
-                                    <td>{{number_format($item->pd_sotientongtamtinh)}} đ</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class=" product-preview-small">
-                            <div class="product-img">
-                                <img alt="product photo" src="{{asset("client")}}/assets/images/products/1_small.png">
+                                    </tr>
+                                    <tr>
+                                        <td>Thời gian:</td>
+                                        <td><input type="datetime-local" style="color: black;"
+                                                value="{{strftime('%Y-%m-%dT%H:%M:%S', strtotime($item->pd_ngayden.$item->pd_gioden))}}"
+                                                name="time">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ghi chú:</td>
+                                        <td><input type="text" value="{{$item->pd_ghichu}}" name="note"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tổng tiền:</td>
+                                        <td>{{number_format($item->pd_sotientongtamtinh)}} đ</td>
+                                    </tr>
+                                </table>
                             </div>
-                            {{-- món ăn --}}
-                            <div class="product-content">
-                                <div class="row">
-                                    @foreach ($item->chitiet as $key=>$item2)
+                            <div class=" product-preview-small">
+                                <div class="product-img">
+                                    <img alt="product photo"
+                                        src="{{asset("client")}}/assets/images/products/1_small.png">
+                                </div>
+                                {{-- món ăn --}}
+                                <div class="product-content">
+                                    <div class="row">
+                                        @foreach ($item->chitiet as $key=>$item2)
 
-                                    <div class="col-md-9 key{{$key}}">
-                                        <div class="row">
-                                            <div class="col-md-8">
-                                                <h4 class="product-title">{{$item2->ma_ten}}</h4>
-                                                Giá {{number_format($item2->ma_gia)}} đ
-                                            </div>
-                                            <div class="col-md-2">
-                                                <h4 class="product-title">&nbsp;</h4>
-                                                x
-                                            </div>
-                                            <div class="col-md-2">
-                                                <h4 class="product-title">&nbsp;</h4>
-                                                <input type="hidden" name="food[]" value="{{$item2->ma_id}}">
-                                                <input type="number" class="form-control" style="color: black;"
-                                                    value="{{$item2->ctpd_soluong}}" name="amount[]">
+                                        <div class="col-md-9 key{{$key}}">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h4 class="product-title">{{$item2->ma_ten}}</h4>
+                                                    Giá {{number_format($item2->ma_gia)}} đ
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <h4 class="product-title">&nbsp;</h4>
+                                                    x
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <h4 class="product-title">&nbsp;</h4>
+                                                    <input type="hidden" name="food[]" value="{{$item2->ma_id}}">
+                                                    <input type="number" class="form-control" style="color: black;"
+                                                        value="{{$item2->ctpd_soluong}}" name="amount[]">
 
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-2 key{{$key}}">
-                                        <h4 class="product-title">&nbsp;</h4>
-                                        <span>
+                                        <div class="col-md-2 key{{$key}}">
+                                            <h4 class="product-title">&nbsp;</h4>
+                                            <span>
 
-                                            {{number_format($item2->ma_gia*$item2->ctpd_soluong)}} đ
-                                        </span>
+                                                {{number_format($item2->ma_gia*$item2->ctpd_soluong)}} đ
+                                            </span>
 
+                                        </div>
+                                        <div class="col-md-1 key{{$key}}">
+                                            <h4 class="product-title">&nbsp;</h4>
+                                            <span>
+                                                <a href="" style="color: red" class="removeFood" data-food="{{$key}}">
+                                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                                </a>
+                                            </span>
+                                        </div>
+                                        @endforeach
                                     </div>
-                                    <div class="col-md-1 key{{$key}}">
-                                        <h4 class="product-title">&nbsp;</h4>
-                                        <span>
-                                            <a href="" style="color: red" class="removeFood" data-food="{{$key}}">
-                                                <i class="fa fa-times" aria-hidden="true"></i>
-                                            </a>
-                                        </span>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div><!-- .product-content -->
-                        </div><!-- .product-preview-small -->
-                        <div class="addFood{{$item->pd_id}}"></div>
-                        <a type="button" id="addFood" data-place="{{$item->pd_id}}">Thêm món</a>
-                        <input type="hidden" name="total" value="0" id="inputTotal">
-                        <button type="submit" class="btn btn-success">Lưu</button>
-                        <button type="button" class="btn btn-danger" style="float: right"
-                            onclick="window.location='{{ route('datban.deleteTable',$item->pd_id) }}'">Huỷ đặt
-                            bàn</button>
-                        <hr>
-                        @endif
-                    </form>
-                    @endforeach
+                                </div><!-- .product-content -->
+                            </div><!-- .product-preview-small -->
+                            <div class="addFood{{$item->pd_id}}"></div>
+                            <a type="button" id="addFood" data-place="{{$item->pd_id}}">Thêm món</a>
+                            <input type="hidden" name="total" value="0" id="inputTotal">
+                            <button type="submit" class="btn btn-success">Lưu</button>
+                            <button type="button" class="btn btn-danger" style="float: right"
+                                onclick="window.location='{{ route('datban.deleteTable',$item->pd_id) }}'">Huỷ đặt
+                                bàn</button>
+                            <hr>
+                            @endif
+                        </form>
+                        @endforeach
+                    </div>
                 </div>
             </div><!-- .cart-content -->
         </div><!-- .container -->
@@ -289,6 +293,198 @@
                 $('.key'+id).remove();
             });
         });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#search').click(function (e) { 
+                let date= $('#date').val();
+                e.preventDefault();
+            $.ajax({
+                type: "get",
+                url: "{{route('datban.search')}}",
+                data: {date:date},
+                dataType: "json",
+                success: function (response) {
+                    let html='';
+                    response.forEach(element => {
+                        
+                        html+="<div class='info'>";
+                        html+="<table>";
+                        html+="<tr>";
+                        html+="<td>Số khách:</td>";
+                        html+="<td>"+element.pd_soluongkhach;
+                        html+="</td>";
+                        html+="</tr>";
+                        html+="<tr>";
+                        html+="<td>Số bàn:</td>";
+                        if (element.banan.length!=0) {
+                            html+="<td>";
+                            for (let index = 0; index < element.banan.length; index++) {
+                                 html+=element.banan[index].ba_id;
+                                 if (element.banan[index+1]!=undefined) {
+                                     
+                                    html+=",";
+                                 }
+                            }
+                            html+="</td>";
+                        }else html+="<td>Đang chờ nhân viên xác nhận</td>";
+                        html+="</tr>";
+                        html+="<tr>";
+                        html+="<td>Thời gian:</td>";
+                        html+="<td>";
+                        html+=element.pd_ngayden;
+                        html+="&nbsp;";
+                        html+=element.pd_gioden;
+                        html+="</td>";
+                        html+="</tr>";
+                        html+="<tr>";
+                        html+="<td>Ghi chú:</td>";
+                        html+="<td>"+element.pd_ghichu;
+                        html+="</tr>";
+                        html+="<tr>";
+                        html+="<td>Tổng tiền:</td>";
+                        console.log(element);
+                        html+="<td>"+element.pd_sotientongtamtinh+" đ</td>";
+                        html+="</tr>";
+                        html+="</table>";
+                        html+="</div>";
+                        html+="<div class='product-preview-small'>";
+                        html+="<div class='product-img'>";
+                        html+="</div>";
+                        html+="{{-- món ăn --}}";
+                        html+="<div class='product-content'>";
+                        html+="<div class='row'>";
+                        element.chitiet.forEach(element3 => {
+                            html+="<div class='col-md-9'>";
+                            html+="<div class='row'>";
+                            html+="<div class='col-md-8'>";
+                            html+="    <h4 class='product-title'>"+element3.ma_ten+"</h4>";
+                            html+="    Giá "+element3.ma_gia+" đ";
+                            html+="</div>";
+                            html+="<div class='col-md-2'>";
+                            html+="    <h4 class='product-title'>&nbsp;</h4>";
+                            html+="    x";
+                            html+="</div>";
+                            html+="<div class='col-md-2'>";
+                            html+="    <h4 class='product-title'>&nbsp;</h4>"+element3.ctpd_soluong;
+                            html+="</div>";
+                            html+="</div>";
+                            html+="</div>";
+                            html+="<div class='col-md-2'>";
+                            html+="<h4 class='product-title'>&nbsp;</h4>";
+                            html+="<span>";
+                            html+=element3.ma_gia*element3.ctpd_soluong+" đ";
+                            html+="</span>";
+                            html+="</div>";
+                            html+="<div class='col-md-1'>";
+                            html+="</div>";
+                        });
+                        html+="</div>";
+                        html+="</div><!-- .product-content -->";
+                        html+="</div><!-- .product-preview-small -->";
+                        html+="<hr>";
+                    
+                        });
+                    $('.contentResponse').html(html);
+                    }
+                });
+            });
+            function genhtml(params) {
+                
+            }
+            $('#history').click(function (e) { 
+
+            $.ajax({
+                type: "get",
+                url: "{{route('datban.history')}}",
+                dataType: "json",
+                success: function (response) {
+                    let html='';
+                    response.forEach(element => {
+                        
+                        html+="<div class='info'>";
+                        html+="<table>";
+                        html+="<tr>";
+                        html+="<td>Số khách:</td>";
+                        html+="<td>"+element.pd_soluongkhach;
+                        html+="</td>";
+                        html+="</tr>";
+                        html+="<tr>";
+                        html+="<td>Số bàn:</td>";
+                        if (element.banan.length!=0) {
+                            html+="<td>";
+                            for (let index = 0; index < element.banan.length; index++) {
+                                 html+=element.banan[index].ba_id;
+                                 if (element.banan[index+1]!=undefined) {
+                                     
+                                    html+=",";
+                                 }
+                            }
+                            html+="</td>";
+                        }else {html+="<td>Đang chờ nhân viên xác nhận</td>"};
+                        html+="</tr>";
+                        html+="<tr>";
+                        html+="<td>Thời gian:</td>";
+                        html+="<td>";
+                        html+=element.pd_ngayden;
+                        html+="&nbsp;";
+                        html+=element.pd_gioden;
+                        html+="</td>";
+                        html+="</tr>";
+                        html+="<tr>";
+                        html+="<td>Ghi chú:</td>";
+                        html+="<td>"+element.pd_ghichu;
+                        html+="</tr>";
+                        html+="<tr>";
+                        html+="<td>Tổng tiền:</td>";
+                        console.log(element);
+                        html+="<td>"+element.pd_sotientongtamtinh+" đ</td>";
+                        html+="</tr>";
+                        html+="</table>";
+                        html+="</div>";
+                        html+="<div class='product-preview-small'>";
+                        html+="<div class='product-img'>";
+                        html+="</div>";
+                        html+="{{-- món ăn --}}";
+                        html+="<div class='product-content'>";
+                        html+="<div class='row'>";
+                        element.chitiet.forEach(element3 => {
+                            html+="<div class='col-md-9'>";
+                            html+="<div class='row'>";
+                            html+="<div class='col-md-8'>";
+                            html+="    <h4 class='product-title'>"+element3.ma_ten+"</h4>";
+                            html+="    Giá "+element3.ma_gia+" đ";
+                            html+="</div>";
+                            html+="<div class='col-md-2'>";
+                            html+="    <h4 class='product-title'>&nbsp;</h4>";
+                            html+="    x";
+                            html+="</div>";
+                            html+="<div class='col-md-2'>";
+                            html+="    <h4 class='product-title'>&nbsp;</h4>"+element3.ctpd_soluong;
+                            html+="</div>";
+                            html+="</div>";
+                            html+="</div>";
+                            html+="<div class='col-md-2'>";
+                            html+="<h4 class='product-title'>&nbsp;</h4>";
+                            html+="<span>";
+                            html+=element3.ma_gia*element3.ctpd_soluong+" đ";
+                            html+="</span>";
+                            html+="</div>";
+                            html+="<div class='col-md-1'>";
+                            html+="</div>";
+                        });
+                        html+="</div>";
+                        html+="</div><!-- .product-content -->";
+                        html+="</div><!-- .product-preview-small -->";
+                        html+="<hr>";
+                    
+                        });
+                    $('.contentResponse').html(html);
+                    }
+                });
+            });
+            });
+        
     </script>
 </body>
 

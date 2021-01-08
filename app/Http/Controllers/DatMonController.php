@@ -291,4 +291,51 @@ class DatMonController extends Controller
         }
         return redirect()->route('listOrder');
     }
+    public function search(Request $request)
+    {
+
+        $phieudat = \DB::table('phieudat')
+            ->whereDate('phieudat.pd_ngaylap', date('Y-m-d', strtotime($request->date)))
+            ->get();
+        if ($phieudat->isNotEmpty()) {
+
+            foreach ($phieudat as $key => $value) {
+
+                $chitiet = \DB::table('chitietphieudat')
+                    ->join('monan', 'monan.ma_id', 'chitietphieudat.ma_id')
+                    ->where('chitietphieudat.pd_id', $value->pd_id)
+                    ->get();
+                $banan = \DB::table('chitietbanan')
+                // ->join('banan','banan.ba_id','chitietbanan.ba_id')
+                    ->where('chitietbanan.pd_id', $value->pd_id)
+                    ->get();
+                $value->chitiet = $chitiet;
+                $value->banan = $banan;
+            }
+        }
+        return response()->json($phieudat, 200);
+    }
+    public function history(Request $request)
+    {
+
+        $phieudat = \DB::table('phieudat')
+            ->get();
+        if ($phieudat->isNotEmpty()) {
+
+            foreach ($phieudat as $key => $value) {
+
+                $chitiet = \DB::table('chitietphieudat')
+                    ->join('monan', 'monan.ma_id', 'chitietphieudat.ma_id')
+                    ->where('chitietphieudat.pd_id', $value->pd_id)
+                    ->get();
+                $banan = \DB::table('chitietbanan')
+                // ->join('banan','banan.ba_id','chitietbanan.ba_id')
+                    ->where('chitietbanan.pd_id', $value->pd_id)
+                    ->get();
+                $value->chitiet = $chitiet;
+                $value->banan = $banan;
+            }
+        }
+        return response()->json($phieudat, 200);
+    }
 }

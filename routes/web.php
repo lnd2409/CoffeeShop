@@ -62,6 +62,8 @@ Route::group(['prefix' => 'dat-ban'], function () {
     Route::post('/', 'DatMonController@setTable')->name('datban.setTable');
     Route::post('/cap-nhat/{id}', 'DatMonController@updateTable')->name('datban.updateTable');
     Route::get('/huy/{id}', 'DatMonController@deleteTable')->name('datban.deleteTable');
+    Route::get('/tim-kiem', 'DatMonController@search')->name('datban.search');
+    Route::get('/lich-su-dat-ban', 'DatMonController@history')->name('datban.history');
 });
 
 #Khách hàng
