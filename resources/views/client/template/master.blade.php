@@ -89,16 +89,33 @@
                     <h1 class="no-top-margin border-lines">Thông tin đặt bàn</h1>
                 </div>
                 <div class="content">
+                    <form action="" method="get">
+
+                        <input type="date" name="date" id="" value="{{$phieudat[0]->pd_ngayden}}" style="color: black;">
+                        &nbsp;
+                        <button class="btn btn-success" type="submit">Tìm kiếm</button>
+                        &nbsp;
+                        <button class="btn btn-warning" type="button">Xem
+                            lịch sử đặt</button>
+                    </form>
+                    <br>
+                    {{-- bàn --}}
                     @foreach ($phieudat as $item)
+                    <form action="{{route('datban.updateTable',$item->pd_id)}}" method="post">
+                        @csrf
                         @if ($item->kh_id == Auth::guard('khachhang')->id())
                         <div class="info">
                             <table>
                                 <tr>
                                     <td>Số khách:</td>
-                                    <td>{{$item->pd_soluongkhach}}</td>
+                                    <td><input type="number" value="{{$item->pd_soluongkhach}}" style="color: black;"
+                                            name="amountCustomer">
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Số bàn:</td>
+                                    @if ($item->banan->isNotEmpty())
+
                                     <td>
                                         @foreach ($item->banan as $key=>$banan)
                                         {{$banan->ba_id}}
@@ -107,14 +124,20 @@
                                         @endif
                                         @endforeach
                                     </td>
+                                    @else
+                                    <td>Đang chờ nhân viên xác nhận</td>
+                                    @endif
                                 </tr>
                                 <tr>
                                     <td>Thời gian:</td>
-                                    <td>{{$item->pd_ngayden}} - {{$item->pd_gioden}}</td>
+                                    <td><input type="datetime-local" style="color: black;"
+                                            value="{{strftime('%Y-%m-%dT%H:%M:%S', strtotime($item->pd_ngayden.$item->pd_gioden))}}"
+                                            name="time">
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Ghi chú:</td>
-                                    <td>{{$item->pd_ghichu}}</td>
+                                    <td><input type="text" value="{{$item->pd_ghichu}}" name="note"></td>
                                 </tr>
                                 <tr>
                                     <td>Tổng tiền:</td>
@@ -122,55 +145,64 @@
                                 </tr>
                             </table>
                         </div>
-                        <form>
-                            <div class="product-preview-small">
-                                <div class="product-img">
-                                    <img alt="product photo" src="{{asset("client")}}/assets/images/products/1_small.png">
-                                </div>
-                                <div class="product-content">
-                                    <div class="row">
-                                        @foreach ($item->chitiet as $item2)
+                        <div class=" product-preview-small">
+                            <div class="product-img">
+                                <img alt="product photo" src="{{asset("client")}}/assets/images/products/1_small.png">
+                            </div>
+                            {{-- món ăn --}}
+                            <div class="product-content">
+                                <div class="row">
+                                    @foreach ($item->chitiet as $key=>$item2)
 
-                                        <div class="col-md-9">
-                                            <div class="row">
-                                                <div class="col-md-8">
-
-                                                    <h4 class="product-title">{{$item2->ma_ten}}</h4>
-                                                    Giá {{number_format($item2->ma_gia)}} đ
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <h4 class="product-title">&nbsp;</h4>
-                                                    x
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <h4 class="product-title">&nbsp;</h4>
-                                                    {{$item2->ctpd_soluong}}
-                                                </div>
+                                    <div class="col-md-9 key{{$key}}">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <h4 class="product-title">{{$item2->ma_ten}}</h4>
+                                                Giá {{number_format($item2->ma_gia)}} đ
                                             </div>
+                                            <div class="col-md-2">
+                                                <h4 class="product-title">&nbsp;</h4>
+                                                x
+                                            </div>
+                                            <div class="col-md-2">
+                                                <h4 class="product-title">&nbsp;</h4>
+                                                <input type="hidden" name="food[]" value="{{$item2->ma_id}}">
+                                                <input type="number" class="form-control" style="color: black;"
+                                                    value="{{$item2->ctpd_soluong}}" name="amount[]">
 
-                                            {{-- <div class="product-pieces">
-                                                <input type="text" value="">
-                                                <div class="product-pieces-up"></div>
-                                                <div class="product-pieces-down"></div>
-                                            </div> --}}
-
+                                            </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <h4 class="product-title">&nbsp;</h4>
-                                            {{number_format($item2->ma_gia*$item2->ctpd_soluong)}} đ
-                                        </div>
-                                        @endforeach
                                     </div>
-                                </div><!-- .product-content -->
-                            </div><!-- .product-preview-small -->
-                            <hr>
-                            {{-- <div class="row text-xs-center">
-                                <div class="col-sm-6">
-                                    <a class="button-yellow button-text-low button-long button-low" href="#">Đặt</a>
+                                    <div class="col-md-2 key{{$key}}">
+                                        <h4 class="product-title">&nbsp;</h4>
+                                        <span>
+
+                                            {{number_format($item2->ma_gia*$item2->ctpd_soluong)}} đ
+                                        </span>
+
+                                    </div>
+                                    <div class="col-md-1 key{{$key}}">
+                                        <h4 class="product-title">&nbsp;</h4>
+                                        <span>
+                                            <a href="" style="color: red" class="removeFood" data-food="{{$key}}">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </a>
+                                        </span>
+                                    </div>
+                                    @endforeach
                                 </div>
-                            </div> --}}
-                        </form>
+                            </div><!-- .product-content -->
+                        </div><!-- .product-preview-small -->
+                        <div class="addFood{{$item->pd_id}}"></div>
+                        <a type="button" id="addFood" data-place="{{$item->pd_id}}">Thêm món</a>
+                        <input type="hidden" name="total" value="0" id="inputTotal">
+                        <button type="submit" class="btn btn-success">Lưu</button>
+                        <button type="button" class="btn btn-danger" style="float: right"
+                            onclick="window.location='{{ route('datban.deleteTable',$item->pd_id) }}'">Huỷ đặt
+                            bàn</button>
+                        <hr>
                         @endif
+                    </form>
                     @endforeach
                 </div>
             </div><!-- .cart-content -->
@@ -207,6 +239,57 @@
     <script type="text/javascript" src="{{asset("client")}}/assets/js/jquery.nav.min.js"></script>
     <script type="text/javascript" src="{{asset("client")}}/assets/js/custom.js"></script>
     @stack('script')
+    <link rel="stylesheet" href="{{asset('client/assets/bootstrap-select-1.13.14/dist/css/bootstrap-select.min.css')}}">
+    <script src="{{asset('client/assets/bootstrap-select-1.13.14/dist/js/bootstrap-select.min.js')}}"></script>
+    <script src="{{asset('client/assets/bootstrap-select-1.13.14/dist/js/i18n/defaults-vi_VN.min.js')}}"></script>
+    <script>
+        $('.selectpicker').selectpicker();
+    </script>
+    <script>
+        $(document).ready(function () {
+            let count=1;
+            $('#addFood').click(function (e) {
+                var place= $(this).attr('data-place');
+                let html='<div class="append">';
+                html+='<div class="col-md-12"><br></div>';
+                html+='<div class="col-md-8">';
+                html+='<select class="form-control selectpicker selectFood '+count+'" data-live-search="true" name="food[]" data-before=0 data-select="'+count+'">';
+                html+='<option data-tokens="Chọn món" value="0" data-price=0 selected="true" disabled="disabled">Chọn món</option>';
+                html+='@foreach ($monan as $item)';
+                html+='<option data-tokens="{{$item->nma_ten}} {{$item->ma_ten}}" value="{{$item->ma_id}}" data-price="{{$item->ma_gia}}">{{$item->nma_ten}}, {{$item->ma_ten}}';
+                html+='<span class="" style="float: right"> {{number_format($item->ma_gia)}} </span>';
+                html+='</option>';
+                html+='@endforeach';
+                html+='</select>';
+                html+='</div>';
+                html+='<div class="col-md-3">';
+                html+='<input class="form-control amount" data-amount="'+count+'" type="number" name="amount[]" value="1" placeholder="Số lượng" min="1" step="any" onKeyUp="if(this.value>100){this.value=`100`;}else if(this.value<1){this.value=`1`;}">';
+                html+='</div>';
+                html+='<div class="col-md-1 text-center ">';
+                html+='<a class="testimonial"><i class="fa fa-times" aria-hidden="true"></i></a>';
+                // html+='</div>';
+                html+='</div>';
+                count++;
+                $('.addFood'+place).append(html);
+                $('.selectpicker').selectpicker();
+    
+                $( ".append" ).each(function(index) {
+                    $('.testimonial').click(function (e) {
+                        // e.preventDefault();
+                        $(this).parents(".append").html('');
+    
+                    });
+                });
+               
+    
+            });
+            $('.removeFood').click(function (e) { 
+                e.preventDefault();
+                var id=$(this).attr('data-food');
+                $('.key'+id).remove();
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -93,7 +93,11 @@ Danh sách đặt bàn
                                             <div class="background text-center">
 
                                                 <input type="checkbox" name="tableNumber[]" value="{{$bann->ba_id}}"
-                                                    id="tableNumber{{$key}}">
+                                                    id="tableNumber{{$key}}" @foreach ($item->bandadat as $itembandadat)
+                                                @if ($itembandadat->ba_id==$bann->ba_id)
+                                                checked
+                                                @endif
+                                                @endforeach>
                                                 <label for="tableNumber{{$key}}" class="table-number">
                                                     <strong>
                                                         &nbsp;Bàn số {{$bann->ba_id}}
